@@ -22,8 +22,19 @@ const LandingPage = () => {
           {currentText.bookButtonLanding}
         </button>
       </div>
-      <footer className="landing-footer">
-        © 2025 Shega Skin Studio. All rights reserved.
+      
+        <footer className="landing-footer">
+        <div className="footer-content">
+          
+          <div className="social-media-links">
+            <a href="https://www.t.me/shega_skinstudio" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i className="fab fa-telegram-plane"></i></a>
+            <a href="https://www.instagram.com/shega_skinstudio?igsh=N2lxYmlsNDRmNHVk&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" aria-label="Tiktok"><i className="fab fa-tiktok"></i></a>
+            <a href="https://maps.app.goo.gl/sC7zhgZA2YiZVkgJ9?g_st=ipc" target="_blank" rel="noopener noreferrer" aria-label="Maps"><i className="fas fa-map-marker-alt"></i></a>
+          </div>
+          <span>© 2025 Shega Skin Studio. All rights reserved.</span>
+        </div>
+        
       </footer>
     </div>
   );
