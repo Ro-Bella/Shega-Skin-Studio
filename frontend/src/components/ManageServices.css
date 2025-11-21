@@ -1,0 +1,94 @@
+/* src/components/ManageServices.css */
+.manage-services-container {
+    padding: 2rem;
+    max-width: 960px;
+    margin: 2rem auto;
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.manage-services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.manage-services-header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.add-new-btn {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-new-btn:hover {
+    background-color: #15a589;
+    transform: translateY(-2px);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.services-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.services-table th,
+.services-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.services-table thead th {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.services-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.services-table .edit-btn,
+.services-table .delete-btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    color: white;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.services-table .edit-btn {
+    background-color: #3498db; /* Blue */
+}
+
+.services-table .edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.services-table .delete-btn {
+    background-color: #e74c3c; /* Red */
+}
+
+.services-table .delete-btn:hover {
+    background-color: #c0392b;
+}

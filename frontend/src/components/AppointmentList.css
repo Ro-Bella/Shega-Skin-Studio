@@ -1,0 +1,52 @@
+/* c:/Users/Robi/Desktop/Shega Skin Studio/frontend/src/components/AppointmentList.css */
+
+.appointment-list-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.appointment-list-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse; /* ድንበሮችን ያጣምራል */
+    font-size: 16px;
+}
+
+.appointments-table thead {
+    background-color: #4a90e2; /* ራስጌውን ሰማያዊ ቀለም ይሰጠዋል */
+    color: white;
+}
+
+.appointments-table th,
+.appointments-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+/* ለሠንጠረዡ ረድፎች የተለያየ ቀለም (Zebra-striping) */
+.appointments-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* አይጤ ሲያርፍበት የረድፉን ቀለም ይቀይራል */
+.appointments-table tbody tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+.no-appointments {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    padding: 20px;
+}

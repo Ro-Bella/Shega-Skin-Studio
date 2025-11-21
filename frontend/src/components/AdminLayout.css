@@ -1,0 +1,12 @@
+/* src/components/AdminLayout.css */
+.admin-layout {
+    display: flex;
+    padding-left: 260px; /* Match the new sidebar width */
+}
+
+.admin-content {
+    flex-grow: 1;
+    padding: 0; /* ፓዲንጉ በዳሽቦርዱ ኮንቴይነር ውስጥ ስላለ እዚህ አያስፈልግም */
+    background-color: #e2e8f0;
+    min-height: 100vh;
+}

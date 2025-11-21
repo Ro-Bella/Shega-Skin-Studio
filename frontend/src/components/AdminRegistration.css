@@ -1,0 +1,29 @@
+/* src/components/AdminRegistration.css */
+.admin-registration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.admin-registration-form {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.admin-registration-form h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* ከ LoginPage.css እና AppointmentForm.css ያሉትን የጋራ ቅጦች ይጠቀማል */
+/* (form-group, label, input, submit-btn, error-message, spinner, back-btn-login) */
+/* አዲስ ቅጥ መጨመር ካስፈለገ እዚህ ጋር ይደረጋል */
