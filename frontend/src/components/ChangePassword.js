@@ -79,9 +79,6 @@ const ChangePassword = () => {
 
     return (
         <div className="change-password-container">
-            <button onClick={() => navigate(-1)} className="back-btn-login">
-                &larr; {t.backButtonLogin}
-            </button>
             <form onSubmit={handleSubmit} className="change-password-form">
                 <h2>{t.changePasswordTitle}</h2>
                 {message && <p className={`form-message ${message.startsWith('✅') ? 'success' : 'error'}`}>{message}</p>}

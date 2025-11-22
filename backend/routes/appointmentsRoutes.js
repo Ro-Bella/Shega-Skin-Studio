@@ -27,6 +27,10 @@ const validateAppointment = [
 // አስተዳዳሪ ብቻ እንዲያያቸው በ protect middleware እንጠብቀዋለን
 router.get('/', protect, appointmentController.getAllAppointments);
 
+// @route   POST /api/appointments/public
+// @desc    Book a new appointment (public access)
+// This route is for public users to book appointments without authentication
+router.post('/public', validateAppointment, appointmentController.createAppointment);
 
 // @route   POST /api/appointments
 // @desc    Book a new appointment / አዲስ ቀጠሮ አስያዝ
@@ -38,8 +42,14 @@ router.post('/', protect, validateAppointment, appointmentController.createAppoi
 // አስተዳዳሪ ብቻ እንዲያያቸው በ protect middleware እንጠብቀዋለን
 router.get('/:id', protect, appointmentController.getAppointment);
 
+// @route   PUT /api/appointments/:id
+// @desc    Update an appointment / ቀጠሮ አዘምን
+// አስተዳዳሪ ብቻ እንዲያያቸው በ protect middleware እንጠብቀዋለን
+router.put('/:id', protect, validateAppointment, appointmentController.updateAppointment);
+
 // @route   DELETE /api/appointments/:id
 // @desc    Cancel an appointment / ቀጠሮ አሰርዝ
 // አስተዳዳሪ ብቻ እንዲያያቸው በ protect middleware እንጠብቀዋለን
 router.delete('/:id', protect, appointmentController.deleteAppointment);
+
 module.exports = router;
