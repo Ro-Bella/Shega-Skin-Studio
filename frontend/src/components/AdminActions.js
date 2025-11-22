@@ -13,10 +13,14 @@ const AdminActions = () => {
     const handleManageServices = () => navigate('/admin/manage-services');
     const handleViewReports = () => navigate('/reports');
     const handleChangePassword = () => navigate('/admin/change-password'); // የይለፍ ቃል ለመቀየር
+    const handleRegisterAdmin = () => navigate('/admin/register'); // አዲስ አስተዳዳሪ ለመመዝገብ
 
     return (
         <div className="admin-actions-container">
             <div className="admin-actions-header">
+                <button onClick={() => navigate(-1)} className="back-btn-admin-corner">
+                    &larr; {t.backButton}
+                </button>
                 <h1>{t.adminActionsTitle}</h1>
             </div>
             <p className="admin-actions-description">{t.adminActionsDescription}</p>
@@ -32,6 +36,10 @@ const AdminActions = () => {
                 <button className="action-card" onClick={handleChangePassword}>
                     <span className="action-icon">🔑</span>
                     <h3>{t.changePasswordAction}</h3>
+                </button>
+                <button className="action-card" onClick={handleRegisterAdmin}>
+                    <span className="action-icon">👤+</span>
+                    <h3>{t.addNewAdminAction}</h3>
                 </button>
             </div>
         </div>

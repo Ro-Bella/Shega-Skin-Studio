@@ -16,6 +16,8 @@ const AdminDashboard = ({ onBackToHome }) => {
     const { language, translations, setLanguage } = useContext(LanguageContext);
     const t = translations[language];
 
+    
+
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -55,14 +57,6 @@ const AdminDashboard = ({ onBackToHome }) => {
         <div className="dashboard-container">
             <div className="dashboard-header">
                 <h1>{t.adminDashboardTitle}</h1>
-                {/* የቋንቋ መቀየሪያ ቁልፎች */}
-                <div className="language-switcher-admin">
-                    <button onClick={() => setLanguage('en')} className={language === 'en' ? 'active' : ''}>English</button>
-                    <button onClick={() => setLanguage('am')} className={language === 'am' ? 'active' : ''}>አማርኛ</button>
-                    <button onClick={() => (onBackToHome ? onBackToHome() : window.history.back())} className="back-btn-booking">
-                {t.backButton} &larr;
-            </button>
-                </div>
             </div>
             {loading && <h2>{t.loadingAppointments}</h2>}
             {error && <p className="error-message">{error}</p>}

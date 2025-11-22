@@ -20,16 +20,18 @@ const AdminSidebar = () => {
 
     return (
         <aside className="admin-sidebar">
-            <h2 className="sidebar-title">{t.title}</h2>
-            <nav className="sidebar-nav">
-                <NavLink to="/admin" end>{t.dashboard}</NavLink>
-                <NavLink to="/admin-actions">{t.actions}</NavLink>
-                {/* ለሪፖርቶች የሚሆን ሊንክ ወደፊት ሲጨመር */}
-                {/* <NavLink to="/admin/reports">{t.reports}</NavLink> */}
-            </nav>
-            <button onClick={handleLogout} className="sidebar-logout-btn">
-                {t.logout}
-            </button>
+            <div className="sidebar-top">
+                <h2 className="sidebar-title">{t.title}</h2>
+                <nav className="sidebar-nav">
+                    <NavLink to="/admin" end className={({ isActive }) => isActive ? 'active' : ''}>{t.dashboard}</NavLink>
+                    <NavLink to="/admin/actions" className={({ isActive }) => isActive ? 'active' : ''}>{t.actions}</NavLink>
+                </nav>
+            </div>
+            <div className="sidebar-bottom">
+                <button onClick={handleLogout} className="sidebar-logout-btn">
+                    {t.logout}
+                </button>
+            </div>
         </aside>
     );
 };

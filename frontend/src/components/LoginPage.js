@@ -1,7 +1,7 @@
 // src/components/LoginPage.js
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './LoginPage.css';
 
@@ -54,9 +54,6 @@ const LoginPage = () => {
                         required />
                 </div>
                 <button type="submit" className="login-btn">{t.loginButton || 'Login'}</button>
-                <div className="forgot-password-link">
-                    <Link to="/forgot-password">{t.forgotPasswordLink || 'Forgot Password?'}</Link>
-                </div>
             </form>
         </div>
     );

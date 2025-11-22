@@ -29,8 +29,7 @@ const AdminRegistration = () => {
                 },
             };
 
-            await axios.post(`${API_URL}/auth/register`, { email, password }, config);
-
+            await axios.post(`${API_URL}/auth/register-admin`, { email, password }, config);
             setMessage(t.registrationSuccessMessage || '✅ New admin registered successfully.');
             setEmail('');
             setPassword('');
@@ -45,11 +44,11 @@ const AdminRegistration = () => {
 
     return (
         <div className="admin-registration-container">
-            <button onClick={() => navigate(-1)} className="back-btn-login" aria-label="Back">
-                &larr; {t.backButtonLogin || 'Back'}
-            </button>
             <form onSubmit={handleSubmit} className="admin-registration-form">
-                <h2>{t.adminRegistrationTitle || 'Register New Admin'}</h2>
+                <div className="form-header-admin">
+                    <h2>{t.adminRegistrationTitle || 'Register New Admin'}</h2>
+                    <button type="button" onClick={() => navigate(-1)} className="back-btn-admin-corner">&larr; {t.backButton || 'Back'}</button>
+                </div>
                 {message && <p className={`form-message ${message.startsWith('✅') ? 'success' : 'error'}`}>{message}</p>}
                 <div className="form-group">
                     <label htmlFor="email">{t.newAdminEmailLabel || 'New Admin Email'}</label>

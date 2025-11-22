@@ -29,7 +29,7 @@ const ManageServices = () => {
 
     useEffect(() => {
         fetchServices();
-    }, [t]);
+    }, );
 
     const handleDelete = async (id) => {
         if (window.confirm(t.manageServices.deleteConfirm)) {
@@ -53,6 +53,9 @@ const ManageServices = () => {
         <div className="manage-services-container">
             <div className="manage-services-header">
                 <h1>{t.manageServices.title}</h1>
+                <button onClick={() => navigate(-1)} className="back-btn-admin-corner">
+                    &larr; {t.backButton}
+                </button>
                 <button onClick={() => navigate('/admin/add-service')} className="add-new-btn">
                     {t.manageServices.addNewButton}
                 </button>

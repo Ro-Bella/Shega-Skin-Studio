@@ -67,7 +67,7 @@ const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
       let clientId;
       try {
         // በኢሜይል ደንበኛውን ለመፈለግ እንሞክራለን
-        const existingClientRes = await axios.get(`${API_URL}/clients/by-email/${formData.clientEmail}`);
+        const existingClientRes = await axios.get(`${API_URL}/clients/by-email/${formData.clientEmail}`, { withCredentials: false });
         clientId = existingClientRes.data._id;
       } catch (error) {
         // ደንበኛው ካልተገኘ (404 Not Found) አዲስ እንፈጥራለን
@@ -76,7 +76,7 @@ const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
             name: formData.clientName,
             email: formData.clientEmail,
             phone: formData.clientPhone,
-          });
+          }, { withCredentials: false });
           clientId = newClientRes.data._id;
         } else {
           throw error; // ሌላ ስህተት ከሆነ እናስተላልፋለን
@@ -85,25 +85,29 @@ const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
 
       // የማጠናቀቂያ ሰዓት ማስላት
       // የተመረጠውን የአገልግሎት አይነት መሰረት በማድረግ ትክክለኛውን አገልግሎት መለየት
-      const selectedService = filteredServices.find(s => s._id === formData.service);
-      if (!selectedService) {
-          throw new Error("Please select a valid service.");
-      }
-      
-      const durationMinutes = selectedService.durationMinutes || 60;
-      
-      const startTime = new Date(`${formData.date}T${formData.startTime}`);
-      const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
-
       const appointmentData = {
         client: clientId,
-        service: selectedService._id, // ትክክለኛውን የአገልግሎት ID እንልካለን
         date: formData.date,
         startTime: formData.startTime,
-        endTime: endTime.toTimeString().slice(0, 5),
       };
 
-      const response = await axios.post(`${API_URL}/appointments`, appointmentData); // ሩቱን ወደ /api/appointments አስተካክለናል
+      if (formData.service) {
+        const selectedService = filteredServices.find(s => s._id === formData.service);
+        if (!selectedService) {
+            throw new Error("Please select a valid service.");
+        }
+        
+        const durationMinutes = selectedService.durationMinutes || 60;
+        
+        const startTime = new Date(`${formData.date}T${formData.startTime}`);
+        const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
+
+        appointmentData.service = selectedService._id; // ትክክለኛውን የአገልግሎት ID እንልካለን
+        appointmentData.endTime = endTime.toTimeString().slice(0, 5);
+      }
+
+
+      const response = await axios.post(`${API_URL}/appointments`, appointmentData, { withCredentials: false }); // ሩቱን ወደ /api/appointments አስተካክለናል
       setMessage(currentText?.successMessage || 'Appointment booked.');
       setFormData({
         clientName: '',
@@ -174,8 +178,8 @@ const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
           {/* የአገልግሎት መምረጫ */}
           {filteredServices.length > 0 && (
             <div className="form-group">
-              <label>{currentText.serviceLabel || 'አይነት እና ዋጋ'}</label>
-              <select name="service" value={formData.service} onChange={handleChange} required>
+              <label>{currentText.serviceLabel || 'የሚፈልጉት እቃ አይነት እና ዋጋ'}</label>
+              <select name="service" value={formData.service} onChange={handleChange}>
                 <option value="">{currentText.selectServicePlaceholder || '-- አገልግሎት ይምረጡ --'}</option>
                 {filteredServices.map(service => (
                   <option key={service._id} value={service._id}>{`${service.name} (${service.price} ${currentText.priceUnit})`}</option>
@@ -197,7 +201,7 @@ const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
           </div>
         </div>
 
-        <button type="submit" className="submit-btn" disabled={loading || !formData.date || !formData.startTime}>
+        <button type="submit" className="submit-btn" disabled={loading || !formData.date || !formData.startTime || !formData.serviceType}>
          {loading ? <div className="spinner"></div> : currentText.submitButton}
         </button>
       </form>

@@ -80,7 +80,10 @@ const ChangePassword = () => {
     return (
         <div className="change-password-container">
             <form onSubmit={handleSubmit} className="change-password-form">
-                <h2>{t.changePasswordTitle}</h2>
+                <div className="form-header-admin">
+                    <h2>{t.changePasswordTitle}</h2>
+                    <button type="button" onClick={() => navigate(-1)} className="back-btn-admin-corner">&larr; {t.backButton}</button>
+                </div>
                 {message && <p className={`form-message ${message.startsWith('✅') ? 'success' : 'error'}`}>{message}</p>}
                 
                 <div className="form-group password-input-group">

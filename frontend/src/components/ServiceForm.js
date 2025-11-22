@@ -71,11 +71,11 @@ const ServiceForm = () => {
 
     return (
         <div className="service-form-container">
-            <button onClick={() => navigate(-1)} className="back-btn-login">
-                &larr; {t.backButton}
-            </button>
             <form onSubmit={handleSubmit} className="service-form">
-                <h2>{isEditing ? t.serviceForm.editTitle : t.serviceForm.addTitle}</h2>
+                <div className="form-header-admin">
+                    <h2>{isEditing ? t.serviceForm.editTitle : t.serviceForm.addTitle}</h2>
+                    <button type="button" onClick={() => navigate(-1)} className="back-btn-admin-corner">&larr; {t.backButton || 'Back'}</button>
+                </div>
                 {message && <p className={`form-message ${message.startsWith('✅') ? 'success' : 'error'}`}>{message}</p>}
                 
                 <div className="form-group">
