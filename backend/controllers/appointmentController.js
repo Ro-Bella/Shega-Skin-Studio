@@ -1,59 +1,193 @@
 // backend/controllers/appointmentController.js
-const Appointment = require('../models/appointment');
-const { getOne, updateOne, deleteOne } = require('./apiHandler');
+const Appointment = require('../models/Appointment');  // ቀጠሮ ሞዴል እንዲጠቀም ለማድረግ
 
-// የተወሰነ ንባብ (Populated Read) - ለቀጠሮ ሰራተኛውን እና አገልግሎቱን ማሳየት
-const getAllAppointments = async (req, res) => {
-    try {
-        const docs = await Appointment.find()
-            .populate('client', 'name phone') // የደንበኛን ስም እና ስልክ ቁጥር ያመጣል
-            .populate('service', 'name price durationMinutes'); // የአገልግሎቱን ስም፣ ዋጋ እና የቆይታ ጊዜ ያመጣል
-        res.status(200).json(docs);
+// አዲስ ቀጠሮ መፍጠር
+exports.createAppointment = async (req, res) => { // አዲስ ቀጠሮ መፍጠር
+    try { // የሚከናወን ኮድ
+        // ከፍሮንትኤንድ የመጣውን ዳታ ማስተካከል
+        const { name, phone, service, date, timeSlot } = req.body; // የቀጠሮ መረጃዎችን ከእባክዎ ያግኙ
+
+        // የተመረጠው ቀን እና ሰዓት አስቀድሞ መያዙን ማረጋገጥ
+        const existingAppointment = await Appointment.findOne({ date, timeSlot });
+        if (existingAppointment) {
+            return res.status(409).json({ // 409 Conflict status code
+                success: false,
+                message: 'ይህ የቀጠሮ ሰዓት በሌላ ደንበኛ ተይዟል። እባክዎ ሌላ ሰዓት ይምረጡ።'
+            });
+        }
+        const appointmentData = { // የቀጠሮ መረጃዎችን ማዘጋጀት
+            name, // የደንበኛ ስም
+            phone,  // የደንበኛ ስልክ ቁጥር
+            service, // የቀጠሮ አገልግሎት
+            date, // የቀጠሮ ቀን
+            timeSlot, // የቀጠሮ የሰዓት ሰአት
+        };
+        const appointment = new Appointment(appointmentData); // የቀጠሮ አዲስ ኦቤጅክት መፍጠር
+        await appointment.save(); // ቀጠሮውን ወደ ዳታቤዝ ማስቀመጥ
+        res.status(201).json({  // 201 ማለት ተፈጥሯል
+            success: true, // ስኬታማ ሆኗል
+            data: appointment, // የቀጠሮ መረጃ
+            message: 'ቀጠሮዎ በተሳካ ሁኔታ ተይዟል!' // ማሳወቂያ መልእክት
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ // 500 ማለት የውስጥ አስተዳደር ስህተት ነው
+            success: false, // አልሆነም
+            message: 'ቀጠሮ ማስያዝ አልተቻለም', // ማሳወቂያ መልእክት
+            error: error.message // የስህተት መልእክት
+        });
     }
 };
 
-// @desc    አዲስ ቀጠሮ መፍጠር (ከግጭት ማረጋገጫ ጋር)
-// @route   POST /api/appointments
-// @access  Public
-const createAppointment = async (req, res) => {
-    const { date, startTime, endTime } = req.body;
 
+// ሁሉንም ቀጠሮዎች ማምጣት
+exports.getAppointments = async (req, res) => { // ሁሉንም ቀጠሮዎች ማምጣት
     try {
-        // 1. የግዜ ግጭት መኖሩን ማረጋገጥ
-        // በተጠቀሰው ቀን እና ሰዓት ላይ ሌላ ቀጠሮ እንዳለ እንፈትሻለን
-        const existingAppointment = await Appointment.findOne({
-            date: date,
-            $or: [
-                // አዲሱ ቀጠሮ በነበረ ቀጠሮ ውስጥ እንዳይጀምር ወይም እንዳያልቅ ማረጋገጥ
-                { startTime: { $lt: endTime }, endTime: { $gt: startTime } }
-            ]
+        const appointments = await Appointment.find({}); // ሁሉንም ቀጠሮዎች ከዳታቤዝ ማግኘት
+        res.status(200).json({ // 200 ማለት ጥሩ ነው
+            success: true, // ስኬታማ ሆኗል
+            count: appointments.length, // የቀጠሮዎች ብዛት
+            data: appointments // የቀጠሮዎች መረጃ
         });
 
-        if (existingAppointment) {
-            // 409 Conflict status code እንመልሳለን
-            return res.status(409).json({ message: 'ይህ ሰዓት በሌላ ቀጠሮ ተይዟል። እባክዎ ሌላ ሰዓት ይምረጡ።' });
-        }
-
-        // 2. ግጭት ከሌለ አዲሱን ቀጠሮ መፍጠር
-        const newAppointment = await Appointment.create(req.body);
-        res.status(201).json(newAppointment);
-
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+    } catch (error) { // ስህተት ከተፈጠረ
+        res.status(500).json({ // 500 ማለት የውስጥ አስተዳደር ስህተት ነው
+            success: false, // አልሆነም
+            message: 'ቀጠሮዎችን ማምጣት አልተቻለም', // ማሳወቂያ መልእክት
+            error: error.message // የስህተት መልእክት
+        });
     }
 };
 
-const getAppointment = getOne(Appointment);
-const updateAppointment = updateOne(Appointment);
-const deleteAppointment = deleteOne(Appointment);
 
-module.exports = {
-    getAllAppointments,
-    createAppointment,
-    getAppointment,
-    updateAppointment,
-    deleteAppointment,
-    getAll: getAllAppointments // getAllAppointmentsን እንደ getAll export እናደርጋለን
+// ቀጠሮ ማስተካከል
+exports.updateAppointment = async (req, res) => { // ቀጠሮ ማስተካከል
+    try {
+        const { date, timeSlot } = req.body;
+
+        // If date or time is being updated, check for conflicts
+        if (date && timeSlot) {
+            const existingAppointment = await Appointment.findOne({
+                date,
+                timeSlot,
+                _id: { $ne: req.params.id } // Exclude the current appointment from the check
+            });
+            if (existingAppointment) {
+                return res.status(409).json({
+                    success: false,
+                    message: 'This time slot is already taken. Please choose another time.', // Default message
+                    messageKey: 'timeSlotTaken' // Key for frontend translation
+                });
+            }
+        }
+
+        const appointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {
+            new: true, // የተስተካከለውን ዳታ ለመመለስ
+            runValidators: true // በሞዴሉ ላይ የተቀመጡትን ህጎች ለማረጋገጥ
+        });
+
+        if (!appointment) {
+            return res.status(404).json({ // 404 ማለት አልተገኘም
+                success: false,
+                message: 'ይህ ቀጠሮ አልተገኘም'
+            });
+        }
+
+        res.status(200).json({ // 200 ማለት ጥሩ ነው
+            success: true, // ስኬታማ ሆኗል
+            data: appointment,
+            message: 'ቀጠሮዎ በተሳካ ሁኔታ ተስተካክሏል!' // ማሳወቂያ መልእክት
+        });
+
+    } catch (error) {  // ስህተት ከተፈጠረ
+        res.status(500).json({ // 500 ማለት የውስጥ አስተዳደር ስህተት ነው
+            success: false, // አልሆነም
+            message: 'ቀጠሮ ማስተካከል አልተቻለም', // ማሳወቂያ መልእክት
+            error: error.message // የስህተት መልእክት 
+        });
+    }
+};
+
+
+// ቀጠሮ ማጥፋት
+exports.deleteAppointment = async (req, res) => { // ቀጠሮ ማጥፋት
+    try {
+        const appointment = await Appointment.findByIdAndDelete(req.params.id); // የቀጠሮ መረጃ ማጥፋት
+
+        if (!appointment) {
+            return res.status(404).json({ // 404 ማለት አልተገኘም
+                success: false,
+                message: 'ይህ ቀጠሮ አልተገኘም'
+            });
+        }
+
+        res.status(200).json({ // 200 ማለት ጥሩ ነው
+            success: true, // ስኬታማ ሆኗል
+            message: 'ቀጠሮው በተሳካ ሁኔታ ተሰርዟል' // ማሳወቂያ መልእክት
+        });
+
+    } catch (error) {  // ስህተት ከተፈጠረ
+        res.status(500).json({ // 500 ማለት የውስጥ አስተዳደር ስህተት ነው
+            success: false, // አልሆነም
+            message: 'ቀጠሮ ማጥፋት አልተቻለም', // ማሳወቂያ መልእክት   
+            error: error.message // የስህተት መልእክት
+        });
+    }
+};
+
+// Helper function to update status to avoid repetition
+const updateStatus = async (id, status, res) => {
+    try {
+        const appointment = await Appointment.findById(id);
+
+        if (!appointment) {
+            return res.status(404).json({
+                success: false,
+                message: 'ይህ ቀጠሮ አልተገኘም'
+            });
+        }
+
+        appointment.status = status;
+        await appointment.save();
+
+        res.status(200).json({
+            success: true,
+            data: appointment,
+            message: `ቀጠሮው ወደ '${status}' በተሳካ ሁኔታ ተቀይሯል!`
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'የቀጠሮውን ሁኔታ ማስተካከል አልተቻለም',
+            error: error.message
+        });
+    }
+};
+
+// ቀጠሮን ማረጋገጥ (Confirm)
+exports.confirmAppointment = async (req, res) => {
+    await updateStatus(req.params.id, 'Confirmed', res);
+};
+
+// ቀጠሮን መሰረዝ (Cancel)
+exports.cancelAppointment = async (req, res) => {
+    await updateStatus(req.params.id, 'Cancelled', res);
+};
+
+// @desc    ለተወሰነ ቀን የተያዙትን ሰዓቶች ለማምጣት
+// @route   GET /api/appointments/booked-slots
+// @access  Public (can be protected if needed)
+exports.getBookedSlots = async (req, res) => {
+    const { date } = req.query;
+    if (!date) {
+        return res.status(400).json({ message: 'Date query parameter is required.' });
+    }
+
+    try {
+        const appointments = await Appointment.find({ date, status: { $ne: 'Cancelled' } });
+        const bookedTimeSlots = appointments.map(apt => apt.timeSlot);
+        res.status(200).json(bookedTimeSlots);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch booked slots.', error: error.message });
+    }
 };

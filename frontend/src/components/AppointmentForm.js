@@ -1,213 +1,255 @@
-// src/components/AppointmentForm.js
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import './AppointmentForm.css';
-import { LanguageContext } from './LanguageContext';
+// AppointmentForm.jsx (Frontend)
 
-// የባክ-ኢንዱ ቤዝ ዩአርኤል (URL)
-const API_URL = 'http://localhost:5000/api';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { Link } from 'react-router-dom'; // Link ኮምፖነንትን እናስገባለን
+import axios from 'axios'; // axios import እናደርጋለን
+import './AppointmentForm.css'; // Importing CSS for styling
+import { LanguageContext } from './LanguageContext'; // For multi-language support (Assuming this file exists)
 
-const AppointmentForm = ({ onAppointmentBooked, onBackToHome }) => {
- // የቋንቋ ኮንቴክስትን መጠቀም
-  const { language = 'am', translations = {} } = useContext(LanguageContext) || {};
-  const currentText = translations[language] || {};
 
-  // 1. ቅፅን ለመቆጣጠር የሚያገለግል State
-  const [formData, setFormData] = useState({
-    clientName: '',
-    clientEmail: '',
-    clientPhone: '+251',
-    serviceType: 'type1', // የአገልግሎት አይነት መምረጫ state - 'Signature Facial' ነባሪ እንዲሆን 'type1' እናደርገዋለን
+// Backend API Base URL
+const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
+const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
+const AppointmentForm = () => {
+  const { language, translations } = useContext(LanguageContext);
+  const currentText = translations[language];
+
+  // State for form data
+  const [formData, setFormData] = useState({ 
+    fullName: '', // ወደ 'fullName' ተቀይሯል
+    phone: '',
     service: '',
-    // staff: '', // የሰራተኛ ምርጫ ስለማያስፈልግ ከ state እናስወግደዋለን
-    date: '',
-    startTime: '',
+    date: '', 
+    timeSlot: '',
   });
 
-  const [filteredServices, setFilteredServices] = useState([]);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
-  // 2. ከባክ-ኢንዱ የተጫኑ ዝርዝሮች (Lists)
-  // (removed unused `services` state)
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [phoneError, setPhoneError] = useState(''); // ለስልክ ቁጥር ስህተት state
+  const [services, setServices] = useState([]); // አገልግሎቶችን ከ API ለማምጣት
+  const [bookedSlots, setBookedSlots] = useState([]); // For holding booked time slots
+  const [availableSlots, setAvailableSlots] = useState([]); // For holding available time slots
 
-  // 4. የአገልግሎት አይነት ሲቀየር ተዛማጅ አገልግሎቶችን ከ API ለመጫን
-  // የአገልግሎት አይነት ሲቀየር ተዛማጅ አገልግሎቶችን ከባክ-ኢንድ ያመጣል
   useEffect(() => {
-    const fetchServicesForType = async () => {
-      if (!formData.serviceType) {
-        setFilteredServices([]);
-        return;
-      }
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000); // በየሰከንዱ አዘምን
+
+    return () => {
+      clearInterval(timer); // ኮምፖነንቱ ሲዘጋ ሰዓቱን ማቆም
+    };
+  }, []);
+
+  // ኮምፖነንቱ ሲጫን አገልግሎቶችን ከባክኤንድ ለማምጣት
+  useEffect(() => {
+    const fetchServices = async () => {
       try {
-        // የአገልግሎት አይነት ሲቀየር፣ አዲስ ዝርዝር ስለሚመጣ የተመረጠውን አገልግሎት እናጸዳለን (reset)
-        setFormData(prev => ({ ...prev, service: '', date: '', startTime: '' })); 
-        setFilteredServices([]); // ዝርዝሩን እናጸዳለን
-        const response = await axios.get(`${API_URL}/services/by-type/${formData.serviceType}`);
-        setFilteredServices(response.data);
+        const response = await axios.get(SERVICES_API_URL);
+        setServices(response.data); // የመጡትን አገልግሎቶች state ላይ እናስቀምጣለን
       } catch (error) {
-        console.error("Error fetching services for type:", error);
-        setFilteredServices([]);
+        console.error("አገልግሎቶችን ማምጣት አልተቻለም:", error);
+        // ለተጠቃሚው ስህተት መኖሩን ማሳየትም ይቻላል
       }
     };
-    fetchServicesForType();
-  }, [formData.serviceType]);
 
-  // 5. የቅፅ ግብዓቶችን ለመቆጣጠር (Handle Input Changes)
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    fetchServices();
+  }, []); // ባዶ dependency array ማለት አንድ ጊዜ ብቻ ይስራ ማለት ነው
+
+    // Generate time slots from 9 AM to 5 PM every hour
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let hour = 9; hour <= 17; hour++) {
+      const time = `${hour.toString().padStart(2, '0')}:00`;
+      slots.push(time);
+    }
+    return slots;
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage(currentText?.loadingMessage || 'Loading...');
-    setLoading(true);
 
-    try {
-      // የተሻሻለ የደንበኛ አያያዝ፡ ደንበኛው ካለ ማግኘት፣ ከሌለ መፍጠር (findOrCreate)
-      let clientId;
-      try {
-        // በኢሜይል ደንበኛውን ለመፈለግ እንሞክራለን
-        const existingClientRes = await axios.get(`${API_URL}/clients/by-email/${formData.clientEmail}`, { withCredentials: false });
-        clientId = existingClientRes.data._id;
-      } catch (error) {
-        // ደንበኛው ካልተገኘ (404 Not Found) አዲስ እንፈጥራለን
-        if (error.response && error.response.status === 404) {
-          const newClientRes = await axios.post(`${API_URL}/clients`, {
-            name: formData.clientName,
-            email: formData.clientEmail,
-            phone: formData.clientPhone,
-          }, { withCredentials: false });
-          clientId = newClientRes.data._id;
-        } else {
-          throw error; // ሌላ ስህተት ከሆነ እናስተላልፋለን
+  // Fetch booked slots when date changes
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      if (formData.date) {
+        try {
+          // Assuming an endpoint to get booked slots for a specific date
+          const response = await axios.get(`${APPOINTMENTS_API_URL}/booked-slots?date=${formData.date}`);
+          setBookedSlots(response.data); // e.g., ['10:00', '14:00']
+        } catch (error) {
+          console.error("Failed to fetch booked slots:", error);
+          setBookedSlots([]); // Reset on error
         }
       }
+    };
 
-      // የማጠናቀቂያ ሰዓት ማስላት
-      // የተመረጠውን የአገልግሎት አይነት መሰረት በማድረግ ትክክለኛውን አገልግሎት መለየት
-      const appointmentData = {
-        client: clientId,
-        date: formData.date,
-        startTime: formData.startTime,
-      };
+    fetchBookedSlots();
+    // Reset time slot when date changes
+    setFormData(prev => ({ ...prev, timeSlot: '' }));
+  }, [formData.date]);
 
-      if (formData.service) {
-        const selectedService = filteredServices.find(s => s._id === formData.service);
-        if (!selectedService) {
-            throw new Error("Please select a valid service.");
-        }
-        
-        const durationMinutes = selectedService.durationMinutes || 60;
-        
-        const startTime = new Date(`${formData.date}T${formData.startTime}`);
-        const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
+  // Update available slots when booked slots change
+  useEffect(() => {
+    const allSlots = generateTimeSlots();
+    const available = allSlots.filter(slot => !bookedSlots.includes(slot));
+    setAvailableSlots(available);
+  }, [bookedSlots]);
+  
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-        appointmentData.service = selectedService._id; // ትክክለኛውን የአገልግሎት ID እንልካለን
-        appointmentData.endTime = endTime.toTimeString().slice(0, 5);
+    // If the date is changed, reset the time slot
+    const isDateChange = name === 'date';
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+
+    // የስልክ ቁጥር validation
+    if (name === 'phone') {
+      // የኢትዮጵያ ስልክ ቁጥር ቅርጸት፡ በ +2519 ወይም በ 09 የሚጀምር እና 8 ቁጥሮች የሚከተሉት
+      const phoneRegex = /^(\+2519\d{8}|09\d{8})$/;
+      if (!value) {
+        setPhoneError(currentText.phoneErrorRequired);
+      } else if (!phoneRegex.test(value)) {
+        setPhoneError(currentText.phoneErrorInvalid);
+      } else {
+        setPhoneError(''); // ስህተት ከሌለ መልዕክቱን እናጠፋለን
       }
-
-
-      const response = await axios.post(`${API_URL}/appointments`, appointmentData, { withCredentials: false }); // ሩቱን ወደ /api/appointments አስተካክለናል
-      setMessage(currentText?.successMessage || 'Appointment booked.');
-      setFormData({
-        clientName: '',
-        clientEmail: '',
-        clientPhone: '+251',
-        service: '',
-        date: '',
-        startTime: '',
-      });
-      
-      
-      if (onAppointmentBooked) {
-        onAppointmentBooked(response.data);
-      }
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      setMessage(`${currentText?.errorMessage || 'Error:'} ${errorMessage}`);
-    } finally {
-      setLoading(false);
     }
   };
 
-  if (!currentText) {
-    return <div>Loading translations...</div>;
-  }
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // ፎርሙ ከመላኩ በፊት ስህተት ካለ ማረጋገጥ
+    if (phoneError || !formData.phone) {
+      setMessage(`❌ ${currentText.submitError}`);
+      return; // ስህተት ካለ ፎርሙ እንዳይላክ እናደርጋለን
+    }
+    setLoading(true);
+    setMessage(currentText.sending); // "Sending..."
+    try {
+      // ዳታውን ወደ ባክኤንድ እንልካለን
+      const response = await axios.post(APPOINTMENTS_API_URL, {
+        name: formData.fullName, // 'fullName'ን ወደ 'name' እንቀይረዋለን
+        phone: formData.phone,
+        service: formData.service,
+        date: formData.date,
+        timeSlot: formData.timeSlot,
+      });
+
+      setMessage(`✅ ${currentText.submitSuccess}`); // ከባክኤንድ የመጣውን መልዕክት እናሳያለን
+      // ፎርሙን ባዶ እናደርጋለን
+      setFormData({
+        fullName: '',
+        phone: '',
+        service: '',
+        date: '',
+        timeSlot: '',
+      });
+    } catch (error) {
+      // ስህተት ከተፈጠረ
+      let errorMessage = currentText.submitFail;
+      if (error.response?.status === 409) {
+        errorMessage = currentText.timeSlotTaken;
+      }
+
+      setMessage(`❌ ${errorMessage}`);
+    } finally {
+      setLoading(false); // `loading` ሁኔታን ወደ false እንመልሳለን
+    }
+  };
 
   return (
     <div className="appointment-form-container">
-      {/* "ወደ ኋላ" የሚለው ቁልፍ በግራ በኩል */}
-      <button onClick={() => (onBackToHome ? onBackToHome() : window.history.back())} className="back-btn-login">
-                {currentText.backButton} &larr;
-            </button>
-      {/* "አስተዳደር መግቢያ" የሚለው ቁልፍ በቀኝ በኩል */}
-      <button onClick={() => window.location.href='/login'} className="admin-login-btn">
-        {currentText.adminButton} &rarr;
-      </button>
-      <h2>{currentText.formTitle}</h2>
-      {message && <p className={`form-message ${message.startsWith('✅') ? 'success' : 'error'}`}>{message}</p>}
+      <div className="form-page-header"> {/* New wrapper */}
+        <div className="form-header-left">
+          <Link to="/" className="back-link"> &larr; {currentText.backButton}</Link>
+          <h2 className="title-gradient">{currentText.formTitle}</h2>
+        </div>
+        <div className="datetime-container">
+          <div className="time-display">{currentDateTime.toLocaleTimeString(language === 'am' ? 'am-ET' : 'en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</div>
+          <div className="date-display">{currentDateTime.toLocaleDateString(language === 'am' ? 'am-ET-u-ca-ethiopic' : 'en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</div>
+        </div>
+      </div>
+      {message && (
+        <p
+          className={`form-message ${message.includes('❌') ? 'error' : 'success'}`}
+          style={message.includes(currentText.timeSlotTaken) ? { color: 'black' } : {}}
+        >
+          {message}
+        </p>
+      )}
       <form onSubmit={handleSubmit} className="appointment-form">
-        <div className="form-card">
+        <div className="form-section">
           <h3>{currentText.clientInfoTitle}</h3>
-          <div className="form-group">
-            <label>{currentText.clientNameLabel}</label>
-            <input type="text" name="clientName" value={formData.clientName} onChange={handleChange} required />
+          <div className="appointment-form-group">
+            <label htmlFor="fullName">{currentText.clientNameLabel}:</label>
+            <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
           </div>
-          <div className="form-group">
-            <label>{currentText.clientEmailLabel}</label>
-            <input type="email" name="clientEmail" value={formData.clientEmail} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>{currentText.clientPhoneLabel}</label>
-            <input type="tel" name="clientPhone" value={formData.clientPhone} onChange={handleChange} />
+          <div className="appointment-form-group">
+            <label htmlFor="phone">{currentText.clientPhoneLabel}:</label>
+            <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required className={phoneError ? 'input-error' : ''} />
+            {phoneError && <p className="error-message">{phoneError}</p>}
           </div>
         </div>
 
-        <div className="form-card">
+        <div className="form-section">
           <h3>{currentText.serviceInfoTitle}</h3>
-          {/* የአገልግሎት አይነት መምረጫ */}
-          <div className="form-group">
-            <label>{currentText.serviceTypeLabel}</label>
-            <select name="serviceType" value={formData.serviceType} onChange={handleChange} required>
-              <option value="">{currentText.selectServiceTypePlaceholder}</option>
-              {Object.keys(currentText.serviceTypes || {}).map((typeKey) => (
-                <option key={typeKey} value={typeKey}>{currentText.serviceTypes[typeKey]}</option>
+          <div className="appointment-form-group">
+            <label htmlFor="service">{currentText.serviceLabel}:</label>
+            <select id="service" name="service" value={formData.service} onChange={handleChange} required>
+              <option value="">{currentText.selectServicePlaceholder}</option>
+              {services.map(service => (
+                <option key={service._id} value={service.name}>{service.name}</option>
               ))}
             </select>
           </div>
-          {/* የአገልግሎት መምረጫ */}
-          {filteredServices.length > 0 && (
-            <div className="form-group">
-              <label>{currentText.serviceLabel || 'የሚፈልጉት እቃ አይነት እና ዋጋ'}</label>
-              <select name="service" value={formData.service} onChange={handleChange}>
-                <option value="">{currentText.selectServicePlaceholder || '-- አገልግሎት ይምረጡ --'}</option>
-                {filteredServices.map(service => (
-                  <option key={service._id} value={service._id}>{`${service.name} (${service.price} ${currentText.priceUnit})`}</option>
-                ))}
-              </select>
-            </div>
-          )}
         </div>
 
-        <div className="form-card">
+        <div className="form-section">
           <h3>{currentText.dateTimeTitle}</h3>
-          <div className="form-group">
-            <label>{currentText.dateLabel}</label>
-            <input type="date" name="date" value={formData.date} onChange={handleChange} required min={new Date().toISOString().split('T')[0]} />
+          <div className="appointment-form-group">
+            <label htmlFor="date">{currentText.dateLabel}:</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+              min={new Date().toISOString().split('T')[0]} // Prevent selecting past dates
+            />
           </div>
-          <div className="form-group">
-            <label>{currentText.timeLabel}</label>
-            <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} required />
+          <div className="appointment-form-group">
+            <label htmlFor="timeSlot">{currentText.timeLabel}:</label>
+            <select
+              id="timeSlot"
+              name="timeSlot"
+              value={formData.timeSlot}
+              onChange={handleChange}
+              required
+              disabled={!formData.date || availableSlots.length === 0} // Disable if no date or no slots
+            >
+              <option value="">{formData.date ? (availableSlots.length > 0 ? currentText.selectTimePlaceholder || 'Select a time' : currentText.noSlotsAvailable || 'No slots available') : (currentText.selectDateFirst || 'Select a date first')}</option>
+              {availableSlots.map(slot => (
+                <option key={slot} value={slot}>{new Date(`1970-01-01T${slot}`).toLocaleTimeString(language === 'am' ? 'am-ET' : 'en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</option>
+              ))}
+            </select>
           </div>
         </div>
 
-        <button type="submit" className="submit-btn" disabled={loading || !formData.date || !formData.startTime || !formData.serviceType}>
-         {loading ? <div className="spinner"></div> : currentText.submitButton}
+        <button type="submit" className="appointment-form-submit" disabled={loading || phoneError || !formData.fullName || !formData.phone || !formData.service || !formData.date || !formData.timeSlot}>
+          {loading ? <div className="spinner"></div> : currentText.submitButton}
         </button>
+        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+            <Link to="/admin/login">{currentText.adminLogin}</Link>
+        </div>
       </form>
     </div>
-  );
+  ); 
 };
-
 
 export default AppointmentForm;

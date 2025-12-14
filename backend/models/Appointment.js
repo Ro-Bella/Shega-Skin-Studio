@@ -1,38 +1,36 @@
-// models/Appointment.js
-const mongoose = require('mongoose');
+// backend/models/Appointment.js
+const mongoose = require('mongoose'); // ሞንጎው አሰባሰብ ለመጠቀም
 
-const AppointmentSchema = new mongoose.Schema({
-  clientName: {
-    type: String,
-    required: [true, 'የደንበኛ ስም ያስፈልጋል'],
-  },
+const appointmentSchema = new mongoose.Schema({ // የቀጠሮ ስኬታዊ አወቃቀር
+    name: { // የደንበኛ ስም
+        type: String, // ለምሳሌ 'John Doe'
+        required: true, // አስፈላጊ ነው
+        trim: true // ቅንጅት ለማድረግ
+    },
+    phone: { // የደንበኛ ስልክ ቁጥር
+        type: String, // ለምሳሌ '+251912345678'
+        required: true // አስፈላጊ ነው
+    },
+    service: { // የቀጠሮ አገልግሎት
+        type: String, // ለምሳሌ 'Haircut', 'Manicure', 'Massage'
+        required: true // አስፈላጊ ነው
+    },
+    date: { // የቀጠሮ ቀን
+        type: Date, // ለምሳሌ '2024-06-15'
+        required: true // አስፈላጊ ነው
+    },
+    timeSlot: { // የቀጠሮ የሰዓት ሰአት
+        type: String, // ለምሳሌ '10:00 AM'
+        required: true // አስፈላጊ ነው
+    },
+    status: { // የቀጠሮ ሁኔታ
+        type: String, // ለምሳሌ 'Pending', 'Confirmed', 'Cancelled', 'Completed'
+        enum: ['Pending', 'Confirmed', 'Cancelled', 'Completed'], // የሚቀበሉ እርምጃዎች
+        default: 'Pending' // ነባሪ እርምጃ
+    }
+}, { timestamps: true }); // የማዘጋጃ ጊዜና የማሻሻያ ጊዜ መክተት
 
-  email: {
-    type: String,
-    required: [true, 'የኢሜይል አድራሻ ያስፈልጋል'],
-  },
-  
-  phone: {
-    type: String,
-    required: [true, 'የስልክ ቁጥር ያስፈልጋል'],
-  },
+// አንድ አይነት ቀን እና ሰዓት እንዳይደገም ለማድረግ (Compound Index)
+appointmentSchema.index({ date: 1, timeSlot: 1 }, { unique: true });
 
-  service: {
-    type: String,
-    required: [true, 'የተፈለገው አገልግሎት ያስፈልጋል'],
-  },
-  date: {
-    type: Date,
-    required: [true, 'የቀጠሮ ቀን ያስፈልጋል'],
-  },
-  time: {
-    type: String,
-    required: [true, 'የቀጠሮ ሰዓት ያስፈልጋል'],
-  },
-  isConfirmed: {
-    type: Boolean,
-    default: false,
-  }
-}, { timestamps: true });
-
-module.exports = mongoose.model('Appointment', AppointmentSchema);
+module.exports = mongoose.model('Appointment', appointmentSchema);  // ሞዴል ላይ ማስተናገድ

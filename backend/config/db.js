@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // ሞንጎው አሰባሰብ ለመጠቀም
 
-// ... dotenv.config() is already called at the top of server.js
+const connectDB = async () => { // ዳታቤዝ ግንኙነት ለመፍጠር
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI); // ወደ MongoDB መገናኘት
 
-const DB = process.env.DATABASE_LOCAL;
+    console.log(`MongoDB Connected: ${conn.connection.host}`); // ግንኙነት ተሳክቷል መልእክት ማሳወቅ
+  } catch (error) { // ስህተት ከተፈጠረ
+    console.error(`Error: ${error.message}`); // ስህተት መልእክት ማሳወቅ
+    process.exit(1); // ፕሮሰሱ በስህተት መውጣት
+  }
+};
 
-mongoose.connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('DB connection successful!');
-});
+module.exports = connectDB; // ሌሎች ፋይሎች ውስጥ ለመጠቀም ማስተናገድ
