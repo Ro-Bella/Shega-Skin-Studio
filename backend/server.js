@@ -1,11 +1,12 @@
 // backend/server.js
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
 const connectDB = require('./config/db'); // MongoDB connection
 
 // Load env vars
-dotenv.config(); // Loads .env file from the root of the backend folder
+dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
 
 // Connect to database
 connectDB();

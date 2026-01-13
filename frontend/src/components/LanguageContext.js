@@ -46,7 +46,6 @@ export const LanguageProvider = ({ children }) => {
       // Services Section
       servicesTitle: 'Our Premier Services',
       servicesList: [
-          { icon: 'fas fa-spa', title: 'Signature Facials', description: 'Customized facials that target your specific skin concerns, leaving you with a radiant glow.' },
           { icon: 'fas fa-magic', title: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.' },
           { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
           { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
@@ -178,6 +177,7 @@ export const LanguageProvider = ({ children }) => {
           { icon: 'fas fa-leaf', title: 'ሚክሮደርማ ብራዢን', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
           { icon: 'fas fa-leaf', title: 'የእርጅና ናኖ መጠቀሚያ', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
           { icon: 'fas fa-leaf', title: 'የእርጅና ሂድራ ፊሽያል', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
+          { icon: 'fas fa-star', title: 'አዲስ አገልግሎት', description: 'ስለ አዲሱ አገልግሎት መግለጫ እዚህ ይገባል።' },
       ],
       // Appointment Form
       formTitle: 'ሸጋ ቀጠሮ ማስገቢያ ቅጽ',

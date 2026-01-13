@@ -17,34 +17,41 @@ const connectDB = async () => {
   }
 };
 
-const changeAdminCredentials = async () => {
+const seedAdmins = async () => {
   await connectDB();
 
   try {
-    // --- እዚህ ጋር ይቀይሩ ---
-    const targetEmail = process.env.ADMIN_EMAIL || 'admin@example.com'; // .env ፋይል ውስጥ ያስቀምጡ
-    const newPassword = process.env.ADMIN_PASSWORD || 'password123'; // .env ፋይል ውስጥ ያስቀምጡ
-    // -------------------------
-
-    if (!targetEmail || !newPassword) {
-      console.log('እባክዎ ኢሜል እና ፓስወርድ ያስገቡ።');
-      process.exit();
-    }
-
-    // ፓስወርዱን ሃሽ (hash) እናደርጋለን
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // ኢሜሉ ካለ እናዘምነዋለን፣ ከሌለ አዲስ እንፈጥራለን (upsert: true)
-    const admin = await Admin.findOneAndUpdate(
-      { email: targetEmail },
-      { email: targetEmail, password: hashedPassword },
+    // 1. Regular Admin (መደበኛ አድሚን)
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || '12345678';
+    const hashedAdminPassword = await bcrypt.hash(adminPassword, salt);
+
+    await Admin.findOneAndUpdate(
+      { email: adminEmail },
+      { email: adminEmail, password: hashedAdminPassword, role: 'admin' },
       { new: true, upsert: true }
     );
+    console.log(`✅ Regular Admin Created/Updated:\n   Email: ${adminEmail}\n   Password: ${adminPassword}`);
 
-    console.log('የአድሚን መረጃ በተሳካ ሁኔታ ተቀይሯል/ተፈጥሯል:');
-    console.log(`   ኢሜል: ${admin.email}`);
-    console.log('   ፓስወርድ: (የተደበቀ)');
+    // 2. Super Admin (ለ Admin Management የሚሆን)
+    const superAdminEmail = process.env.SUPER_ADMIN_EMAIL || 'superadmin@example.com';
+    
+    // በ .env ላይ ያለው ፓስወርድ Hash የተደረገ ከሆነ ለጊዜው 'password123' እንጠቀማለን
+    let superAdminPassword = 'password123';
+    if (process.env.SUPER_ADMIN_PASSWORD && !process.env.SUPER_ADMIN_PASSWORD.startsWith('$2b$')) {
+        superAdminPassword = process.env.SUPER_ADMIN_PASSWORD;
+    }
+
+    const hashedSuperAdminPassword = await bcrypt.hash(superAdminPassword, salt);
+
+    await Admin.findOneAndUpdate(
+      { email: superAdminEmail },
+      { email: superAdminEmail, password: hashedSuperAdminPassword, role: 'superadmin' },
+      { new: true, upsert: true }
+    );
+    console.log(`✅ Super Admin Created/Updated:\n   Email: ${superAdminEmail}\n   Password: ${superAdminPassword}`);
 
     process.exit();
   } catch (error) {
@@ -53,4 +60,4 @@ const changeAdminCredentials = async () => {
   }
 };
 
-changeAdminCredentials();
+seedAdmins();

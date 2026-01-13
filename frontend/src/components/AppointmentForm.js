@@ -6,10 +6,17 @@ import axios from 'axios'; // axios import እናደርጋለን
 import './AppointmentForm.css'; // Importing CSS for styling
 import { LanguageContext } from './LanguageContext'; // For multi-language support (Assuming this file exists)
 
-
+// የድሮው (Old):
 // Backend API Base URL
-const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
-const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
+// const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
+// const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
+
+// አዲሱ (New):
+// ፕሮዳክሽን ላይ ሲሆን ከ Vercel Environment Variable ያነባል፣ ካልሆነ localhost ይጠቀማል
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
+const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
+
 const AppointmentForm = () => {
   const { language, translations } = useContext(LanguageContext);
   const currentText = translations[language];
@@ -94,6 +101,16 @@ const AppointmentForm = () => {
     setAvailableSlots(available);
   }, [bookedSlots]);
   
+  // መልዕክቱ ከ 5 ሰከንድ በኋላ በራሱ እንዲጠፋ (Auto-clear message)
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 5000); // 5000 ሚሊሰከንድ = 5 ሰከንድ
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -202,8 +219,8 @@ const AppointmentForm = () => {
             <label htmlFor="service">{currentText.serviceLabel}:</label>
             <select id="service" name="service" value={formData.service} onChange={handleChange} required>
               <option value="">{currentText.selectServicePlaceholder}</option>
-              {services.map(service => (
-                <option key={service._id} value={service.name}>{service.name}</option>
+              {currentText.servicesList && currentText.servicesList.map((service, index) => (
+                <option key={index} value={service.title}>{service.title}</option>
               ))}
             </select>
           </div>

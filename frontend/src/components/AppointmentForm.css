@@ -182,3 +182,17 @@ body {
     font-size: 0.8rem;
     margin-top: 0.25rem;
 }
+
+.form-message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.form-message.success {
+    color: #2ecc71; /* አረንጓዴ ቀለም ለስኬት መልዕክት */
+}
+
+.form-message.error {
+    color: #e74c3c; /* ቀይ ቀለም ለስህተት መልዕክት */
+}
