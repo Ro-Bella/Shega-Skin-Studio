@@ -3,7 +3,7 @@ import axios from 'axios';  // አክሲዮስ ለHTTP ጥያቄዎች
 
 const API = axios.create({  // API ኢንስታንስ ፍጠር
     // Backend API የሚሰራበት አድራሻ
-    baseURL: 'http://localhost:5000/api/appointments'  // እባክዎ ይህን የእርስዎ  backend አድራሻ በመሆኑ ይቀይሩ
+    baseURL: 'https://shega-skin-studio.onrender.com/api/appointments'  // እባክዎ ይህን የእርስዎ  backend አድራሻ በመሆኑ ይቀይሩ
 });
 
 // አዲስ ቀጠሮ ለማስያዝ

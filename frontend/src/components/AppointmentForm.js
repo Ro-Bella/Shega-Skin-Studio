@@ -8,14 +8,14 @@ import { LanguageContext } from './LanguageContext'; // For multi-language suppo
 
 // የድሮው (Old):
 // Backend API Base URL
-// const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
-// const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
+const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
+const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
 
 // አዲሱ (New):
 // ፕሮዳክሽን ላይ ሲሆን ከ Vercel Environment Variable ያነባል፣ ካልሆነ localhost ይጠቀማል
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
-const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
+// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+// const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
+// const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
 
 const AppointmentForm = () => {
   const { language, translations } = useContext(LanguageContext);
