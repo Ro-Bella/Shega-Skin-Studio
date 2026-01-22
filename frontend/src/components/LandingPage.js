@@ -10,6 +10,7 @@ const LandingPage = () => {
   const navigate = useNavigate(); // navigate ተግባርን ማዘጋጀት
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactDropdownOpen, setIsContactDropdownOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,6 +25,19 @@ const LandingPage = () => {
   // ሰዓቱን እና ቀኑን እንደ ቋንቋው ማስተካከል
   const formattedTime = currentDateTime.toLocaleTimeString(language === 'am' ? 'am-ET' : 'en-US');
   const formattedDate = currentDateTime.toLocaleDateString(language === 'am' ? 'am-ET-u-ca-ethiopic' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+    setIsContactDropdownOpen(false);
+  };
+
+  const handleContactToggle = (e) => {
+    // Only apply click-to-toggle logic on mobile screen sizes
+    if (window.innerWidth <= 768) {
+      e.stopPropagation(); // Prevent other click handlers
+      setIsContactDropdownOpen(prev => !prev);
+    }
+  };
 
 
   return (
@@ -95,7 +109,63 @@ const LandingPage = () => {
           }
           .nav-link {
             color: #333 !important;
+            font-weight: 600;
           }
+          .nav-item.nav-dropdown {
+            flex-wrap: wrap;
+            cursor: pointer;
+          }
+          .nav-item.nav-dropdown > .nav-link {
+            display: flex;
+            justify-content: space-between;
+            width: auto;
+            flex: 1;
+            align-items: center;
+          }
+          .nav-dropdown .dropdown-content {
+            display: none;
+            position: static;
+            background: transparent;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            min-width: unset;
+          }
+          .nav-dropdown.mobile-dropdown-open .dropdown-content {
+            display: block;
+            animation: none;
+          }
+          .nav-dropdown .dropdown-content a {
+            background-color: rgba(0, 0, 0, 0.04);
+            padding-left: 50px !important;
+            font-size: 0.9em;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+          }
+          .nav-dropdown .dropdown-content a:last-child {
+            border-bottom: none;
+          }
+          /* Disable desktop hover effect on mobile */
+          .nav-dropdown:hover .dropdown-content {
+            display: none;
+          }
+          .nav-dropdown.mobile-dropdown-open:hover .dropdown-content {
+            display: block; /* Keep it open if clicked */
+          }
+          /* Chevron icon for expandable menu */
+          .nav-item.nav-dropdown > span.nav-link::after {
+            content: '\\f078'; /* FontAwesome chevron-down */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            padding-left: 10px;
+            font-size: 0.8em;
+          }
+          .nav-item.nav-dropdown.mobile-dropdown-open > span.nav-link::after {
+            transform: rotate(180deg);
+          }
+
           .services-grid, .testimonials-grid {
             display: grid;
             grid-template-columns: 1fr !important;
@@ -148,21 +218,21 @@ const LandingPage = () => {
 
         <nav className={`main-nav ${isMenuOpen ? 'nav-open' : ''}`}>
           {/* These should be replaced with React Router's <Link> or <NavLink> for better SPA navigation */}
-          <a href="/#"><i className="fas fa-home"></i>{currentText.navHome}</a>
-          <a href="#services"><i className="fas fa-spa"></i>{currentText.navServices}</a>
-          <a href="#about"><i className="fas fa-info-circle"></i>{currentText.navAbout}</a>
-          <div className="nav-item nav-dropdown">
+          <a href="/#" onClick={handleMenuClose}><i className="fas fa-home"></i>{currentText.navHome}</a>
+          <a href="#services" onClick={handleMenuClose}><i className="fas fa-spa"></i>{currentText.navServices}</a>
+          <a href="#about" onClick={handleMenuClose}><i className="fas fa-info-circle"></i>{currentText.navAbout}</a>
+          <div className={`nav-item nav-dropdown ${isContactDropdownOpen ? 'mobile-dropdown-open' : ''}`} onClick={handleContactToggle}>
             <i className="fas fa-phone-alt"></i><span className="nav-link">{currentText.navContact}</span>
             <div className="dropdown-content">
-              <a href="tel:+251911084237"><i className="fas fa-phone"></i> +251911084237</a>
-              <a href="https://www.t.me/shega_skinstudio" target="_blank" rel="noopener noreferrer"><i className="fab fa-telegram-plane"></i> Telegram</a>
-              <a href="mailto:info@shegastudio.com"><i className="fas fa-envelope"></i> Email</a>
+              <a href="tel:+251911084237" onClick={handleMenuClose}><i className="fas fa-phone"></i> +251911084237</a>
+              <a href="https://www.t.me/shega_skinstudio" target="_blank" rel="noopener noreferrer" onClick={handleMenuClose}><i className="fab fa-telegram-plane"></i> Telegram</a>
+              <a href="mailto:info@shegastudio.com" onClick={handleMenuClose}><i className="fas fa-envelope"></i> Email</a>
             </div>
           </div>
-          <a href="https://maps.app.goo.gl/sC7zhgZA2YiZVkgJ9?g_st=ipc" target="_blank" rel="noopener noreferrer"><i className="fas fa-map-marker-alt"></i>{currentText.navLocation}</a>
+          <a href="https://maps.app.goo.gl/sC7zhgZA2YiZVkgJ9?g_st=ipc" target="_blank" rel="noopener noreferrer" onClick={handleMenuClose}><i className="fas fa-map-marker-alt"></i>{currentText.navLocation}</a>
           <div className="mobile-lang-switch">
-            <button onClick={() => setLanguage('en')} className={`lang-btn ${language === 'en' ? 'active' : ''}`}>{currentText.langEn}</button>
-            <button onClick={() => setLanguage('am')} className={`lang-btn ${language === 'am' ? 'active' : ''}`}>{currentText.langAm}</button>
+            <button onClick={() => { setLanguage('en'); handleMenuClose(); }} className={`lang-btn ${language === 'en' ? 'active' : ''}`}>{currentText.langEn}</button>
+            <button onClick={() => { setLanguage('am'); handleMenuClose(); }} className={`lang-btn ${language === 'am' ? 'active' : ''}`}>{currentText.langAm}</button>
           </div>
         </nav>
         <div className="header-right">
