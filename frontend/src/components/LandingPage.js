@@ -9,6 +9,7 @@ const LandingPage = () => {
   const currentText = translations[language];
   const navigate = useNavigate(); // navigate ተግባርን ማዘጋጀት
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -27,22 +28,142 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
+      <style>{`
+        .menu-toggle {
+          display: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 10px;
+          color: #ff69b4;
+        }
+        .mobile-lang-switch {
+          display: none;
+        }
+        @media (max-width: 768px) {
+          .landing-container {
+            padding-top: 0;
+          }
+          .landing-header {
+            flex-wrap: wrap;
+            padding: 10px 20px;
+            position: relative;
+          }
+          .header-right {
+            display: none;
+          }
+          .menu-toggle {
+            display: block;
+            margin-left: auto;
+          }
+          .main-nav {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            text-align: left;
+            padding: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 0 0 20px 20px;
+            overflow: hidden;
+          }
+          .main-nav.nav-open {
+            display: flex;
+          }
+          .main-nav a, .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            width: 100%;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: #333;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+          }
+          .main-nav a:hover, .nav-item:hover {
+            background-color: rgba(255, 105, 180, 0.08);
+            color: #ff69b4 !important;
+            padding-left: 35px;
+          }
+          .main-nav a i, .nav-item > i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #ff69b4;
+          }
+          .nav-link {
+            color: #333 !important;
+          }
+          .services-grid, .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr !important;
+            justify-items: center;
+          }
+          .service-card, .testimonial-card {
+            width: 100%;
+            max-width: 400px;
+          }
+          .mobile-lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 25px;
+            opacity: 0;
+            animation: fadeInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+          }
+          /* Staggered animation delays */
+          .main-nav.nav-open > *:nth-child(1) { animation-delay: 0.1s; }
+          .main-nav.nav-open > *:nth-child(2) { animation-delay: 0.15s; }
+          .main-nav.nav-open > *:nth-child(3) { animation-delay: 0.2s; }
+          .main-nav.nav-open > *:nth-child(4) { animation-delay: 0.25s; }
+          .main-nav.nav-open > *:nth-child(5) { animation-delay: 0.3s; }
+          .main-nav.nav-open > *:nth-child(6) { animation-delay: 0.35s; }
+          }
+          .mobile-lang-switch .lang-btn {
+            color: #333;
+            border: 1px solid #333;
+          }
+          .mobile-lang-switch .lang-btn.active {
+            background-color: #ff69b4;
+            color: #fff;
+            border-color: #ff69b4;
+          }
+          @keyframes fadeInRight {
+            from {
+              opacity: 0;
+              transform: translateX(-20px);
+            }
+            to { opacity: 1; transform: translateX(0); }
+          }
+        }
+      `}</style>
       <header className="landing-header">
         <div className="header-logo" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>Shega</div>
-        <nav className="main-nav">
+        
+        <div className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+        </div>
+
+        <nav className={`main-nav ${isMenuOpen ? 'nav-open' : ''}`}>
           {/* These should be replaced with React Router's <Link> or <NavLink> for better SPA navigation */}
-          <a href="/#">{currentText.navHome}</a>
-          <a href="#services">{currentText.navServices}</a>
-          <a href="/#about">{currentText.navAbout}</a>
+          <a href="/#"><i className="fas fa-home"></i>{currentText.navHome}</a>
+          <a href="#services"><i className="fas fa-spa"></i>{currentText.navServices}</a>
+          <a href="#about"><i className="fas fa-info-circle"></i>{currentText.navAbout}</a>
           <div className="nav-item nav-dropdown">
-            <span className="nav-link">{currentText.navContact}</span>
+            <i className="fas fa-phone-alt"></i><span className="nav-link">{currentText.navContact}</span>
             <div className="dropdown-content">
               <a href="tel:+251911084237"><i className="fas fa-phone"></i> +251911084237</a>
               <a href="https://www.t.me/shega_skinstudio" target="_blank" rel="noopener noreferrer"><i className="fab fa-telegram-plane"></i> Telegram</a>
               <a href="mailto:info@shegastudio.com"><i className="fas fa-envelope"></i> Email</a>
             </div>
           </div>
-          <a href="https://maps.app.goo.gl/sC7zhgZA2YiZVkgJ9?g_st=ipc" target="_blank" rel="noopener noreferrer">{currentText.navLocation}</a>
+          <a href="https://maps.app.goo.gl/sC7zhgZA2YiZVkgJ9?g_st=ipc" target="_blank" rel="noopener noreferrer"><i className="fas fa-map-marker-alt"></i>{currentText.navLocation}</a>
+          <div className="mobile-lang-switch">
+            <button onClick={() => setLanguage('en')} className={`lang-btn ${language === 'en' ? 'active' : ''}`}>{currentText.langEn}</button>
+            <button onClick={() => setLanguage('am')} className={`lang-btn ${language === 'am' ? 'active' : ''}`}>{currentText.langAm}</button>
+          </div>
         </nav>
         <div className="header-right">
           <div className="landing-datetime-container">
@@ -77,6 +198,14 @@ const LandingPage = () => {
               <p className="service-card-description">{service.description}</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* About Us Section */}
+      <div id="about" className="about-section">
+        <h3 className="about-title">{currentText.aboutTitle}</h3>
+        <div className="about-content">
+          <p>{currentText.aboutContent}</p>
         </div>
       </div>
 

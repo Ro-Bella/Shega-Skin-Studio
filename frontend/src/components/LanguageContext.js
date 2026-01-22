@@ -42,6 +42,9 @@ export const LanguageProvider = ({ children }) => {
         { quote: "Shega Skin Studio is my go-to place for relaxation and skincare. The results are always fantastic.", author: "Lidya G." },
         { quote: "I was struggling with acne for years, but after a few sessions here, my skin is clear and glowing. Thank you, Shega!", author: "Samuel B." }
       ],
+      // About Section
+      aboutTitle: 'About Us',
+      aboutContent: 'With over 5 years of extensive experience in the skincare industry, we proudly established Shega Skin Studio one year ago to bring our vision of holistic beauty to life. We are home to a team of hardworking and dedicated professionals who prioritize your skin\'s health above all else. We pride ourselves on maintaining a pristine, hygienic, and relaxing environment where you can unwind and rejuvenate while we care for your glow.',
 
       // Services Section
       servicesTitle: 'Our Premier Services',
@@ -166,6 +169,9 @@ export const LanguageProvider = ({ children }) => {
         { quote: "ሸጋ ስኪን ስቱዲዮ ለመዝናናት እና ለቆዳ እንክብካቤ የምሄድበት ቦታ ነው። ውጤቱ ሁልጊዜ አስደናቂ ነው።", author: "ሊድያ ገ." },
         { quote: "ለዓመታት በብጉር እሰቃይ ነበር፣ ነገር ግን እዚህ ጥቂት ህክምናዎችን ከወሰድኩ በኋላ ቆዳዬ ንጹህ እና አንጸባራቂ ሆኗል። አመሰግናለሁ ሸጋ!", author: "ሳሙኤል በ." }
       ],
+      // About Section
+      aboutTitle: 'ስለ እኛ',
+      aboutContent: 'በቆዳ እንክብካቤ ዘርፍ ከ5 ዓመታት በላይ ባካበትነው ጥልቅ ልምድ፣ የራሳችንን ራዕይ እውን ለማድረግ ሸጋ ስኪን ስቱዲዮን ከከፈትን እነሆ አንድ ዓመት ሞላን። ጉዞአችን በሙያ ፍቅር እና በክህሎት ላይ የተገነባ ነው። ለደህንነትዎ ቅድሚያ በሚሰጡ ታታሪ እና ፕሮፌሽናል ባለሙያዎቻችን እንኮራለን። ስቱዲዮአችን ንጽህናው የተጠበቀ እና ሰላማዊ መሆኑ፣ ለህክምናዎ አስተማማኝ እና ዘና የሚያደርግ ቦታ ያደርገዋል።',
 
       // Services Section
       servicesTitle: 'የእኛ ዋና አገልግሎቶች',

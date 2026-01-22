@@ -181,6 +181,42 @@ const AppointmentForm = () => {
 
   return (
     <div className="appointment-form-container">
+      <style>{`
+        @media (max-width: 768px) {
+          .appointment-form-container {
+            padding: 1rem;
+          }
+          .form-page-header {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+          }
+          .form-header-left {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+          .back-link {
+            align-self: flex-start;
+            margin-bottom: 0.5rem;
+          }
+          .datetime-container {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+          }
+          .appointment-form {
+            padding: 1.5rem;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .appointment-form-submit {
+            width: 100%;
+          }
+        }
+      `}</style>
       <div className="form-page-header"> {/* New wrapper */}
         <div className="form-header-left">
           <Link to="/" className="back-link"> &larr; {currentText.backButton}</Link>
