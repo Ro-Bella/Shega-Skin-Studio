@@ -69,7 +69,7 @@ const LandingPage = () => {
         <h3 className="services-title">{currentText.servicesTitle}</h3>
         <div className="services-grid">
           {currentText.servicesList && currentText.servicesList.map((service, index) => (
-            <div key={index} className="service-card">
+            <div key={index} className="service-card" style={{ minWidth: '250px' }}>
               <div className="service-icon">
                 <i className={service.icon}></i>
               </div>
