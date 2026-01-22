@@ -46,14 +46,15 @@ export const LanguageProvider = ({ children }) => {
       // Services Section
       servicesTitle: 'Our Premier Services',
       servicesList: [
+          { icon: 'fas fa-spa', title: 'Signature Facials', description: 'Customized facials that target your specific skin concerns, leaving you with a radiant glow.' },
           { icon: 'fas fa-magic', title: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.' },
-          { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
-          { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
-          { icon: 'fas fa-leaf', title: 'Waxing Services', description: 'Professional waxing services for smooth, hair-free skin.' },
-          { icon: 'fas fa-leaf', title: 'BB Glowing', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
-          { icon: 'fas fa-leaf', title: 'Microderma Brasion', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
-          { icon: 'fas fa-leaf', title: 'Nano Infusions', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
-          { icon: 'fas fa-leaf', title: 'Hidra Facial', description: 'Effective programs to clear up acne and prevent future breakouts for a smooth, confident complexion.' },
+          { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Stimulates collagen production to improve skin texture and reduce scars.' },
+          { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Exfoliates the skin to treat acne, scars, and discoloration.' },
+          { icon: 'fas fa-leaf', title: 'Waxing Services', description: 'Professional hair removal for smooth and silky skin.' },
+          { icon: 'fas fa-leaf', title: 'BB Glowing', description: 'Semi-permanent foundation treatment for glowing, even-toned skin.' },
+          { icon: 'fas fa-leaf', title: 'Microderma Brasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.' },
+          { icon: 'fas fa-leaf', title: 'Nano Infusions', description: 'Non-invasive treatment to enhance product absorption and skin hydration.' },
+          { icon: 'fas fa-leaf', title: 'Hidra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.' },
 
         
         
@@ -170,13 +171,13 @@ export const LanguageProvider = ({ children }) => {
       servicesList: [
           { icon: 'fas fa-spa', title: 'ፊርማ የፊት ህክምናዎች', description: 'ለቆዳዎ አይነት እና ፍላጎት ተብለው የተዘጋጁ፣ ቆዳዎን የሚያንጸባርቁ የፊት ህክምናዎች።' },
           { icon: 'fas fa-magic', title: 'የእርጅና መከላከያ ህክምናዎች', description: 'የመሸብሸብ እና የእርጅና ምልክቶችን የሚቀንሱ፣ የቆዳዎን የወጣትነት ህይወት የሚመልሱ ዘመናዊ ህክምናዎች።' },
-          { icon: 'fas fa-leaf', title: 'የብጉር መፍትሄዎች', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
-          { icon: 'fas fa-leaf', title: 'የኬሚካል ፒልስ', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
-          { icon: 'fas fa-leaf', title: 'የማስረጃ አገልግሎት', description: 'የቆዳዎን ለማጠባበቅ የተዘጋጁ የማስረጃ አገልግሎቶች።' },
-          { icon: 'fas fa-leaf', title: 'የእርጅና ብሎዊንግ', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
-          { icon: 'fas fa-leaf', title: 'ሚክሮደርማ ብራዢን', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
-          { icon: 'fas fa-leaf', title: 'የእርጅና ናኖ መጠቀሚያ', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
-          { icon: 'fas fa-leaf', title: 'የእርጅና ሂድራ ፊሽያል', description: 'ብጉርን ለማጥፋት እና ለወደፊቱ እንዳይወጣ ለመከላከል ውጤታማ ፕሮግራሞች።' },
+          { icon: 'fas fa-leaf', title: 'ማይክሮኒድሊንግ', description: 'የኮላጅን ምርትን በማነቃቃት የቆዳ ጥራትን የሚያሻሽል እና ጠባሳዎችን የሚቀንስ።' },
+          { icon: 'fas fa-leaf', title: 'የኬሚካል ፒልስ', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ብጉርን፣ ጠባሳን እና የቆዳ ቀለምን የሚያስተካክል።' },
+          { icon: 'fas fa-leaf', title: 'የዋክስ አገልግሎት', description: 'ለስላሳ እና ጸጉር አልባ ቆዳ የሚሰጥ የባለሙያ የዋክስ አገልግሎት።' },
+          { icon: 'fas fa-leaf', title: 'ቢቢ ግሎው', description: 'ለቆዳ ወጥ እና አንጸባራቂ ቀለም የሚሰጥ ከፊል-ቋሚ የመዋቢያ ህክምና።' },
+          { icon: 'fas fa-leaf', title: 'ማይክሮደርማ ብራሽን', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ቆዳን የሚያበራ እና የሚያድስ።' },
+          { icon: 'fas fa-leaf', title: 'ናኖ ኢንፊውዥን', description: 'የቆዳን እርጥበት እና የምርት መሳብ አቅምን የሚጨምር ህክምና።' },
+          { icon: 'fas fa-leaf', title: 'ሃይድራ ፌሻል', description: 'ቆዳን የሚያጸዳ፣ የሚያርስ እና እርጥበት የሚሰጥ ዘመናዊ የፊት ህክምና።' },
           { icon: 'fas fa-star', title: 'አዲስ አገልግሎት', description: 'ስለ አዲሱ አገልግሎት መግለጫ እዚህ ይገባል።' },
       ],
       // Appointment Form
