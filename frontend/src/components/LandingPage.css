@@ -225,18 +225,24 @@
 .landing-time-display {
   font-family: 'monospace', 'Courier New', Courier; /* ዲጂታል ፊደል */
   font-size: 1.5rem; /* የፊደል መጠን ቀይረናል */
+  font-size: 1.1rem; /* የፊደል መጠን ቀይረናል (አሳንሰናል) */
   font-weight: normal;
   color: #fff;
   letter-spacing: 2px; /* በፊደሎቹ መካከል ያለውን ክፍተት አስተካክለናል */
+  font-size: 1rem;
 }
 
 .landing-date-display {
   font-family: 'monospace', 'Courier New', Courier; /* ዲጂታል ፊደል */
   font-size: 0.8rem; /* የፊደል መጠን ቀይረናል */
+  font-size: 0.75rem; /* የፊደል መጠን ቀይረናል (አሳንሰናል) */
   font-weight: bold; /* ጎላ እንዲል */
   color: rgba(255, 255, 255, 0.9); /* ትንሽ ደመቅ እንዲል */
   margin-top: 0.3rem; /* ከላይ ያለውን ክፍተት አስተካክለናል */
   letter-spacing: 1px;
+  gap: 1.5rem;
+  text-align: center;
+  font-size: 0.7rem;
 }
 
 /* Date and Time Display */

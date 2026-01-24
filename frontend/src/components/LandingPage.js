@@ -61,8 +61,16 @@ const LandingPage = () => {
             flex-wrap: wrap;
             padding: 10px 20px;
             position: relative;
+            align-items: center;
           }
           .header-right {
+            display: none;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin-top: 5px;
+          }
+          .header-right .language-switcher {
             display: none;
           }
           .menu-toggle {

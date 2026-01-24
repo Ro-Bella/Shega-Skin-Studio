@@ -55,7 +55,7 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin: 0; /* ነባሩን ማርጂን እናስወግዳለን */
-    font-size: 2.5rem; /* የፊደል መጠን ጨምረናል */
+    font-size: 1.6rem; /* የፊደል መጠን ጨምረናል */
 }
 
 /* ለካርዶቹ/ክፍሎቹ ስታይል */
@@ -151,7 +151,7 @@ body {
 
 /* Date and Time Display */
 .datetime-container {
-  padding: 0.5rem 1rem; /* የውስጥ ክፍተት ጨምረናል */
+  padding: 0.2rem 0.2rem; /* የውስጥ ክፍተት ጨምረናል */
   background-color: rgba(0, 0, 0, 0.2); /* ዳራውን ትንሽ ቀነስ አድርገናል */
   border-radius: 8px; /* ጠርዙን አስተካክለናል */
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.6); /* የብርሃን ጥላ ጨምረናል */
@@ -159,12 +159,13 @@ body {
   flex-shrink: 0; /* እንዳይጨማደድ */
   text-align: right; /* ጽሑፉን ወደ ቀኝ አስተካክለናል */
   margin-top: -7rem; /* ከላይ ያለውን ክፍተት አስተካክለናል */
-  margin-right: -2.5rem; /* ከቀኝ ያለውን ክፍተት አስተካክለናል */
+  margin-right: -1.5rem; /* ከቀኝ ያለውን ክፍተት አስተካክለናል */
+  margin-left: -1.5rem; /* ከግራ ያለውን ክፍተት አስተካክለናል */
 }
 
 .time-display {
   font-family: 'monospace', 'Courier New', Courier; /* ዲጂታል ፊደል */
-  font-size: 1.8rem; /* የፊደል መጠን ጨምረናል */
+  font-size: 1.6rem; /* የፊደል መጠን ጨምረናል */
   font-weight: bold; /* ጎላ እንዲል */
   color: #fff;
   letter-spacing: 2px; /* በፊደሎቹ መካከል ክፍተት ጨምረናል */
@@ -225,7 +226,10 @@ body {
         margin-top: 0;
         margin-right: 0;
         text-align: center;
-        width: 100%;
+       
+        width: fit-content; /* ይዘቱ ባለበት ልክ ብቻ እንዲሆን */
+        margin-left: auto; /* መሃል ላይ ለማድረግ */
+        margin-right: auto; /* መሃል ላይ ለማድረግ */
         margin-bottom: 1rem;
     }
 }
