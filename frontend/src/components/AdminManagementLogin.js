@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminManagementLogin.css';
+import API_BASE_URL from '../api/config';
 
 const AdminManagementLogin = () => {
   const [email, setEmail] = useState('');
@@ -36,7 +37,7 @@ const AdminManagementLogin = () => {
       };
 
       await axios.post(
-        'http://localhost:5000/api/admin/super-login',
+        `${API_BASE_URL}/api/admin/super-login`,
         { email, password },
         config
       );

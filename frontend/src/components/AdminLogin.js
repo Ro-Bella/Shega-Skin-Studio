@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminLogin.css'; // ቅጥን ለመጋራት
+import API_BASE_URL from '../api/config';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ const AdminLogin = () => {
       };
 
       const { data } = await axios.post(
-        'http://localhost:5000/api/admin/login',
+        `${API_BASE_URL}/api/admin/login`,
         { email, password },
         config
       );

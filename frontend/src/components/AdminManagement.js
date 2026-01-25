@@ -4,8 +4,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminDashboard.css'; // Sharing styles
+import API_BASE_URL from '../api/config';
 
-const API_URL = 'http://localhost:5000/api/admin';
+const API_URL = `${API_BASE_URL}/api/admin`;
 
 const AdminManagement = () => {
   const { language, translations } = useContext(LanguageContext);

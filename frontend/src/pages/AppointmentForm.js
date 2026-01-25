@@ -4,9 +4,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import './AppointmentForm.css'; // Importing CSS for styling
 import { LanguageContext } from '../components/LanguageContext'; // For multi-language support (Assuming this file exists)
-
-// Backend API Base URL
-const API_URL = 'http://localhost:5000/api';
+import API_BASE_URL from '../api/config';
 
 const AppointmentForm = () => {
   // Using LanguageContext for translations
@@ -21,6 +19,10 @@ const AppointmentForm = () => {
     date: '',
     timeSlot: '',
   });
+  
+  // አዲሱ (ትክክለኛው)
+  // import moved to top and stray axios.post removed
+  
 
   // States for services, loading status, and messages
   const [services, setServices] = useState([]);
@@ -42,7 +44,7 @@ const AppointmentForm = () => {
     if (formData.date) {
       const fetchBookedSlots = async () => {
         try {
-          const response = await axios.get(`${API_URL}/appointments/booked-slots?date=${formData.date}`);
+          const response = await axios.get(`${API_BASE_URL}/api/appointments/booked-slots?date=${formData.date}`);
           const bookedSlots = response.data;
           const allSlots = generateTimeSlots();
           const available = allSlots.filter(slot => !bookedSlots.includes(slot));
@@ -73,7 +75,7 @@ const AppointmentForm = () => {
     setMessage(currentText.loadingMessage || 'እየላክን ነው...');
 
     try {
-      await axios.post(`${API_URL}/appointments`, formData);
+      await axios.post(`${API_BASE_URL}/api/appointments`, formData);
       setMessage(currentText.submitSuccess || `✅ ቀጠሮ በተሳካ ሁኔታ ተይዟል!`);
       // Reset form
       setFormData({ name: '', phone: '', service: '', date: '', timeSlot: '' });

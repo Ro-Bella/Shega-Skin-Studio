@@ -6,8 +6,9 @@ import { LanguageContext } from './LanguageContext';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import API_BASE_URL from '../api/config';
 
-const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments';
+const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
 
 const AdminDashboard = () => {
   const { language, translations } = useContext(LanguageContext);

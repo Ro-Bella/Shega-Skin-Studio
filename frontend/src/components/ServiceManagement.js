@@ -4,8 +4,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 import { LanguageContext } from './LanguageContext';
 import './ServiceManagement.css'; // ቅሉን ከዳሽቦርዱ ጋር እንዲጋራ
+import API_BASE_URL from '../api/config';
 
-const API_URL = 'http://localhost:5000/api/services';
+const API_URL = `${API_BASE_URL}/api/services`;
 
 const ServiceManagement = () => {
   const { language, translations } = useContext(LanguageContext);

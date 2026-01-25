@@ -6,6 +6,7 @@ const cors = require('cors'); // To allow cross-origin requests
 const connectDB = require('./config/db'); // MongoDB connection
 const port = process.env.PORT || 5000;
 
+
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
 
@@ -18,7 +19,13 @@ const app = express();
 app.use(express.json());
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000", 
+    "https://shega-skin-studio.vercel.app" // የእርስዎ Vercel ዌብሳይት
+  ],
+  credentials: true
+}));
 
 // Import routes
 const appointmentRoutes = require('./routes/appointmentRoutes');

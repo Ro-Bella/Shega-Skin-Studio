@@ -5,17 +5,10 @@ import { Link } from 'react-router-dom'; // Link ኮምፖነንትን እናስ
 import axios from 'axios'; // axios import እናደርጋለን
 import './AppointmentForm.css'; // Importing CSS for styling
 import { LanguageContext } from './LanguageContext'; // For multi-language support (Assuming this file exists)
+import API_BASE_URL from '../api/config'; // አዲሱን ኮንፊግ እናስገባለን
 
-// የድሮው (Old):
-// Backend API Base URL
-const APPOINTMENTS_API_URL = 'http://localhost:5000/api/appointments'; // የቀጠሮ API URL
-const SERVICES_API_URL = 'http://localhost:5000/api/services'; // የአገልግሎት API URL
-
-// አዲሱ (New):
-// ፕሮዳክሽን ላይ ሲሆን ከ Vercel Environment Variable ያነባል፣ ካልሆነ localhost ይጠቀማል
-// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
-// const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
-// const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
+const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
+const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
 
 const AppointmentForm = () => {
   const { language, translations } = useContext(LanguageContext);
