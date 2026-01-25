@@ -13,7 +13,7 @@ const AppointmentForm = () => {
 
   // State for form data
   const [formData, setFormData] = useState({
-    name: '', // ከዚህ በፊት 'name' ነበር፣ ወደ 'fullName' ተቀይሯል
+    fullName: '', // ከዚህ በፊት 'name' ነበር፣ ወደ 'fullName' ተቀይሯል
     phone: '',
     service: '',
     date: '',
@@ -91,7 +91,7 @@ const AppointmentForm = () => {
       await axios.post(`${API_BASE_URL}/api/appointments`, formData);
       setMessage(currentText.submitSuccess || `✅ ቀጠሮ በተሳካ ሁኔታ ተይዟል!`);
       // Reset form
-      setFormData({ name: '', phone: '', service: '', date: '', timeSlot: '' });
+      setFormData({ fullName: '', phone: '', service: '', date: '', timeSlot: '' });
       setAvailableTimes([]);
     } catch (error) {
       const messageKey = error.response?.data?.messageKey;
@@ -110,8 +110,8 @@ const AppointmentForm = () => {
         <div className="form-card">
           <h3>{currentText.clientInfoTitle || 'የደንበኛ መረጃ'}</h3>
           <div className="form-group">
-            <label htmlFor="name">{currentText.clientNameLabel || 'ሙሉ ስም'}:</label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+            <label htmlFor="fullName">{currentText.clientNameLabel || 'ሙሉ ስም'}:</label>
+            <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="phone">{currentText.clientPhoneLabel || 'ስልክ ቁጥር'}:</label>
@@ -159,7 +159,7 @@ const AppointmentForm = () => {
           </div>
         </div>
 
-        <button type="submit" className="submit-btn" disabled={loading || !formData.name || !formData.phone || !formData.service || !formData.date || !formData.timeSlot}>
+        <button type="submit" className="submit-btn" disabled={loading || !formData.fullName || !formData.phone || !formData.service || !formData.date || !formData.timeSlot}>
           {loading ? <div className="spinner"></div> : (currentText.submitButton || 'ቀጠሮ አስገባ')}
         </button>
       </form>
