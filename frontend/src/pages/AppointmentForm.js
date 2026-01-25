@@ -39,6 +39,19 @@ const AppointmentForm = () => {
     return slots;
   }, []);
 
+  // Fetch services from backend on component mount
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/services`);
+        setServices(response.data);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+    fetchServices();
+  }, []);
+
   // Fetch available time slots when date or service changes
   useEffect(() => {
     if (formData.date) {
