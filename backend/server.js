@@ -4,8 +4,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
 const connectDB = require('./config/db'); // MongoDB connection
-const port = process.env.PORT || 5000;
-
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
@@ -31,15 +29,11 @@ app.use(cors({
 // Import routes
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
 const { authSuperAdmin } = require('./controllers/adminController'); // Import the specific controller
 
 // Mount routes
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/services', serviceRoutes);
-
-// Backend/index.js ወይም server.js ውስጥ
 
 // የአገልግሎት ዝርዝሮችን የሚመልስ API
 app.get('/api/services', (req, res) => {
@@ -51,7 +45,6 @@ app.get('/api/services', (req, res) => {
   ];
   res.json(services);
 });
-
 
 // Explicitly define the super-login route to fix the 404 error
 app.post('/api/admin/super-login', authSuperAdmin);
