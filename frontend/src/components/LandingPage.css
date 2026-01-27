@@ -6,7 +6,7 @@
   position: relative;
   padding-top: 80px; /* ሄደሩ ይዘቱን እንዳይሸፍነው */
   text-align: center;
-  color: white;
+  color: #171718;
   box-sizing: border-box;
 }
 
@@ -52,7 +52,7 @@
     line-height: 1.6;
     max-width: 700px; /* ጽሑፉ እንዳይለጠጥ */
     margin: 1.5rem auto 2.5rem auto; /* ከላይ እና ከታች ክፍተት */
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(10, 10, 10, 0.9);
     font-weight: 300;
     animation: fadeInUp 1s ease-out 0.6s forwards; /* ከርዕሶቹ በኋላ እንዲታይ */
     opacity: 0; /* አኒሜሽኑ ከመጀመሩ በፊት እንዳይታይ */
@@ -141,7 +141,7 @@
 }
 
 .main-nav a {
-  color: rgba(255, 255, 255, 0.85);
+  color: #171718;
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
@@ -175,7 +175,7 @@
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(15, 15, 15, 0.85);
   text-decoration: none;
   font-weight: 500;
   font-size: 1rem;
@@ -262,7 +262,7 @@
   max-width: 1400px;
   margin: 4rem auto;
   padding: 2rem; /* This was already here, which is good */
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(8, 8, 8, 0.1);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -305,21 +305,22 @@
 .service-icon {
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  color: #ffc8e6; /* Soft pink */
+  color: #f763b4; /* Soft pink */
   text-shadow: 0 0 15px rgba(255, 200, 230, 0.7);
 }
 
 .service-card-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff;
+  color: #f02fa0;
   margin-bottom: 1rem;
 }
 
 .service-card-description {
   font-size: 1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(15, 15, 15, 0.85);
+  font-weight: bold; /* ጽሑፉን ቦልድ አድርገናል */
 }
 
 /* About Section */
@@ -350,7 +351,7 @@
 .about-content p {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(12, 12, 12, 0.9);
   max-width: 900px;
   margin: 0 auto;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -408,7 +409,7 @@
   font-size: 1rem;
   font-style: italic;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(36, 18, 77, 0.9);
   margin-bottom: 1.5rem;
   flex-grow: 1;
 }
@@ -454,7 +455,7 @@
 }
 
 .social-media-links a {
-  color: #fff; /* የአይከኑን ቀለም ወደ ነጭ ቀይረናል */
+  color: #eb0ccd; /* የአይከኑን ቀለም ወደ ነጭ ቀይረናል */
   text-decoration: none;
   font-size: 1.5rem; /* የፊደል መጠን አስተካክለናል */
   transition: transform 0.3s ease, background-color 0.3s ease;
@@ -478,7 +479,7 @@
 
 .footer-content span {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(6, 206, 241, 0.85);
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 

@@ -3,10 +3,11 @@ const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
-const connectDB = require('./config/db'); // MongoDB connection
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
+
+const connectDB = require('./config/db'); // MongoDB connection
 
 // Connect to database
 connectDB();
@@ -20,7 +21,8 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:3000", 
-    "https://shega-skin-studio.vercel.app" // የእርስዎ Vercel ዌብሳይት
+    "https://shega-skin-studio.vercel.app", // Vercel የሰጠዎትን ትክክለኛ ሊንክ እዚህ ያረጋግጡ
+    process.env.FRONTEND_URL // ወይም Render ላይ ይህንን variable መሙላት ይችላሉ
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
@@ -29,22 +31,16 @@ app.use(cors({
 // Import routes
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
 const { authSuperAdmin } = require('./controllers/adminController'); // Import the specific controller
 
 // Mount routes
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/services', serviceRoutes);
 
-// የአገልግሎት ዝርዝሮችን የሚመልስ API
-app.get('/api/services', (req, res) => {
-  const services = [
-    { _id: '1', name: 'የፊት ህክምና (Facial)' },
-    { _id: '2', name: 'የቆዳ እንክብካቤ (Skin Care)' },
-    { _id: '3', name: 'ሌዘር ህክምና (Laser Treatment)' },
-    { _id: '4', name: 'ማሳጅ (Massage)' }
-  ];
-  res.json(services);
-});
+
+
 
 // Explicitly define the super-login route to fix the 404 error
 app.post('/api/admin/super-login', authSuperAdmin);

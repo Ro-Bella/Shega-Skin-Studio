@@ -1,20 +1,19 @@
 
-#Node.js 18ን እንጠቀማለን
+# Use the official Node.js 18 image as a parent image
 FROM node:18-alpine
 
-# የስራ ቦታ
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# ፓኬጆችን መጫን
+# Copy package.json and package-lock.json to leverage Docker cache
 COPY package.json package-lock.json ./
 RUN npm install
 
-# ኮዱን መገልበጥ እና ማስጀመር
+# Bundle app source
 COPY . .
 
-# Backend የሚሰራበትን ፖርት (ብዙ ጊዜ 5000)
+# Inform Docker that the container listens on port 5000 at runtime
 EXPOSE 5000
 
-CMD ["npm", "start"]
-
-# CMD ["node", "server.js"]
+# Run the app when the container launches
+CMD [ "npm", "start" ]
