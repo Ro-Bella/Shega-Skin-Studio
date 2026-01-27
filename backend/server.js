@@ -39,6 +39,20 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/services', serviceRoutes);
 
+// Backend/index.js ወይም server.js ውስጥ
+
+// የአገልግሎት ዝርዝሮችን የሚመልስ API
+app.get('/api/services', (req, res) => {
+  const services = [
+    { _id: '1', name: 'የፊት ህክምና (Facial)' },
+    { _id: '2', name: 'የቆዳ እንክብካቤ (Skin Care)' },
+    { _id: '3', name: 'ሌዘር ህክምና (Laser Treatment)' },
+    { _id: '4', name: 'ማሳጅ (Massage)' }
+  ];
+  res.json(services);
+});
+
+
 // Explicitly define the super-login route to fix the 404 error
 app.post('/api/admin/super-login', authSuperAdmin);
 
