@@ -24,6 +24,7 @@ app.use(cors({
     "http://localhost:3000", 
     "https://shega-skin-studio.vercel.app" // የእርስዎ Vercel ዌብሳይት
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
