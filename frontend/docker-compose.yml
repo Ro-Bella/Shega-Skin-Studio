@@ -1,0 +1,34 @@
+
+services:
+  # 1. Frontend Service (React)
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000" # Map host port 3000 to container port 3000
+    depends_on:
+      - backend
+
+  # 2. Backend Service (Node.js)
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000" # API ጥያቄዎች የሚስተናገዱበት
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/shega_skin_studio
+      - PORT=5000
+      - JWT_SECRET=12345678 # ይህንን በራስዎ ሚስጥራዊ ቁልፍ ይቀይሩ
+      # ሌሎች በ .env ላይ የነበሩትን እዚህ መጨመር ይችላሉ
+    depends_on:
+      - mongo
+
+  # 3. Database Service (MongoDB)
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db # ዳታው እንዳ ይጠፋ ማስቀመጫ
+
+# የዳታቤዝ ማስቀመጫ ቦታ
+volumes:
+  mongo-data:

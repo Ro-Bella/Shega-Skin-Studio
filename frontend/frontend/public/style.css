@@ -1,0 +1,13 @@
+body {
+  /* Replace 'your-image.jpg' with the path to your image file */
+  background-image: url('your-image.jpg');
+
+  /* Make the background image cover the entire viewport */
+  background-size: cover;
+
+  /* Prevent the background image from repeating */
+  background-repeat: no-repeat;
+
+  /* Center the background image */
+  background-position: center;
+}
