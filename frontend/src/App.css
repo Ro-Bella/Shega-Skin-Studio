@@ -1,0 +1,40 @@
+/* መደበኛ ዲዛይን (ለዴስክቶፕ/ላፕቶፕ) */
+.container {
+  display: flex;
+  flex-direction: row; /* ኤለመንቶች በጎን እና በጎን */
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.service-card {
+  width: 30%; /* ሶስት ካርዶች በአንድ መስመር */
+}
+
+/* ለታብለት (Tablet) - ስክሪኑ ከ 768px በታች ሲሆን */
+@media (max-width: 768px) {
+  .container {
+    flex-wrap: wrap; /* ቦታ ሲጠብ ወደ ታች እንዲወርድ */
+  }
+  
+  .service-card {
+    width: 45%; /* ሁለት ካርዶች በአንድ መስመር */
+    margin-bottom: 20px;
+  }
+}
+
+/* ለሞባይል (Mobile) - ስክሪኑ ከ 480px በታች ሲሆን */
+@media (max-width: 480px) {
+  .container {
+    flex-direction: column; /* አንዱ ከሌላው በታች (በቁመት) */
+    padding: 10px;
+  }
+  
+  .service-card {
+    width: 100%; /* ሙሉ ስፋት እንዲይዝ */
+  }
+  
+  /* ጽሁፎችን ለሞባይል ማስተካከል */
+  h1 {
+    font-size: 1.5rem; /* የጽሁፍ መጠኑን መቀነስ */
+  }
+}

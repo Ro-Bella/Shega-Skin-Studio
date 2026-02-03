@@ -1,0 +1,235 @@
+body {
+  background-image: url('./background.jpg'); /* የምስሉን ትክክለኛ ስም እና ቦታ እዚህ ያስገቡ */
+  background-size: cover; /* ምስሉ ሙሉውን ስክሪን እንዲሸፍን */
+  background-position: center; /* ምስሉ መሃል ላይ እንዲሆን */
+  background-repeat: no-repeat; /* ምስሉ እንዳይደጋገም */
+  background-attachment: fixed; /* ገጹ ሲንቀሳቀስ ምስሉ እንዳይንቀሳቀስ */
+  min-height: 100vh; /* ሙሉውን ቁመት እንዲይዝ */
+  display: flex; /* Flexbox ን እንጠቀማለን */
+  justify-content: center; /* በአግድም መሃል ላይ ለማድረግ */
+  align-items: center; /* በአቀባዊ መሃል ላይ ለማድረግ */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; /* ተመራጭ የፊደል አይነት */
+  color: #fcfafb; /* የጽሑፍ ቀለም */
+}
+
+
+
+.appointment-form-container {
+    max-width: 1400px; /* ስፋቱን ጨምረናል */
+    margin: 2rem auto 4rem auto; /* ቦርዱ መሃል ላይ እንዲሆን አስተካክለናል */
+    padding: 4rem; /* ፓዲንጉን ወደነበረበት መልሰናል */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* የቦርደሩን ቀለም አስተካክለናል */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(10px); /* ለ Safari */
+    backdrop-filter: blur(10px); /* የበረዶ መስታወት ውጤት */
+    text-align: center; /* ሁሉንም ይዘቶች መሃል ላይ ለማድረግ */
+}
+
+.form-page-header {
+    display: flex;
+    justify-content: center; /* ይዘቶችን መሃል ላይ ለማድረግ */
+    align-items: center; /* ይዘቶችን በአቀባዊ መሃል ላይ ለማድረግ */
+    margin-bottom: 1.5rem;
+    margin-right: -0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0; /* ከላይ ያለውን ክፍተት አንስተናል */
+    gap: 2rem;
+    flex-wrap: wrap; /* አስፈላጊ ከሆነ ወደ ታች እንዲወርድ */
+    position: relative;
+}
+
+.form-header-left {
+    display: flex;
+    align-items: center;
+    gap: 5rem; /* ክፍተቱን ጨምረናል */
+    margin-left: 5rem;
+    /* margin-top: 4rem; */ /* ይህ መስመር አያስፈልግም */
+}
+
+.appointment-form-container h2 {
+    text-align: center; /* ጽሑፉን መሃል ላይ አድርገናል */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0; /* ነባሩን ማርጂን እናስወግዳለን */
+    font-size: 1.6rem; /* የፊደል መጠን ጨምረናል */
+}
+
+/* ለካርዶቹ/ክፍሎቹ ስታይል */
+.form-section {
+    margin-bottom: 1rem; /* ክፍተቱን ቀይረናል */
+    padding-bottom: 0.5rem; /* ክፍተቱን ቀይረናል */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-section h3 {
+    color: #ec41d6; /* ወደ ፒንክ ቀለም ቀይረናል */
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem; /* ክፍተቱን ቀይረናል */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* ጥላ ጨምረናል */
+}
+
+.appointment-form-group {
+    margin-bottom: 1rem;
+}
+
+.appointment-form-container .appointment-form-group label {
+    display: block;
+    color: #0e0d0d; /* ወደ ፒንክ ቀለም ቀይረናል */
+    font-weight: bold;
+}
+
+.appointment-form-group input[type="text"],
+.appointment-form-group input[type="tel"],
+.appointment-form-group input[type="date"],
+.appointment-form-group select,
+.appointment-form-group textarea {
+    width: 100%;
+    max-width: 500px; /* የመሙያ ሳጥኖቹ እንዳይለጠጡ */
+    padding: 0.9rem 1rem; /* ፓዲንግ አስተካክለናል */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* ድንበሩን አስተካክለናል */
+    border-radius: 25px; /* ክብ እንዲሆን አድርገናል */
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.2); /* ግልጽ ዳራ */
+    color: #111111; /* የጽሑፍ ቀለም ጥቁር */
+    transition: all 0.3s ease;
+    margin: 0.5rem auto; /* መሃል ላይ ለማድረግ */
+}
+
+.appointment-form-group input::placeholder,
+.appointment-form-group select::placeholder,
+.appointment-form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.appointment-form-group input:focus,
+.appointment-form-group select:focus {
+    outline: none;
+    border-color: #ff69b4;
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3);
+}
+
+.appointment-form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.appointment-form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.appointment-form-submit {
+    width: auto; /* ስፋቱ በይዘቱ ይወሰናል */
+    display: block; /* መሃል ላይ ለማድረግ */
+    margin-left: auto; /* መሃል ላይ ለማድረግ */
+    margin-right: auto; /* መሃል ላይ ለማድረግ */
+    padding: 0.8rem 2.5rem; /* የፓዲንግ መጠን አስተካክለናል */
+    background: linear-gradient(45deg, #ff69b4, #277df5); /* ከሮዝ ወደ ሰማያዊ ቅልመት */
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem; /* የፊደል መጠን ቀይረናል */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 79, 193, 0.4);
+    outline: none;
+}
+
+.appointment-form-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(231, 79, 193, 0.6);
+}
+
+.appointment-form-submit:active {
+    transform: translateY(1px);
+}
+
+/* Date and Time Display */
+.datetime-container {
+  padding: 0.2rem 0.2rem; /* የውስጥ ክፍተት ጨምረናል */
+  background-color: rgba(0, 0, 0, 0.2); /* ዳራውን ትንሽ ቀነስ አድርገናል */
+  border-radius: 8px; /* ጠርዙን አስተካክለናል */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6); /* የብርሃን ጥላ ጨምረናል */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* ድንበሩን አስተካክለናል */
+  flex-shrink: 0; /* እንዳይጨማደድ */
+  text-align: right; /* ጽሑፉን ወደ ቀኝ አስተካክለናል */
+  margin-top: -7rem; /* ከላይ ያለውን ክፍተት አስተካክለናል */
+  margin-right: -1.5rem; /* ከቀኝ ያለውን ክፍተት አስተካክለናል */
+  margin-left: -1.5rem; /* ከግራ ያለውን ክፍተት አስተካክለናል */
+}
+
+.time-display {
+  font-family: 'monospace', 'Courier New', Courier; /* ዲጂታል ፊደል */
+  font-size: 1.6rem; /* የፊደል መጠን ጨምረናል */
+  font-weight: bold; /* ጎላ እንዲል */
+  color: #fff;
+  letter-spacing: 2px; /* በፊደሎቹ መካከል ክፍተት ጨምረናል */
+}
+
+.date-display {
+  font-family: 'monospace', 'Courier New', Courier; /* ዲጂታል ፊደል */
+  font-size: 0.9rem; /* የፊደል መጠን ጨምረናል */
+  color: rgba(255, 255, 255, 0.9); /* ቀለሙን ደመቅ አድርገናል */
+  margin-top: 0.2rem; /* ከላይ ያለውን ክፍተት ቀይረናል */
+  letter-spacing: 1px;
+}
+
+/* ለስህተት ማሳያ ስታይሎች */
+.input-error {
+    border-color: #e74c3c; /* ቀይ ቦርደር */
+}
+
+.error-message {
+    color: #e74c3c; /* ቀይ ጽሑፍ */
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.form-message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.form-message.success {
+    color: #0a51eb; /* አረንጓዴ ቀለም ለስኬት መልዕክት */
+}
+
+.form-message.error {
+    color: #e74c3c; /* ቀይ ቀለም ለስህተት መልዕክት */
+}
+
+@media (max-width: 768px) {
+    .appointment-form-container {
+        padding: 2rem 1rem;
+        margin: 1rem auto;
+        width: 95%;
+    }
+
+    .form-page-header {
+        flex-direction: column;
+        margin-right: 0;
+        gap: 1rem;
+    }
+
+    .form-header-left {
+        margin-left: 0;
+        gap: 1rem;
+    }
+
+    .datetime-container {
+        margin-top: 0;
+        margin-right: 0;
+        text-align: center;
+       
+        width: fit-content; /* ይዘቱ ባለበት ልክ ብቻ እንዲሆን */
+        margin-left: auto; /* መሃል ላይ ለማድረግ */
+        margin-right: auto; /* መሃል ላይ ለማድረግ */
+        margin-bottom: 1rem;
+    }
+}

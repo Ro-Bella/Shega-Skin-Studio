@@ -1,0 +1,38 @@
+name: Shega Skin Studio CI/CD & Security
+
+# ይህ ሮቦት መቼ እንደሚነሳ (Main branch ላይ Push ሲደረግ)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. ኮዱን ከ GitHub ይቀበላል
+    - uses: actions/checkout@v3
+
+    # 2. Node.js ያዘጋጃል
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    # 3. የሚያስፈልጉ ፓኬጆችን ይጭናል
+    - name: Install Dependencies
+      working-directory: ./frontend
+      run: npm ci
+
+    # 4. Security Check (DevSecOps) - ክፍተት ያለባቸውን ፓኬጆች ይፈትሻል
+    - name: Security Audit
+      working-directory: ./frontend
+      run: npm audit --audit-level=high
+      continue-on-error: true # ለጊዜው ስህተት ቢገኝም እንዳያቆም (ለጀማሪ ስለሆነ)
+
+    # 5. ፕሮጀክቱን ይገነባል (Build) - ኮዱ መስራቱን ያረጋግጣል
+    - name: Build Project
+      working-directory: ./frontend
+      run: npm run build
