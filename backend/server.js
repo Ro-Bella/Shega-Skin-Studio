@@ -45,6 +45,11 @@ app.use('/api/services', serviceRoutes);
 // Explicitly define the super-login route to fix the 404 error
 app.post('/api/admin/super-login', authSuperAdmin);
 
+// Root route to show server status
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
