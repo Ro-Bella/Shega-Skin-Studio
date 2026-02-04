@@ -20,6 +20,10 @@ exports.protect = async (req, res, next) => {
       // ተጠቃሚውን ከዳታቤዝ መፈለግ እና ከጥያቄው ጋር ማያያዝ
       req.admin = await Admin.findById(decoded.id).select('-password');
 
+      if (!req.admin) {
+        return res.status(401).json({ message: 'ተጠቃሚው አልተገኘም' });
+      }
+
       next();
     } catch (error) {
       res.status(401).json({ message: 'ያልተፈቀደ ጥያቄ፣ ቶክኑ አልተገኘም ወይም የተሳሳተ ነው' });
