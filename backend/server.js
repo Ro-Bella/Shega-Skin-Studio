@@ -32,7 +32,7 @@ app.use(cors({
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
-const { authSuperAdmin } = require('./controllers/adminController'); // Import the specific controller
+const { notFound, errorHandler } = require('./errorMiddleware');
 
 // Mount routes
 app.use('/api/appointments', appointmentRoutes);
@@ -45,6 +45,10 @@ app.use('/api/services', serviceRoutes);
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+// Error Middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
