@@ -24,7 +24,7 @@ const seedAdmins = async () => {
     const salt = await bcrypt.genSalt(10);
 
     // 1. Regular Admin (መደበኛ አድሚን)
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'robi@example.com'; // እዚህ ጋር የሚፈልጉትን ኢሜል ያስገቡ
     const adminPassword = process.env.ADMIN_PASSWORD || '12345678';
     const hashedAdminPassword = await bcrypt.hash(adminPassword, salt);
 
