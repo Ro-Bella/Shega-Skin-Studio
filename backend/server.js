@@ -46,6 +46,9 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// Ignore favicon requests to prevent 404 errors
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 // Error Middleware
 app.use(notFound);
 app.use(errorHandler);
