@@ -22,6 +22,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000", 
     "https://shega-skin-studio.vercel.app", // Vercel የሰጠዎትን ትክክለኛ ሊንክ እዚህ ያረጋግጡ
+    "https://shega-skin-studio-2018.vercel.app", // እዚህ ጋር የቀየሩትን አዲስ ሊንክ ያስገቡ (ለምሳሌ፡ https://my-new-name.vercel.app)
     process.env.FRONTEND_URL // ወይም Render ላይ ይህንን variable መሙላት ይችላሉ
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
