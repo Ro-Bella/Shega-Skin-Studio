@@ -23,6 +23,7 @@ exports.authAdmin = async (req, res) => {
       res.status(401).json({ messageKey: 'invalidCredentials' });
     }
   } catch (error) {
+    console.error('Error during admin authentication:', error); // ለዲበጊንግ እንዲረዳ
     res.status(500).json({
       message: 'ሰርቨር ላይ ስህተት ተፈጥሯል',
       error: error.message,
