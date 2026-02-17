@@ -70,6 +70,8 @@ exports.authSuperAdmin = async (req, res) => {
       });
     } else {
       console.log('የበላይ አስተዳዳሪ ማረጋገጫ አልተሳካም።');
+      if (email !== superAdminEmail) console.log('ምክንያት: ኢሜል አልተጣጣመም።');
+      if (!isMatch) console.log('ምክንያት: ፓስወርድ አልተጣጣመም።');
       res.status(401).json({ messageKey: 'superAdminAuthFailed' }); // Use messageKey for consistency
     }
   } catch (error) {

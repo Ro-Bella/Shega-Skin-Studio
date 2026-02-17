@@ -8,7 +8,7 @@ const {
   confirmAppointment,
   cancelAppointment,
 } = require('../controllers/appointmentController');
-const { protect } = require('../controllers/authMiddleware'); // Import protect middleware
+const { protect } = require('../middleware/authMiddleware'); // Import protect middleware
 
 const router = express.Router();
 

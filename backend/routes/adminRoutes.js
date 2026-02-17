@@ -9,7 +9,7 @@ const {
   deleteAdmin,
   authSuperAdmin,
 } = require('../controllers/adminController');
-const { protect,admin } = require('../controllers/authMiddleware'); // Import protect middleware
+const { protect, admin } = require('../middleware/authMiddleware'); // Import protect middleware
 
 router.post('/login', authAdmin);
 router.post('/super-login', authSuperAdmin);
