@@ -25,7 +25,7 @@ const seedAdmins = async () => {
 
     // 1. Regular Admin (መደበኛ አድሚን)
     const adminEmail = process.env.ADMIN_EMAIL || 'robi@example.com'; // እዚህ ጋር የሚፈልጉትን ኢሜል ያስገቡ
-    const adminPassword = process.env.ADMIN_PASSWORD || '12345678';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'shega123';
     const hashedAdminPassword = await bcrypt.hash(adminPassword, salt);
 
     await Admin.findOneAndUpdate(
