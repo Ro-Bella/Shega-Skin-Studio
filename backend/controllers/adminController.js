@@ -50,7 +50,16 @@ exports.authSuperAdmin = async (req, res) => {
     // The password in .env should be hashed. Let's assume it is for this comparison.
     console.log('የገባው ኢሜል:', email, 'ትክክለኛው ኢሜል:', superAdminEmail);
     console.log('የይለፍ ቃል ማነፃፀርን በመሞከር ላይ...');
-    const isMatch = await bcrypt.compare(password, superAdminHashedPassword);
+    
+    let isMatch = false;
+    // የይለፍ ቃሉ bcrypt hash መሆኑን ማረጋገጥ (በ $2 ይጀምራል)
+    if (superAdminHashedPassword.startsWith('$2')) {
+      isMatch = await bcrypt.compare(password, superAdminHashedPassword);
+    } else {
+      // ካልሆነ እንደ Plain Text ማነፃፀር (ለ Development ምቹ ነው)
+      isMatch = password === superAdminHashedPassword;
+    }
+    
     console.log('የይለፍ ቃል ማነፃፀር ውጤት (isMatch):', isMatch);
     
     if (email === superAdminEmail && isMatch) {

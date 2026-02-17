@@ -18,6 +18,8 @@ services:
       - MONGO_URI=mongodb://mongo:27017/shega_skin_studio
       - PORT=5000
       - JWT_SECRET=12345678 # ይህንን በራስዎ ሚስጥራዊ ቁልፍ ይቀይሩ
+      - SUPER_ADMIN_EMAIL=baby@example.com
+      - SUPER_ADMIN_PASSWORD=shega123
     depends_on:
       - mongo
 
