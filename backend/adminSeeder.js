@@ -25,7 +25,7 @@ const seedAdmins = async () => {
 
     // 1. Regular Admin (መደበኛ አድሚን)
     const adminEmail = process.env.ADMIN_EMAIL || 'robitesf@example.com'; // ወደሚፈልጉት ኢሜል ተቀይሯል
-    const adminPassword = process.env.ADMIN_PASSWORD || '12345678';   // ወደሚፈልጉት ፓስወርድ ተቀይሯል
+    const adminPassword = process.env.ADMIN_PASSWORD || 'shega123';   // ወደሚፈልጉት ፓስወርድ ተቀይሯል
     const hashedAdminPassword = await bcrypt.hash(adminPassword, salt);
 
     await Admin.findOneAndUpdate(
@@ -36,10 +36,10 @@ const seedAdmins = async () => {
     console.log(`✅ Regular Admin Created/Updated:\n   Email: ${adminEmail}\n   Password: ${adminPassword}`);
 
     // 2. Super Admin (ለ Admin Management የሚሆን)
-    const superAdminEmail = process.env.SUPER_ADMIN_EMAIL || 'superadmin@example.com';
+    const superAdminEmail = process.env.SUPER_ADMIN_EMAIL || 'baby@example.com';
     
     // በ .env ላይ ያለው ፓስወርድ Hash የተደረገ ከሆነ ለጊዜው 'password123' እንጠቀማለን
-    let superAdminPassword = 'password123';
+    let superAdminPassword = 'shega123';
     if (process.env.SUPER_ADMIN_PASSWORD && !process.env.SUPER_ADMIN_PASSWORD.startsWith('$2b$')) {
         superAdminPassword = process.env.SUPER_ADMIN_PASSWORD;
     }
