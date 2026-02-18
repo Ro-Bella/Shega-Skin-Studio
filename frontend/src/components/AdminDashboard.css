@@ -34,12 +34,12 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* ከታች ብቻ ቀጭን መስመር */
   padding: 15px; /* ፓዲንግ ጨምረናል */
   text-align: left;
-  color: #fff; /* የጽሑፉን ቀለም ወደ ጥቁር ቀይረናል */
+  color: #000; /* የጽሑፉን ቀለም ወደ ጥቁር ቀይረናል */
 }
 
 .appointments-table th {
   background-color: rgba(255, 255, 255, 0.15); /* የጀርባ ቀለም አስተካክለናል */
-  color: #fff; /* የሠንጠረዥ ርዕስ ቀለም ወደ ጥቁር ቀይረናል */
+  color: #000; /* የሠንጠረዥ ርዕስ ቀለም ወደ ጥቁር ቀይረናል */
   font-weight: bold;
   font-size: 1rem; /* የፊደል መጠን ጨምረናል */
 }
@@ -56,7 +56,7 @@
   padding: 15px;
   text-align: left;
   background-color: rgba(255, 255, 255, 0.15); /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
-  color: #fff; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
+  color: #000; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   font-weight: bold;
   font-size: 1rem;
 }
@@ -69,7 +69,7 @@
   padding: 15px;
   text-align: left;
   font-weight: bold;
-  color: #fff; /* የቁጥሩን ቀለም ወደ ጥቁር ቀይረናል */
+  color: #000; /* የቁጥሩን ቀለም ወደ ጥቁር ቀይረናል */
 }
 
 .status {
@@ -327,7 +327,7 @@
 }
 
 .section-title {
-  color: #fff;
+  color: #000;
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
