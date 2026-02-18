@@ -12,6 +12,10 @@ exports.authAdmin = async (req, res) => {
     const admin = await Admin.findOne({ email });
 
     if (admin && (await admin.matchPassword(password))) {
+      // JWT_SECRET መኖሩን ማረጋገጥ
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET environment variable is missing.');
+      }
       const token = admin.getSignedJwtToken();
       res.json({
         _id: admin._id,

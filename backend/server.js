@@ -7,6 +7,12 @@ const cors = require('cors'); // To allow cross-origin requests
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
 
+// Check for critical environment variables
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');
+  console.error('Please set JWT_SECRET in your .env file or Render dashboard.');
+}
+
 const connectDB = require('./config/db'); // MongoDB connection
 
 // Connect to database
