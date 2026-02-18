@@ -376,7 +376,6 @@
 }
 
 /* Modal Styles */
-.modal-overlay {
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -401,6 +400,7 @@
   max-width: 500px;
   animation: slide-down 0.3s ease-out;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
   backdrop-filter: blur(8px); /* የበረዶ መስታወት ውጤት */
 }
 
