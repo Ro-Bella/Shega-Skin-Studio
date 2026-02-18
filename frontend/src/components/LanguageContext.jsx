@@ -173,7 +173,7 @@ export const LanguageProvider = ({ children }) => {
       // Services Section
       servicesTitle: 'የእኛ ዋና አገልግሎቶች',
       servicesList: [
-          { icon: 'fas fa-spa', title: 'ፊርማ የፊት ህክምናዎች', description: 'ለቆዳዎ አይነት እና ፍላጎት ተብለው የተዘጋጁ፣ ቆዳዎን የሚያንጸባርቁ የፊት ህክምናዎች።' },
+          { icon: 'fas fa-spa', title: 'ፌሻል የፊት ህክምናዎች', description: 'ለቆዳዎ አይነት እና ፍላጎት ተብለው የተዘጋጁ፣ ቆዳዎን የሚያንጸባርቁ የፊት ህክምናዎች።' },
           { icon: 'fas fa-magic', title: 'የእርጅና መከላከያ ህክምናዎች', description: 'የመሸብሸብ እና የእርጅና ምልክቶችን የሚቀንሱ፣ የቆዳዎን የወጣትነት ህይወት የሚመልሱ ዘመናዊ ህክምናዎች።' },
           { icon: 'fas fa-leaf', title: 'ማይክሮኒድሊንግ', description: 'የኮላጅን ምርትን በማነቃቃት የቆዳ ጥራትን የሚያሻሽል እና ጠባሳዎችን የሚቀንስ።' },
           { icon: 'fas fa-leaf', title: 'የኬሚካል ፒልስ', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ብጉርን፣ ጠባሳን እና የቆዳ ቀለምን የሚያስተካክል።' },
