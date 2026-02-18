@@ -248,7 +248,7 @@
 }
 
 .filter-container label {
-  color: #fff;
+  color: #000; /* የ "Filter by Status" ጽሑፍ ወደ ጥቁር ተቀይሯል */
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -261,7 +261,7 @@
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3); /* ቀለል ያለ እና ግልጽ ድንበር */
   background-color: rgba(255, 255, 255, 0.2); /* ትንሽ ግልጽ የሆነ ዳራ */
-  color: #fff; /* የጽሑፍ ቀለም ጥቁር */
+  color: #000; /* የውስጥ ጽሑፍ (All, Pending...) ወደ ጥቁር ተቀይሯል */
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
@@ -272,7 +272,7 @@
 
 /* ለ placeholder ጽሑፍ ቀለም */
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* ለንባብ ምቹ የሆነ ጥቁር */
+  color: rgba(0, 0, 0, 0.7); /* የ "Search..." ጽሑፍ ወደ ጥቁር ተቀይሯል */
 }
 
 .filter-select:focus,
