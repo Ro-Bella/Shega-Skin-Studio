@@ -377,6 +377,7 @@
 
 /* Modal Styles */
 .modal-overlay {
+.modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -391,12 +392,16 @@
 
 .modal-content {
   background-color: #fff;
+  background-color: rgba(30, 30, 42, 0.95); /* ከገጹ ገጽታ ጋር እንዲመሳሰል ዳራውን ቀይረናል */
+  color: #fff; /* በጨለማው ዳራ ላይ ጽሑፍ እንዲነበብ */
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   width: 90%;
   max-width: 500px;
   animation: slide-down 0.3s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px); /* የበረዶ መስታወት ውጤት */
 }
 
 @keyframes slide-down {
