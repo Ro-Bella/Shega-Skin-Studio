@@ -17,7 +17,7 @@ exports.getServices = async (req, res) => {
 // @route   POST /api/services
 // @access  Private/Admin (ለወደፊት ጥበቃ ያስፈልገዋል)
 exports.createService = async (req, res) => {
-    const { name } = req.body;
+    const { name, description, icon } = req.body;
 
     if (!name) {
         return res.status(400).json({ message: 'የአገልግሎቱ ስም መሞላት አለበት።' });
@@ -30,7 +30,7 @@ exports.createService = async (req, res) => {
             return res.status(400).json({ message: 'ይህ አገልግሎት አስቀድሞ ተመዝግቧል።' });
         }
 
-        const service = await Service.create({ name });
+        const service = await Service.create({ name, description, icon });
 
         res.status(201).json(service);
     } catch (error) {
