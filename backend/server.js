@@ -37,6 +37,8 @@ const seedAdmin = async () => {
     } catch (error) {
       console.error('Auto-seeding failed:', error.message);
     }
+  } else {
+    console.log('⚠️ Admin seeding skipped: ADMIN_EMAIL or ADMIN_PASSWORD not set in environment variables.');
   }
 };
 seedAdmin(); // ሰርቨሩ ሲነሳ ይህን ፈንክሽን ጥራ
