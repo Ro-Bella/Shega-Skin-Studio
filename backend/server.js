@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
+const Admin = require('./models/Admin'); // Admin ሞዴልን ማስገባት
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
@@ -17,6 +18,29 @@ const connectDB = require('./config/db'); // MongoDB connection
 
 // Connect to database
 connectDB();
+
+// --- Auto-Seed Admin (ለ Render Free Tier መፍትሄ) ---
+const seedAdmin = async () => {
+  // Environment variables መኖራቸውን ማረጋገጥ
+  if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
+    try {
+      const adminExists = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
+      if (!adminExists) {
+        // አድሚን ከሌለ መፍጠር (Admin ሞዴል ፓስወርዱን በራሱ Hash ያደርገዋል)
+        await Admin.create({
+          email: process.env.ADMIN_EMAIL,
+          password: process.env.ADMIN_PASSWORD,
+          role: 'admin'
+        });
+        console.log(`✅ Admin created automatically: ${process.env.ADMIN_EMAIL}`);
+      }
+    } catch (error) {
+      console.error('Auto-seeding failed:', error.message);
+    }
+  }
+};
+seedAdmin(); // ሰርቨሩ ሲነሳ ይህን ፈንክሽን ጥራ
+// ---------------------------------------------------
 
 const app = express();
 

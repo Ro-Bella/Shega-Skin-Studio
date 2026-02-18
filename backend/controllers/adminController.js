@@ -107,12 +107,9 @@ exports.createAdmin = async (req, res) => {
             return res.status(400).json({ message: 'ይህ ኢሜል አስቀድሞ ተመዝግቧል።' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
         const admin = await Admin.create({
             email,
-            password: hashedPassword,
+            password, // ሞዴሉ በራሱ Hash ስለሚያደርገው እዚህ ጋር ዝም ብለን እንልካለን
         });
 
         // Generate token for the newly created admin
