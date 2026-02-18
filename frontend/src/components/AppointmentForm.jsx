@@ -247,10 +247,14 @@ const AppointmentForm = () => {
           <div className="appointment-form-group">
             <label htmlFor="service">{currentText.serviceLabel}:</label>
             <select id="service" name="service" value={formData.service} onChange={handleChange} required>
-              <option value="">{currentText.selectServicePlaceholder}</option>
-              {currentText.servicesList && currentText.servicesList.map((service, index) => (
-                <option key={index} value={service.title}>{service.title}</option>
-              ))}
+              <option value="">{currentText.selectServicePlaceholder || 'Select a Service'}</option>
+              {services.length > 0 ? (
+                services.map((service) => (
+                  <option key={service._id} value={service.name}>{service.name}</option>
+                ))
+              ) : (
+                <option value="" disabled>{language === 'am' ? 'አገልግሎቶች እየተጫኑ ነው...' : 'Loading services...'}</option>
+              )}
             </select>
           </div>
         </div>

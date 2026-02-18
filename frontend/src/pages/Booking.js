@@ -1,16 +1,39 @@
 // frontend/src/pages/Booking.js
-import React, { useState } from 'react'; // ሪአክት እና የሁኔታ ማዋቀሪያ ኢምፖርት
+import React, { useState, useEffect } from 'react'; // ሪአክት እና የሁኔታ ማዋቀሪያ ኢምፖርት
+import axios from 'axios'; // axios ኢምፖርት
 import { createNewAppointment } from '../api/appointmentsApi'; // ከAPI ፋይል የቀጠሮ መፍጠር ፋንክሽን ኢምፖርት
+import API_BASE_URL from '../api/config'; // API URL ለማግኘት
 
 const Booking = () => { // የቀጠሮ ገፅ ኮምፖነንት
     const [formData, setFormData] = useState({  // የቅጽ ውሂብ ለማስቀመጥ ሁኔታ
         name: '', // የደንበኛ ስም (ወደ name ተቀይሯል)
         phone: '', // የደንበኛ ስልክ ቁጥር (ወደ phone ተቀይሯል)
-        service: 'Haircut', // የሚፈልጉት አገልግሎት
+        service: '', // የሚፈልጉት አገልግሎት (ከዳታቤዝ ሲመጣ ይሞላል)
         date: '',  // ቀጠሮ ቀን
         timeSlot: '10:00 AM' // ቀጠሮ ሰዓት
     });
     const [message, setMessage] = useState(''); // ለመልእክቶች ሁኔታ
+    const [services, setServices] = useState([]); // የአገልግሎቶች ዝርዝር
+
+    // አገልግሎቶችን ከዳታቤዝ ለማምጣት
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/api/services`);
+                setServices(response.data);
+                // አገልግሎቶች ሲመጡ የመጀመሪያውን እንደ ነባሪ ለመምረጥ
+                if (response.data.length > 0) {
+                    setFormData(prevState => ({
+                        ...prevState,
+                        service: response.data[0].name
+                    }));
+                }
+            } catch (error) {
+                console.error('Error fetching services:', error);
+            }
+        };
+        fetchServices();
+    }, []);
 
     const handleChange = (e) => {  // የቅጽ መለወጥ አስተዳደር
         setFormData({ ...formData, [e.target.name]: e.target.value });  // የቅጽ ውሂብ እንደ ተለዋዋጭ ማድረግ
@@ -23,7 +46,13 @@ const Booking = () => { // የቀጠሮ ገፅ ኮምፖነንት
             const res = await createNewAppointment(formData);   // አዲስ ቀጠሮ ማስያዣ ፋንክሽን ጥራት
             setMessage(res.data.message); // ከመልስ ውሂብ መልእክት ማድረግ
             // ቅጹን ባዶ ማድረግ
-            setFormData({ name: '', phone: '', service: 'Haircut', date: '', timeSlot: '10:00 AM' }); // ቅጹን ባዶ ማድረግ
+            setFormData({ 
+                name: '', 
+                phone: '', 
+                service: services.length > 0 ? services[0].name : '', 
+                date: '', 
+                timeSlot: '10:00 AM' 
+            }); // ቅጹን ባዶ ማድረግ
         } catch (error) {  // ስህተት ካጋጠማ
             setMessage('ስህተት ተፈጥሯል፡ ቀጠሮ ማስያዝ አልተቻለም።');  // ስህተት መልእክት ማድረግ
         }
@@ -41,9 +70,15 @@ const Booking = () => { // የቀጠሮ ገፅ ኮምፖነንት
                 
                 <label>አገልግሎት፡</label> {/* የሚፈልጉት አገልግሎት መለያየት */}
                 <select name="service" value={formData.service} onChange={handleChange}> {/* የአገልግሎት ምርጫ ግቤት */}
-                    <option value="Haircut">ፀጉር መቆረጥ</option> {/* አገልግሎት አማራጭ */}
-                    <option value="Manicure">ማኒኪዩር</option> {/* ሌላ አገልግሎት አማራጭ */}
-                    {/* ሌሎች አገልግሎቶችን መጨመር ይቻላል */} 
+                    {services.length > 0 ? (
+                        services.map((service) => (
+                            <option key={service._id} value={service.name}>
+                                {service.name}
+                            </option>
+                        ))
+                    ) : (
+                        <option value="">አገልግሎቶችን በመጫን ላይ...</option>
+                    )}
                 </select>
 
                 <label>ቀን:</label> {/* ቀጠሮ ቀን መለያየት */}
