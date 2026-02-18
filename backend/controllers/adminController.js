@@ -9,7 +9,7 @@ exports.authAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ email }).select('+password');
 
     if (admin && (await admin.matchPassword(password))) {
       // JWT_SECRET መኖሩን ማረጋገጥ
