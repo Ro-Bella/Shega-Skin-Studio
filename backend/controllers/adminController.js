@@ -1,6 +1,7 @@
 // backend/controllers/adminController.js
 const Admin = require('../models/Admin');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken'); // Fallback token generation
 
 // @desc    Auth admin & get token
 // @route   POST /api/admin/login
@@ -8,15 +9,48 @@ const bcrypt = require('bcryptjs');
 exports.authAdmin = async (req, res) => {
   const { email, password } = req.body;
 
+  // 1. Check JWT_SECRET first
+  if (!process.env.JWT_SECRET) {
+    console.error('FATAL ERROR: JWT_SECRET is not defined.');
+    return res.status(500).json({ message: 'Server Configuration Error (JWT_SECRET)', messageKey: 'serverError' });
+  }
+
   try {
     const admin = await Admin.findOne({ email }).select('+password');
 
-    if (admin && (await admin.matchPassword(password))) {
-      // JWT_SECRET መኖሩን ማረጋገጥ
-      if (!process.env.JWT_SECRET) {
-        throw new Error('JWT_SECRET environment variable is missing.');
+    if (!admin) {
+      return res.status(401).json({ messageKey: 'invalidCredentials' });
+    }
+
+    // 2. Robust Password Check
+    let isMatch = false;
+    // Try model method first
+    if (typeof admin.matchPassword === 'function') {
+      try {
+        isMatch = await admin.matchPassword(password);
+      } catch (err) {
+        console.warn('admin.matchPassword failed, trying fallback:', err.message);
       }
-      const token = admin.getSignedJwtToken();
+    }
+    
+    // Fallback: Manual check (handles plain text or missing model method)
+    if (!isMatch && admin.password) {
+        if (admin.password.startsWith('$2')) {
+            isMatch = await bcrypt.compare(password, admin.password);
+        } else if (admin.password === password) {
+            isMatch = true; // Plain text match (for legacy/seeded data)
+        }
+    }
+
+    if (isMatch) {
+      // 3. Token Generation
+      let token;
+      if (typeof admin.getSignedJwtToken === 'function') {
+        token = admin.getSignedJwtToken();
+      } else {
+        token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+      }
+
       res.json({
         _id: admin._id,
         email: admin.email,

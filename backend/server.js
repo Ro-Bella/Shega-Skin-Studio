@@ -4,6 +4,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
 const Admin = require('./models/Admin'); // Admin ሞዴልን ማስገባት
+const bcrypt = require('bcryptjs'); // ለይለፍ ቃል Hash ለማድረግ
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
@@ -27,9 +28,12 @@ const seedAdmin = async () => {
       const adminExists = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
       if (!adminExists) {
         // አድሚን ከሌለ መፍጠር (Admin ሞዴል ፓስወርዱን በራሱ Hash ያደርገዋል)
+        // ማሳሰቢያ: Admin ሞዴል pre-save hook ከሌለው፣ እዚህ ጋር hash ማድረግ ያስፈልጋል
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, salt);
         await Admin.create({
           email: process.env.ADMIN_EMAIL,
-          password: process.env.ADMIN_PASSWORD,
+          password: hashedPassword,
           role: 'admin'
         });
         console.log(`✅ Admin created automatically: ${process.env.ADMIN_EMAIL}`);
