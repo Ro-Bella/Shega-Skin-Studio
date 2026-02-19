@@ -73,54 +73,39 @@ exports.authAdmin = async (req, res) => {
 // @route   POST /api/admin/super-login
 // @access  Public
 exports.authSuperAdmin = async (req, res) => {
-  const { email, password } = req.body;
-  
-  try {
-    const superAdminEmail = process.env.SUPER_ADMIN_EMAIL;
-    const superAdminHashedPassword = process.env.SUPER_ADMIN_PASSWORD; // This should be a hashed password
-    
-    if (!superAdminEmail || !superAdminHashedPassword) {
-      console.error('SUPER_ADMIN_EMAIL or SUPER_ADMIN_PASSWORD environment variables are not set.');
-      return res.status(500).json({ messageKey: 'serverError' });
-    }
+    const { email, password } = req.body;
 
-    // In a real app, you might want a separate SuperAdmin model or a flag on the Admin model.
-    // For this setup, we compare against env variables.
-    // The password in .env should be hashed. Let's assume it is for this comparison.
-    console.log('የገባው ኢሜል:', email, 'ትክክለኛው ኢሜል:', superAdminEmail);
-    console.log('የይለፍ ቃል ማነፃፀርን በመሞከር ላይ...');
-    
-    let isMatch = false;
-    // የይለፍ ቃሉ bcrypt hash መሆኑን ማረጋገጥ (በ $2 ይጀምራል)
-    if (superAdminHashedPassword.startsWith('$2')) {
-      isMatch = await bcrypt.compare(password, superAdminHashedPassword);
-    } else {
-      // ካልሆነ እንደ Plain Text ማነፃፀር (ለ Development ምቹ ነው)
-      isMatch = password === superAdminHashedPassword;
+    try {
+        // 1. Find the admin by email from the database
+        const admin = await Admin.findOne({ email }).select('+password');
+
+        // 2. Check if admin exists and has the 'superadmin' role
+        if (!admin || admin.role !== 'superadmin') {
+            console.log('የበላይ አስተዳዳሪ ማረጋገጫ አልተሳካም: ኢሜል አልተገኘም ወይም ሚናው ትክክል አይደለም።');
+            return res.status(401).json({ messageKey: 'superAdminAuthFailed' });
+        }
+
+        // 3. Check if the password matches
+        const isMatch = await admin.matchPassword(password);
+
+        if (isMatch) {
+            console.log('የበላይ አስተዳዳሪ ማረጋገጫ ተሳክቷል።');
+            res.status(200).json({
+                message: 'Super admin authenticated successfully.',
+                messageKey: 'superAdminAuthSuccess'
+            });
+        } else {
+            console.log('የበላይ አስተዳዳሪ ማረጋገጫ አልተሳካም: ፓስወርድ አልተጣጣመም።');
+            res.status(401).json({ messageKey: 'superAdminAuthFailed' });
+        }
+    } catch (error) {
+        console.error('Error during super admin authentication:', error);
+        res.status(500).json({
+            message: 'ሰርቨር ላይ ስህተት ተፈጥሯል',
+            messageKey: 'serverError',
+            error: error.message,
+        });
     }
-    
-    console.log('የይለፍ ቃል ማነፃፀር ውጤት (isMatch):', isMatch);
-    
-    if (email === superAdminEmail && isMatch) {
-      console.log('የበላይ አስተዳዳሪ ማረጋገጫ ተሳክቷል።');
-      res.status(200).json({ 
-        message: 'Super admin authenticated successfully.',
-        messageKey: 'superAdminAuthSuccess' // For frontend translation
-      });
-    } else {
-      console.log('የበላይ አስተዳዳሪ ማረጋገጫ አልተሳካም።');
-      if (email !== superAdminEmail) console.log('ምክንያት: ኢሜል አልተጣጣመም።');
-      if (!isMatch) console.log('ምክንያት: ፓስወርድ አልተጣጣመም።');
-      res.status(401).json({ messageKey: 'superAdminAuthFailed' }); // Use messageKey for consistency
-    }
-  } catch (error) {
-    console.error('Error during super admin authentication:', error);
-    res.status(500).json({
-      message: 'ሰርቨር ላይ ስህተት ተፈጥሯል',
-      messageKey: 'serverError',
-      error: error.message,
-    });
-  }
 };
 
 
