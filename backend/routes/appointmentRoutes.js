@@ -1,5 +1,5 @@
-// backend/routes/appointmentRoutes.js
 const express = require('express');
+const router = express.Router();
 const {
   createAppointment,
   getAppointments,
@@ -7,19 +7,29 @@ const {
   deleteAppointment,
   confirmAppointment,
   cancelAppointment,
+  getBookedSlots,
 } = require('../controllers/appointmentController');
-const { protect } = require('../middleware/authMiddleware'); // Import protect middleware
 
-const router = express.Router();
+// @route   GET /api/appointments/booked-slots
+// ይህ ራውት ከ '/:id' በፊት መገለጽ አለበት፤ ምክንያቱም 'booked-slots' እንደ ID እንዳይቆጠር
+router.route('/booked-slots').get(getBookedSlots);
 
-// Public route for creating appointments
-router.post('/', createAppointment);
+// @route   POST /api/appointments
+// @route   GET /api/appointments
+router.route('/')
+  .post(createAppointment)
+  .get(getAppointments);
 
-// Protected routes for managing appointments (Admin Dashboard)
-router.route('/').get(protect, getAppointments);
-router.route('/:id').put(protect, updateAppointment).delete(protect, deleteAppointment);
+// @route   PUT /api/appointments/:id
+// @route   DELETE /api/appointments/:id
+router.route('/:id')
+  .put(updateAppointment)
+  .delete(deleteAppointment);
 
-router.put('/:id/confirm', protect, confirmAppointment);
-router.put('/:id/cancel', protect, cancelAppointment);
+// @route   PUT /api/appointments/:id/confirm
+router.route('/:id/confirm').put(confirmAppointment);
+
+// @route   PUT /api/appointments/:id/cancel
+router.route('/:id/cancel').put(cancelAppointment);
 
 module.exports = router;
