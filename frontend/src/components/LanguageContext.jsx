@@ -53,9 +53,9 @@ export const LanguageProvider = ({ children }) => {
           { icon: 'fas fa-magic', title: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.' },
           { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Stimulates collagen production to improve skin texture and reduce scars.' },
           { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Exfoliates the skin to treat acne, scars, and discoloration.' },
-          { icon: 'fas fa-leaf', title: 'Hidra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.' },
+          { icon: 'fas fa-leaf', title: 'Hydra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.' },
           { icon: 'fas fa-leaf', title: 'BB Glowing', description: 'Semi-permanent foundation treatment for glowing, even-toned skin.' },
-          { icon: 'fas fa-leaf', title: 'Microderma Brasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.' },
+          { icon: 'fas fa-leaf', title: 'Microdermabrasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.' },
           { icon: 'fas fa-leaf', title: 'Nano Infusions', description: 'Non-invasive treatment to enhance product absorption and skin hydration.' },
           { icon: 'fas fa-leaf', title: 'Waxing Services', description: 'Professional hair removal for smooth and silky skin.' },
           
@@ -181,7 +181,6 @@ export const LanguageProvider = ({ children }) => {
           { icon: 'fas fa-leaf', title: 'ማይክሮደርማ ብራሽን', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ቆዳን የሚያበራ እና የሚያድስ።' },
           { icon: 'fas fa-leaf', title: 'ናኖ ኢንፊውዥን', description: 'የቆዳን እርጥበት እና የምርት መሳብ አቅምን የሚጨምር ህክምና።' },
           { icon: 'fas fa-leaf', title: 'ሃይድራ ፌሻል', description: 'ቆዳን የሚያጸዳ፣ የሚያርስ እና እርጥበት የሚሰጥ ዘመናዊ የፊት ህክምና።' },
-          { icon: 'fas fa-star', title: 'አዲስ አገልግሎት', description: 'ስለ አዲሱ አገልግሎት መግለጫ እዚህ ይገባል።' },
           { icon: 'fas fa-leaf', title: 'የዋክስ አገልግሎት', description: 'ለስላሳ እና ጸጉር አልባ ቆዳ የሚሰጥ የባለሙያ የዋክስ አገልግሎት።' },
       ],
       // Appointment Form

@@ -5,6 +5,14 @@ const dotenv = require('dotenv');
 const cors = require('cors'); // To allow cross-origin requests
 const Admin = require('./models/Admin'); // Admin ሞዴልን ማስገባት
 
+// Service ሞዴልን ለመጥራት (ፋይሉ ካለ)
+let Service;
+try {
+  Service = require('./models/Service');
+} catch (error) {
+  console.log('⚠️ Service model not found. Skipping service seeding.');
+}
+
 // Load env vars
 const envPath = path.resolve(__dirname, '.env');
 const envConfig = dotenv.config({ path: envPath });
@@ -53,6 +61,39 @@ const seedAdmin = async () => {
 };
 seedAdmin(); // ሰርቨሩ ሲነሳ ይህን ፈንክሽን ጥራ
 // ---------------------------------------------------
+
+// --- Auto-Seed Services (አገልግሎቶችን ወደ ዳታቤዝ ለመጨመር) ---
+const seedServices = async () => {
+  // Service ሞዴሉ መኖሩን ማረጋገጥ
+  if (!Service) return;
+  
+  try {
+    const count = await Service.countDocuments();
+    if (count === 0) {
+      const services = [
+        { name: 'Signature Facials', description: 'Customized facials that target your specific skin concerns, leaving you with a radiant glow.', icon: 'fas fa-spa' },
+        { name: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.', icon: 'fas fa-magic' },
+        { name: 'Microneedling', description: 'Stimulates collagen production to improve skin texture and reduce scars.', icon: 'fas fa-leaf' },
+        { name: 'Chemical Peels', description: 'Exfoliates the skin to treat acne, scars, and discoloration.', icon: 'fas fa-leaf' },
+        { name: 'Hydra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.', icon: 'fas fa-leaf' },
+        { name: 'BB Glowing', description: 'Semi-permanent foundation treatment for glowing, even-toned skin.', icon: 'fas fa-leaf' },
+        { name: 'Microdermabrasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.', icon: 'fas fa-leaf' },
+        { name: 'Nano Infusions', description: 'Non-invasive treatment to enhance product absorption and skin hydration.', icon: 'fas fa-leaf' },
+        { name: 'Waxing Services', description: 'Professional hair removal for smooth and silky skin.', icon: 'fas fa-leaf' }
+      ];
+      
+      await Service.insertMany(services);
+      console.log('✅ Services seeded automatically');
+    }
+  } catch (error) {
+    console.error('⚠️ Service auto-seeding failed:', error.message);
+  }
+};
+seedServices(); // ሰርቨሩ ሲነሳ ይህን ፈንክሽን ጥራ
+// ---------------------------------------------------
+
+
+
 
 const app = express();
 
