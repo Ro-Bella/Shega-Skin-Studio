@@ -1,10 +1,9 @@
 // frontend/src/components/AdminManagementLogin.js
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminManagementLogin.css';
-import API_BASE_URL from '../api/config';
+import api from '../api';
 
 const AdminManagementLogin = () => {
   const [email, setEmail] = useState('');
@@ -30,16 +29,9 @@ const AdminManagementLogin = () => {
     setError('');
 
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      await axios.post(
-        `${API_BASE_URL}/api/admin/super-login`,
-        { email, password },
-        config
+      await api.post(
+        `/admin/super-login`,
+        { email, password }
       );
 
       // Store a flag in sessionStorage to indicate super admin access

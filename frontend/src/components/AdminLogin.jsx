@@ -1,10 +1,9 @@
 // frontend/src/components/AdminLogin.js
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminLogin.css'; // ቅጥን ለመጋራት
-import API_BASE_URL from '../api/config';
+import api from '../api';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -29,16 +28,9 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const { data } = await axios.post(
-        `${API_BASE_URL}/api/admin/login`,
-        { email, password },
-        config
+      const { data } = await api.post(
+        `/admin/login`,
+        { email, password }
       );
 
       // ቶክኑን እና የተጠቃሚ መረጃን localStorage ላይ ማስቀመጥ

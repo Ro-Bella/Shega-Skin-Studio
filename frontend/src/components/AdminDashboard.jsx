@@ -1,14 +1,11 @@
 // frontend/src/components/AdminDashboard.js
 import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import API_BASE_URL from '../api/config';
-
-const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
+import api from '../api';
 
 const AdminDashboard = () => {
   const { language, translations } = useContext(LanguageContext);
@@ -35,22 +32,12 @@ const AdminDashboard = () => {
     navigate('/admin/login');
   };
 
-  // የቀጠሮውን ሁኔታ ለመቀየር የሚያገለግል ተግባር
-  const getConfig = () => {
-    const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${adminInfo?.token}`,
-      },
-    };
-  };
-
   const handleUpdateStatus = async (id, status) => {
     try {
       // `status` 'Confirmed' ከሆነ 'confirm' endpoint, ካልሆነ 'cancel' endpoint እንጠቀማለን
       const endpoint = status === 'Confirmed' ? 'confirm' : 'cancel';
-      const response = await axios.put(`${APPOINTMENTS_API_URL}/${id}/${endpoint}`, {}, getConfig());
+      // The api instance automatically includes the auth token
+      const response = await api.put(`/appointments/${id}/${endpoint}`);
 
       // የቀጠሮዎችን ዝርዝር በአዲሱ መረጃ እናዘምነዋለን
       setAppointments(currentAppointments =>
@@ -72,7 +59,7 @@ const AdminDashboard = () => {
   const handleDeleteAppointment = async (id) => {
     if (window.confirm(currentText.deleteConfirmAppointment || 'ይህን ቀጠሮ ከዳታቤዝ ላይ ሙሉ በሙሉ ለማጥፋት እርግጠኛ ነዎት? ይህን ድርጊት መመለስ አይቻልም።')) {
       try {
-        await axios.delete(`${APPOINTMENTS_API_URL}/${id}`, getConfig());
+        await api.delete(`/appointments/${id}`);
         // የቀጠሮዎችን ዝርዝር እናዘምነዋለን
         setAppointments(currentAppointments =>
           currentAppointments.filter(apt => apt._id !== id)
@@ -118,7 +105,7 @@ const AdminDashboard = () => {
       if (newDate) {
         const allSlots = generateTimeSlots();
         try {
-          const response = await axios.get(`${APPOINTMENTS_API_URL}/booked-slots?date=${newDate}`);
+          const response = await api.get(`/appointments/booked-slots?date=${newDate}`);
           const bookedSlotsForDate = response.data;
           
           const available = allSlots.filter(slot => {
@@ -142,7 +129,10 @@ const AdminDashboard = () => {
 
   const handleUpdateAppointment = async () => {
     try {
-      const response = await axios.put(`${APPOINTMENTS_API_URL}/${editingAppointment._id}`, { date: newDate, timeSlot: newTimeSlot }, getConfig());
+      const response = await api.put(
+        `/appointments/${editingAppointment._id}`,
+        { date: newDate, timeSlot: newTimeSlot }
+      );
       setAppointments(appointments.map(apt => apt._id === editingAppointment._id ? response.data.data : apt));
       handleCloseModal();
     } catch (error) {
@@ -237,8 +227,7 @@ const AdminDashboard = () => {
     // Fetch appointments
     const fetchAppointments = async () => {
       try {
-        // ወደፊት፡ ይህ ጥያቄ ሄደር ላይ ቶክን በመላክ ጥበቃ ሊደረግለት ይገባል
-        const response = await axios.get(APPOINTMENTS_API_URL, getConfig());
+        const response = await api.get('/appointments');
         setAppointments(response.data.data);
         setLoading(false);
       } catch (err) {
