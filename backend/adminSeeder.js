@@ -1,21 +1,10 @@
 // backend/adminSeeder.js
 const mongoose = require('mongoose');
-require('dotenv').config(); // dotenv ላይብረሪ ለመጠቀም
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') }); // dotenv ላይብረሪ ትክክለኛውን ፋይል እንዲያነብ
 const bcrypt = require('bcryptjs');
 const Admin = require('./models/Admin'); // Admin ሞዴልን እናስገባለን
-
-// ከሞንጎዲቢ ዳታቤዝ ጋር መገናኘት
-const MONGO_URI = process.env.MONGO_URI; // በ .env ፋይል ውስጥ ያለውን የዳታቤዝ አድራሻ እንጠቀማለን
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(MONGO_URI); 
-    console.log('Successfully connected to MongoDB for seeding.');
-  } catch (err) {
-    console.error('Connection error', err);
-    process.exit(1); // በስህተት ጊዜ ፕሮሰሱን እናቋርጣለን
-  }
-};
+const connectDB = require('./config/db'); // የዳታቤዝ ግንኙነት ፋንክሽንን ከዋናው ኮድ ጋር ለመጋራት
 
 const seedAdmins = async () => {
   await connectDB();
