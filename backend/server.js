@@ -18,9 +18,11 @@ const envPath = path.resolve(__dirname, '.env');
 const envConfig = dotenv.config({ path: envPath });
 
 if (envConfig.error) {
-  console.error(`\n⚠️  ማስጠንቀቂያ: .env ፋይል አልተገኘም!`);
-  console.error(`ተፈላጊው ቦታ: ${envPath}`);
-  console.error(`እባክዎ ፋይሉ መኖሩን እና ስሙ ትክክል መሆኑን ያረጋግጡ (ለምሳሌ .env.txt አለመሆኑን)።\n`);
+  // Only show warning if not in production (in production, vars are usually injected)
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(`\n⚠️  ማስጠንቀቂያ: .env ፋይል አልተገኘም!`);
+    console.error(`ተፈላጊው ቦታ: ${envPath}\n`);
+  }
 } else {
   console.log(`✅ .env ፋይል ተገኝቷል እና ተነቧል። JWT_SECRET: ${process.env.JWT_SECRET ? 'አለ' : 'የለም'}`);
 }
@@ -56,7 +58,7 @@ const seedAdmin = async () => {
       console.error('Auto-seeding failed:', error.message);
     }
   } else {
-    console.log('⚠️ Admin seeding skipped: ADMIN_EMAIL or ADMIN_PASSWORD not set in environment variables.');
+    console.log('⚠️ Admin seeding skipped: ADMIN_EMAIL or ADMIN_PASSWORD not set. (This is expected if not configured in Dashboard)');
   }
 };
 seedAdmin(); // ሰርቨሩ ሲነሳ ይህን ፈንክሽን ጥራ

@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken'); // Fallback token generation
 // @route   POST /api/admin/login
 // @access  Public
 exports.authAdmin = async (req, res) => {
-  const { email, password } = req.body;
+  // Trim email to remove accidental spaces
+  const email = req.body.email ? req.body.email.trim() : '';
+  const { password } = req.body;
 
   // 1. Check JWT_SECRET first
   if (!process.env.JWT_SECRET) {
@@ -73,7 +75,8 @@ exports.authAdmin = async (req, res) => {
 // @route   POST /api/admin/super-login
 // @access  Public
 exports.authSuperAdmin = async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email ? req.body.email.trim() : '';
+    const { password } = req.body;
 
     try {
         // 1. Find the admin by email from the database
