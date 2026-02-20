@@ -1,9 +1,10 @@
 // backend/config/db.js
 const mongoose = require('mongoose');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const connectDB = async () => {
   try {
-    // ይህ ፋንክሽን ከመጠራቱ በፊት .env ፋይል መጫኑን ያስባል
     const mongoUri = process.env.MONGO_URI;
     if (!mongoUri) {
       console.error('❌ የዳታቤዝ ግንኙነት አልተሳካም: MONGO_URI አልተገኘም');
