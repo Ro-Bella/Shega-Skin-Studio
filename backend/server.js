@@ -6,7 +6,16 @@ const cors = require('cors'); // To allow cross-origin requests
 const Admin = require('./models/Admin'); // Admin ሞዴልን ማስገባት
 
 // Load env vars
-dotenv.config({ path: path.resolve(__dirname, './.env') }); // Loads .env file from the backend folder
+const envPath = path.resolve(__dirname, '.env');
+const envConfig = dotenv.config({ path: envPath });
+
+if (envConfig.error) {
+  console.error(`\n⚠️  ማስጠንቀቂያ: .env ፋይል አልተገኘም!`);
+  console.error(`ተፈላጊው ቦታ: ${envPath}`);
+  console.error(`እባክዎ ፋይሉ መኖሩን እና ስሙ ትክክል መሆኑን ያረጋግጡ (ለምሳሌ .env.txt አለመሆኑን)።\n`);
+} else {
+  console.log(`✅ .env ፋይል ተገኝቷል እና ተነቧል። JWT_SECRET: ${process.env.JWT_SECRET ? 'አለ' : 'የለም'}`);
+}
 
 // Check for critical environment variables
 if (!process.env.JWT_SECRET) {
