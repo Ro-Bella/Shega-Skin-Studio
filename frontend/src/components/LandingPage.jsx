@@ -198,7 +198,6 @@ const LandingPage = () => {
           .main-nav.nav-open > *:nth-child(4) { animation-delay: 0.25s; }
           .main-nav.nav-open > *:nth-child(5) { animation-delay: 0.3s; }
           .main-nav.nav-open > *:nth-child(6) { animation-delay: 0.35s; }
-          }
           .mobile-lang-switch .lang-btn {
             color: #333;
             border: 1px solid #333;
@@ -215,7 +214,7 @@ const LandingPage = () => {
             }
             to { opacity: 1; transform: translateX(0); }
           }
-        }
+        
       `}</style>
       <header className="landing-header">
         <div className="header-logo" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>Shega</div>

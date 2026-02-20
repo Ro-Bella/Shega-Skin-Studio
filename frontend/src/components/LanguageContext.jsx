@@ -8,7 +8,8 @@ export const LanguageContext = createContext();
 export const LanguageProvider = ({ children }) => {
   // ነባሪ ቋንቋ ከአካባቢ ማከማቻ (localStorage) ያንብቡ ወይም 'am' ያድርጉ
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'am';
+    const saved = localStorage.getItem('language');
+    return (saved === 'en' || saved === 'am') ? saved : 'am';
   });
 
   // ቋንቋው ሲቀየር ወደ አካባቢ ማከማቻ ያስቀምጡ
