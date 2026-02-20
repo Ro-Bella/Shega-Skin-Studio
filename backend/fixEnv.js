@@ -13,7 +13,7 @@ PORT=5000
 # 2. በግራ በኩል ካለው ዝርዝር "Database Access" የሚለውን ይምረጡ።
 # 3. ለ 'robitesf_db' የሚባል ተጠቃሚ (user) የይለፍ ቃሉን (password) ይቀይሩ ወይም አዲስ ተጠቃሚ ይፍጠሩ።
 # 4. አዲሱን የይለፍ ቃል ከታች ባለው መስመር ላይ <password> ከሚለው ቦታ በትክክል ይተኩ።
-MONGO_URI=mongodb+srv://robitesf_db:Robi7640@shega-app.vmzp4ck.mongodb.net/?appName=Shega-App
+MONGO_URI=mongodb+srv://robitesf_db:Robi7640@shega-app.vmzp4ck.mongodb.net/shega-app?appName=Shega-App
 JWT_SECRET=shegaskinstudio@123
 JWT_EXPIRE=30d
 ADMIN_EMAIL=robi@example.com
