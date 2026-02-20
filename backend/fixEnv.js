@@ -5,8 +5,9 @@ const envPath = path.join(__dirname, '.env');
 
 const envContent = `NODE_ENV=development
 PORT=5000
-MONGO_URI=mongodb+srv://robi:robi123@cluster0.xxxxx.mongodb.net/shega-skin?retryWrites=true&w=majority
-JWT_SECRET=super_secret_key_shega_skin_123!
+# ⚠️ እባክዎ ይህንን መስመር ከ MongoDB Atlas ባገኙት ትክክለኛ የ Connection String ይተኩት።
+mongodb+srv://robitesf_db:Robi7640@shega-app.vmzp4ck.mongodb.net/?appName=Shega-App
+JWT_SECRET=shegaskinstudio@123
 JWT_EXPIRE=30d
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=password123
