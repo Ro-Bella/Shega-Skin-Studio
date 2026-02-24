@@ -1,17 +1,12 @@
 // frontend/src/api/appointmentsApi.js
-import axios from 'axios';  // አክሲዮስ ለHTTP ጥያቄዎች
-import API_BASE_URL from './config';
-
-const API = axios.create({  // API ኢንስታንስ ፍጠር
-    // Backend API የሚሰራበት አድራሻ
-    baseURL: `${API_BASE_URL}/api`
-});
+import apiClient from '../api'; // ማዕከላዊ የሆነውን apiClient እናስገባለን
 
 // አዲስ ቀጠሮ ለማስያዝ
-export const createNewAppointment = (appointmentData) => API.post('/', appointmentData);  // አዲስ ቀጠሮ መፍጠር
-export const updateAppointment = (id, updatedData) => API.put(`/${id}`, updatedData);  // ቀጠሮ መስተካከል
-export const deleteAppointment = (id) => API.delete(`/${id}`);  // ቀጠሮ ማጥፋት
-export const getAllAppointments = () => API.get('/');  // ሁሉንም ቀጠሮዎች ማምጣት
+// የ apiClient መሰረታዊ URL '/api' ስለሆነ፣ እዚህ ላይ '/appointments' የሚለውን እንጨምራለን።
+export const createNewAppointment = (appointmentData) => apiClient.post('/appointments', appointmentData);
+export const updateAppointment = (id, updatedData) => apiClient.put(`/appointments/${id}`, updatedData);
+export const deleteAppointment = (id) => apiClient.delete(`/appointments/${id}`);
+export const getAllAppointments = () => apiClient.get('/appointments');
 
 // ሁሉንም ቀጠሮዎች ለማምጣት (ለአድሚን ዳሽቦርድ)
-export const fetchAppointments = () => API.get('/');  // ሁሉንም ቀጠሮዎች መውሰድ
+export const fetchAppointments = () => apiClient.get('/appointments');

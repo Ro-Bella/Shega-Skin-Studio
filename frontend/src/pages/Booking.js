@@ -1,8 +1,7 @@
 // frontend/src/pages/Booking.js
 import React, { useState, useEffect } from 'react'; // ሪአክት እና የሁኔታ ማዋቀሪያ ኢምፖርት
-import axios from 'axios'; // axios ኢምፖርት
+import apiClient from '../api'; // አዲሱን apiClient ኢምፖርት እናደርጋለን
 import { createNewAppointment } from '../api/appointmentsApi'; // ከAPI ፋይል የቀጠሮ መፍጠር ፋንክሽን ኢምፖርት
-import API_BASE_URL from '../api/config'; // API URL ለማግኘት
 
 const Booking = () => { // የቀጠሮ ገፅ ኮምፖነንት
     const [formData, setFormData] = useState({  // የቅጽ ውሂብ ለማስቀመጥ ሁኔታ
@@ -19,7 +18,8 @@ const Booking = () => { // የቀጠሮ ገፅ ኮምፖነንት
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/api/services`);
+                // axios በቀጥታ ከመጠቀም ይልቅ apiClient እንጠቀማለን
+                const response = await apiClient.get('/services');
                 setServices(response.data);
                 // አገልግሎቶች ሲመጡ የመጀመሪያውን እንደ ነባሪ ለመምረጥ
                 if (response.data.length > 0) {
