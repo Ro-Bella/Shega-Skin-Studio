@@ -470,3 +470,52 @@
 .appointment-form {
   text-align: center;
 }
+
+/* Responsive Styles for Mobile */
+@media (max-width: 768px) {
+  /* Toolbar adjustments */
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .search-container,
+  .filter-container,
+  .export-buttons {
+    width: 100%;
+    max-width: none;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .filter-select,
+  .search-input {
+    max-width: none;
+  }
+
+  .export-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .export-buttons button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hide the CSS-generated row number on mobile, as it conflicts with the card view */
+  .appointments-table thead tr::before,
+  .appointments-table tbody tr::before {
+    display: none;
+  }
+
+  /* Adjust table cell colors for consistency in card view */
+  .appointments-table td {
+    color: #fff; /* Match the label color for readability on dark card background */
+  }
+}
