@@ -104,7 +104,8 @@ app.use(express.json());
 
 // ተቀባይነት ያላቸውን የፊት-ለፊት (frontend) አድራሻዎች ማዘጋጀት
 const allowedOrigins = [
-  "http://localhost:3000", // ለኮምፒውተር ላይ ልማት (local development)
+  "http://localhost:3000", // ዋናው ምርጫ (primary for development)
+  "http://localhost:3001", // ፖርት 3000 ከተያዘ እንደ አማራጭ (fallback if 3000 is busy)
   "https://shega-skin-studio.vercel.app" // ዋናው የ Vercel አድራሻ እንደ መጠባበቂያ
 ];
 if (process.env.FRONTEND_URL) {
