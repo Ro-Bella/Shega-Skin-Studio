@@ -5,8 +5,9 @@ FROM node:18-alpine
 WORKDIR /app
 
 # --- Security: Create a non-root user ---
-# Create a system group and user 'node'
-RUN addgroup -S node && adduser -S node -G node
+# Create a system user and group named 'node' in one command.
+# -S: system user, -D: no password, -H: no home directory
+RUN adduser -S -D -H node
 
 # Copy package.json and package-lock.json first to leverage Docker cache
 COPY package*.json ./
