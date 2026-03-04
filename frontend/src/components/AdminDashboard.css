@@ -7,6 +7,7 @@
 
 .dashboard-container {
   width: 100%; /* የቦርዱን ስፋት ጨምረናል */
+  direction: rtl; /* ጽሑፉን ከቀኝ ወደ ግራ እንዲሆን */
   margin: 2rem auto; /* ቦርዱ መሃል ላይ እንዲሆን */
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.1); /* ከቀጠሮ ገጹ ጋር እንዲመሳሰል */
@@ -60,7 +61,7 @@
   content: "No."; /* ጽሑፉን ጨምረናል */
   display: table-cell; /* እንደ ሠንጠረዥ ሴል እንዲታይ */
   padding: 15px;
-  text-align: left;
+  text-align: right; /* ወደ ቀኝ እናስተካክላለን */
   background-color: rgba(255, 255, 255, 0.15); /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   color: #fff; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   font-weight: bold;
@@ -72,7 +73,7 @@
   counter-increment: row-num; /* ለእያንዳንዱ ረድፍ ቁጥሩን ይጨምራል */
   content: counter(row-num) ". "; /* ቁጥሩን ከነጥብ ጋር ያሳያል */
   display: table-cell; /* እንደ ሠንጠረዥ ሴል እንዲታይ */
-  padding: 15px;
+  padding: 15px; 
   text-align: left;
   font-weight: bold; /* ጽሑፉ ጎላ እንዲል */
   color: #fff; /* የቁጥሩን ቀለም ወደ ነጭ ቀይረናል */
@@ -607,6 +608,10 @@
     color: #fff; /* Match the label color for readability on dark card background */
     /* ረጅም ቃላት እንዲሰበሩ እና እንዳያስፋፉ ማድረግ */
     overflow-wrap: break-word;
+    /* እሴቶቹን እንገለብጣለን */
+    text-align: right;
+    direction: ltr;
+
     word-wrap: break-word;
     word-break: break-word;
   }
@@ -622,6 +627,7 @@
     color: #fff;
     text-transform: uppercase;
   }
+
 
   .appointments-table .action-buttons {
     justify-content: flex-end;
