@@ -185,9 +185,9 @@ const AdminManagement = () => {
         <tbody>
           {admins.map((admin) => (
             <tr key={admin._id}>
-              <td data-label={currentText.email}>{admin.email}</td>
-              <td data-label={currentText.dateCreated}>{new Date(admin.createdAt).toLocaleDateString()}</td>
-              <td data-label={currentText.actions}>
+              <td>{admin.email}</td>
+              <td>{new Date(admin.createdAt).toLocaleDateString()}</td>
+              <td>
                 <div className="action-buttons">
                   <button onClick={() => handleEdit(admin)} className="btn-confirm">{currentText.editAdmin}</button>
                   <button onClick={() => handleDelete(admin._id)} className="btn-cancel">{currentText.delete}</button>
