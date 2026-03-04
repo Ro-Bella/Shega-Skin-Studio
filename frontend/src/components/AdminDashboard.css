@@ -7,7 +7,6 @@
 
 .dashboard-container {
   width: 100%; /* የቦርዱን ስፋት ጨምረናል */
-  direction: rtl; /* ጽሑፉን ከቀኝ ወደ ግራ እንዲሆን */
   margin: 2rem auto; /* ቦርዱ መሃል ላይ እንዲሆን */
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.1); /* ከቀጠሮ ገጹ ጋር እንዲመሳሰል */
@@ -61,7 +60,6 @@
   content: "No."; /* ጽሑፉን ጨምረናል */
   display: table-cell; /* እንደ ሠንጠረዥ ሴል እንዲታይ */
   padding: 15px;
-  text-align: right; /* ወደ ቀኝ እናስተካክላለን */
   text-align: left;
   background-color: rgba(255, 255, 255, 0.15); /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   color: #fff; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
@@ -345,12 +343,52 @@
 .daily-summary-cards {
   display: flex;
   gap: 1rem; /* በካርዶቹ መካከል ያለውን ክፍተት ቀይረናል */
-  overflow-x: auto;
-  padding-bottom: 1rem; /* Space for scrollbar */
+    overflow-x: auto; /* ወደ ጎን ስክሮል እንዲያደርግ */
+    padding-bottom: 1rem; /* ለስክሮል ባር ቦታ */
+    scroll-snap-type: x mandatory; /* ስክሮል ሲደረግ ካርዶቹ ላይ እንዲያርፍ */
+  }
+  
+  /* Firefox-specific scrollbar styles */
+  @supports (scrollbar-width: thin) {
+    .daily-summary-cards {
+      scrollbar-width: thin; /* ለ Firefox ስክሮል ባር */
+      scrollbar-color: #ff69b4 rgba(255, 255, 255, 0.1); /* ለ Firefox ስክሮል ባር ቀለም */
+    }
+}
+
+/* ለ WebKit (Chrome, Safari, Edge, Opera) ብሮውሰሮች የተሻለ ስክሮል ባር */
+.daily-summary-cards::-webkit-scrollbar {
+  height: 8px;
+}
+
+.daily-summary-cards::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.daily-summary-cards::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff69b4, #277df5);
+  border-radius: 10px;
+}
+
+/* ለ WebKit (Chrome, Safari) ብሮውሰሮች የተሻለ ስክሮል ባር */
+.daily-summary-cards::-webkit-scrollbar {
+  height: 8px;
+}
+
+.daily-summary-cards::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.daily-summary-cards::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff69b4, #277df5);
+  border-radius: 10px;
 }
 
 .summary-card {
   flex: 0 0 120px; /* የካርዱን ስፋት ትንሽ ጨምረናል */
+  scroll-snap-align: start; /* ስክሮል ሲደረግ ከካርዱ መጀመሪያ ላይ እንዲያርፍ */
   padding: 0.75rem; /* የውስጥ ክፍተት ቀይረናል */
   border-radius: 10px;
   text-align: center;
@@ -521,10 +559,8 @@
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1rem;
-    margin: 0;
-    width: 100%;
-    border-radius: 0;
-    border: none;
+    margin: 1rem; /* በሁሉም አቅጣጫ አስተማማኝ ክፍተት እንሰጣለን */
+    width: auto;  /* ስፋቱ በቀሪው ቦታ ላይ እንዲወሰን እናደርጋለን */
   }
 
   .dashboard-header {
@@ -539,8 +575,11 @@
   }
 
   .title-gradient {
-    font-size: 1.8rem;
-    padding: 0.8rem 1.5rem;
+    font-size: 1.5rem; /* ጽሑፉ እንዳይቆረጥ መጠኑን ቀነስን */
+    padding: 0.8rem 1rem;
+    display: block; /* ሳጥኑ ሙሉ ስፋት እንዲይዝ */
+    width: 100%;
+    word-break: break-word; /* ረጅም ጽሑፍ እንዲሰበር እና እንዳይቆረጥ */
   }
   /* Toolbar adjustments */
   .toolbar {
@@ -603,16 +642,13 @@
   .appointments-table td {
     display: block;
     text-align: right;
+    text-align: left; /* ጽሑፉን ከርዕሱ አጠገብ ለማድረግ ወደ ግራ አስተካክለናል */
     font-size: 1rem;
     border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
     padding: 0.75rem 0;
     color: #fff; /* Match the label color for readability on dark card background */
     /* ረጅም ቃላት እንዲሰበሩ እና እንዳያስፋፉ ማድረግ */
     overflow-wrap: break-word;
-    /* እሴቶቹን እንገለብጣለን */
-    text-align: right;
-    direction: ltr;
-
     word-wrap: break-word;
     word-break: break-word;
   }
@@ -627,6 +663,7 @@
     font-weight: bold;
     color: #fff;
     text-transform: uppercase;
+    padding-right: 1em; /* በርዕሱ እና በመረጃው መካከል ክፍተት ለመፍጠር */
   }
 
 
