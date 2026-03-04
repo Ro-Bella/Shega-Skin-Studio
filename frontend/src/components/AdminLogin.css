@@ -89,4 +89,73 @@
     color: white;
     cursor: pointer;
   }
+
+/* Responsive Styles for Mobile */
+@media (max-width: 768px) {
+  .admin-login-container, .dashboard-container {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: auto;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .title-gradient {
+    font-size: 1.8rem;
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link {
+    position: static; /* Change from absolute to static for normal flow */
+    margin: 0 0 1rem 0;
+    align-self: flex-start;
+  }
+
+  /* Responsive Table Styles (for AdminDashboard, AdminManagement, etc.) */
+  .appointments-table {
+    border: 0;
+  }
+
+  .appointments-table thead {
+    display: none; /* Hide table headers on small screens */
+  }
+
+  .appointments-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 1em;
+  }
+
+  .appointments-table td {
+    display: block;
+    text-align: right;
+    font-size: 1rem;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 0;
+  }
+
+  .appointments-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .appointments-table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .appointments-table .action-buttons button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
   
