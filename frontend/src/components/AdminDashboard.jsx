@@ -327,13 +327,13 @@ const AdminDashboard = () => {
           <tbody>
             {filteredAppointments.map((apt) => (
               <tr key={apt._id}>
-                <td>{apt.name}</td>
-                <td>{apt.phone}</td>
-                <td>{apt.service}</td>
-                <td>{new Date(apt.date).toLocaleDateString(language === 'am' ? 'am-ET' : 'en-US')}</td>
-                <td>{apt.timeSlot}</td>
-                <td><span className={`status status-${apt.status.toLowerCase()}`}>{currentText[apt.status.toLowerCase()] || apt.status}</span></td>
-                <td>
+                <td data-label={currentText.name}>{apt.name}</td>
+                <td data-label={currentText.phone}>{apt.phone}</td>
+                <td data-label={currentText.service}>{apt.service}</td>
+                <td data-label={currentText.date}>{new Date(apt.date).toLocaleDateString(language === 'am' ? 'am-ET' : 'en-US')}</td>
+                <td data-label={currentText.time}>{apt.timeSlot}</td>
+                <td data-label={currentText.status}><span className={`status status-${apt.status.toLowerCase()}`}>{currentText[apt.status.toLowerCase()] || apt.status}</span></td>
+                <td data-label={currentText.actions}>
                   <div className="action-buttons">
                     {apt.status === 'Pending' && (
                       <button onClick={() => handleUpdateStatus(apt._id, 'Confirmed')} className="btn-confirm">
