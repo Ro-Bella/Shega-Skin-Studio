@@ -102,13 +102,17 @@ const app = express();
 // Body parser
 app.use(express.json());
 
+// ተቀባይነት ያላቸውን የፊት-ለፊት (frontend) አድራሻዎች ማዘጋጀት
+const allowedOrigins = [
+  "http://localhost:3000", // ለኮምፒውተር ላይ ልማት (local development)
+  "https://shega-skin-studio.vercel.app" // ዋናው የ Vercel አድራሻ እንደ መጠባበቂያ
+];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL); // በ Render ላይ ያስገባነውን አድራሻ መጨመር
+}
 // Enable CORS
 app.use(cors({
-  origin: [
-    "http://localhost:3000", 
-    "https://shega-skin-studio.vercel.app", // Vercel የሰጠዎትን ትክክለኛ ሊንክ እዚህ ያረጋግጡ
-    process.env.FRONTEND_URL // ወይም Render ላይ ይህንን variable መሙላት ይችላሉ
-  ],
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
