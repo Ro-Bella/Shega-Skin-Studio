@@ -60,10 +60,46 @@
     margin-top: -3rem;
     margin-left: -3rem;;
   }
+
+  .dashboard-container h3 {
+    color: #fff;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
   
   .appointment-form {
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
   }
+
+  .appointment-form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 25px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #111;
+    margin-top: 0.5rem;
+  }
+
+  .appointment-form .action-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+
   
   .admin-login-form {
     max-width: 600px;
@@ -116,6 +152,10 @@
     align-self: flex-start;
   }
 
+  .dashboard-container h3 {
+    font-size: 1.5rem;
+  }
+
   /* Responsive Table Styles (for AdminDashboard, AdminManagement, etc.) */
   .appointments-table {
     border: 0;
@@ -156,6 +196,16 @@
   .appointments-table .action-buttons button {
     width: 100%;
     margin-top: 0.5rem;
+  }
+
+  .appointment-form {
+    padding: 1.5rem 1rem;
+    margin: 1rem auto;
+  }
+
+  .appointment-form .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
   

@@ -151,8 +151,8 @@ const AdminManagement = () => {
         <h1 className="title-gradient">{currentText.adminManagement}</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="appointment-form" style={{ maxWidth: '600px', margin: 'auto', marginBottom: '2rem' }}>
-        <h3 style={{ color: 'black' }}>{editingAdmin ? currentText.editAdmin : currentText.addNewAdmin}</h3>
+      <form onSubmit={handleSubmit} className="appointment-form">
+        <h3>{editingAdmin ? currentText.editAdmin : currentText.addNewAdmin}</h3>
         {formMessage && (
           <p
             className={`form-message ${formMessage.includes('❌') ? 'error' : 'success'}`}>
@@ -160,11 +160,11 @@ const AdminManagement = () => {
           </p>
         )}
         <div className="appointment-form-group">
-          <label htmlFor="email" style={{ color: 'black' }}>{currentText.email}:</label>
+          <label htmlFor="email">{currentText.email}:</label>
           <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div className="appointment-form-group">
-          <label htmlFor="password" style={{ color: 'black' }}>{currentText.password}:</label>
+          <label htmlFor="password">{currentText.password}:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={editingAdmin ? currentText.passwordPlaceholder : ''} required={!editingAdmin} />
         </div>
         <div className="action-buttons">
@@ -173,7 +173,7 @@ const AdminManagement = () => {
         </div>
       </form>
 
-      <h3 style={{ color: 'black' }}>{currentText.adminList}</h3>
+      <h3>{currentText.adminList}</h3>
       <table className="appointments-table">
         <thead>
           <tr>
@@ -185,9 +185,9 @@ const AdminManagement = () => {
         <tbody>
           {admins.map((admin) => (
             <tr key={admin._id}>
-              <td>{admin.email}</td>
-              <td>{new Date(admin.createdAt).toLocaleDateString()}</td>
-              <td>
+              <td data-label={currentText.email}>{admin.email}</td>
+              <td data-label={currentText.dateCreated}>{new Date(admin.createdAt).toLocaleDateString()}</td>
+              <td data-label={currentText.actions}>
                 <div className="action-buttons">
                   <button onClick={() => handleEdit(admin)} className="btn-confirm">{currentText.editAdmin}</button>
                   <button onClick={() => handleDelete(admin._id)} className="btn-cancel">{currentText.delete}</button>
