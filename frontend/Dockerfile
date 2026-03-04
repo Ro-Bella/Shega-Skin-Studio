@@ -1,29 +1,32 @@
-# ደረጃ 1: መገንባት (Build Stage)
-# Node.js ያለበትን መሰረት እንጠቀማለን
-FROM node:18-alpine as builder
+# === Stage 1: Build the React application ===
+FROM node:18-alpine AS builder
 
-# የስራ ቦታችንን እንወስናለን
+# Set the working directory
 WORKDIR /app
 
-# package.json ፋይሎችን ወደ ሳጥኑ እንገለብጣለን
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# የሚያስፈልጉ ነገሮችን እንጭናለን
+# Install dependencies
 RUN npm install
 
-# ሙሉ ኮዱን ገልብጠን Build እናደርጋለን
+# Copy the rest of the application files
 COPY . .
+
+# Build the application for production
 RUN npm run build
 
-# ደረጃ 2: ማቅረብ (Serve Stage)
-# ቀላል የሆነውን Nginx ሰርቨር እንጠቀማለን
-FROM nginx:alpine
+# === Stage 2: Serve the application with Nginx ===
+FROM nginx:stable-alpine
 
-# ከላይ የገነባነውን (Build) ፋይል ወደ Nginx እንገለብጣለን
-COPY --from=builder /app/build /usr/share/nginx/html
+# Copy the build output from the builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# ፖርት 80ን ክፍት እናደርጋለን
+# Copy the custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
 EXPOSE 80
 
-# ሰርቨሩን እናስጀምራለን
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -5,15 +5,15 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3000:80" # Map host port 3000 to container port 80 (Nginx)
     depends_on:
       - backend
 
   # 2. Backend Service (Node.js)
   backend:
     build: ./backend
-    ports:
-      - "5000:5000"
+    # The port is no longer exposed to the host.
+    # The 'frontend' service can still access it via the internal Docker network.
     environment:
       - MONGO_URI=mongodb://mongo:27017/shega_skin_studio
       - PORT=5000

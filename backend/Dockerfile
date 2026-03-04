@@ -1,24 +1,20 @@
-
-# Use the official Node.js 18 image as a parent image
+# Use an official Node.js runtime as a parent image
 FROM node:18-alpine
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json to leverage Docker cache
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install production dependencies using npm ci for faster, more reliable builds
-RUN npm ci --only=production
+# Install only production dependencies
+RUN npm install --only=production
 
-# Bundle app source
+# Copy the rest of the application source code
 COPY . .
 
-# The node user is provided by the official Node.js image
-USER node
-
-# Inform Docker that the container listens on port 5000 at runtime
+# Your app binds to port 5000, so you need to expose it
 EXPOSE 5000
 
-# Run the app when the container launches
-CMD [ "npm", "start" ]
+# Command to run the application
+CMD [ "node", "server.js" ]
