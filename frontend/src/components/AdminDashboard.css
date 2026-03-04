@@ -35,12 +35,12 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* ከታች ብቻ ቀጭን መስመር */
   padding: 15px; /* ፓዲንግ ጨምረናል */
   text-align: left;
-  color: #000; /* የጽሑፉን ቀለም ወደ ጥቁር ቀይረናል */
+  color: #fff; /* የጽሑፉን ቀለም ወደ ነጭ ቀይረናል */
 }
 
 .appointments-table th {
   background-color: rgba(255, 255, 255, 0.15); /* የጀርባ ቀለም አስተካክለናል */
-  color: #000; /* የሠንጠረዥ ርዕስ ቀለም ወደ ጥቁር ቀይረናል */
+  color: #fff; /* የሠንጠረዥ ርዕስ ቀለም ወደ ነጭ ቀይረናል */
   font-weight: bold;
   font-size: 1rem; /* የፊደል መጠን ጨምረናል */
 }
@@ -57,7 +57,7 @@
   padding: 15px;
   text-align: left;
   background-color: rgba(255, 255, 255, 0.15); /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
-  color: #000; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
+  color: #fff; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   font-weight: bold;
   font-size: 1rem;
 }
@@ -69,8 +69,8 @@
   display: table-cell; /* እንደ ሠንጠረዥ ሴል እንዲታይ */
   padding: 15px;
   text-align: left;
-  font-weight: bold;
-  color: #000; /* የቁጥሩን ቀለም ወደ ጥቁር ቀይረናል */
+  font-weight: bold; /* ጽሑፉ ጎላ እንዲል */
+  color: #fff; /* የቁጥሩን ቀለም ወደ ነጭ ቀይረናል */
 }
 
 .status {
@@ -249,7 +249,7 @@
 }
 
 .filter-container label {
-  color: #000; /* የ "Filter by Status" ጽሑፍ ወደ ጥቁር ተቀይሯል */
+  color: #fff; /* የ "Filter by Status" ጽሑፍ ወደ ነጭ ተቀይሯል */
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -261,8 +261,8 @@
   padding: 0.75rem 1rem; /* የውስጥ ክፍተት */
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3); /* ቀለል ያለ እና ግልጽ ድንበር */
-  background-color: rgba(255, 255, 255, 0.2); /* ትንሽ ግልጽ የሆነ ዳራ */
-  color: #000; /* የውስጥ ጽሑፍ (All, Pending...) ወደ ጥቁር ተቀይሯል */
+  background-color: rgba(255, 255, 255, 0.1); /* ትንሽ ግልጽ የሆነ ዳራ */
+  color: #fff; /* የውስጥ ጽሑፍ (All, Pending...) ወደ ነጭ ተቀይሯል */
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
@@ -273,7 +273,7 @@
 
 /* ለ placeholder ጽሑፍ ቀለም */
 .search-input::placeholder {
-  color: rgba(0, 0, 0, 0.7); /* የ "Search..." ጽሑፍ ወደ ጥቁር ተቀይሯል */
+  color: rgba(255, 255, 255, 0.7); /* የ "Search..." ጽሑፍ ወደ ነጭ ተቀይሯል */
 }
 
 .filter-select:focus,
@@ -281,7 +281,7 @@
   border-color: #ff69b4; /* ሮዝ ድንበር ሲመረጥ */
   box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3); /* ሮዝ ጥላ ሲመረጥ */
   outline: none;
-  background-color: rgba(255, 255, 255, 0.4); /* ሲመረጥ ትንሽ ይበልጥ ግልጽ */
+  background-color: rgba(255, 255, 255, 0.2); /* ሲመረጥ ትንሽ ይበልጥ ግልጽ */
 }
 
 .export-buttons {
@@ -328,7 +328,7 @@
 }
 
 .section-title {
-  color: #000;
+  color: #fff;
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;

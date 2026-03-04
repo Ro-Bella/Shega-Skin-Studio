@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import api from '../api';
+import './AdminDashboard.css'; // የዚህን ገጽ CSS ፋይል እናስገባለን
 
 const AdminDashboard = () => {
   const { language, translations } = useContext(LanguageContext);
