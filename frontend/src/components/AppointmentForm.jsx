@@ -9,6 +9,7 @@ import API_BASE_URL from '../api/config'; // አዲሱን ኮንፊግ እናስ
 
 const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
 const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
+const SETTINGS_API_URL = `${API_BASE_URL}/api/settings`; // ለ settings አዲስ URL
 
 const AppointmentForm = () => {
   const { language, translations } = useContext(LanguageContext);
@@ -30,7 +31,7 @@ const AppointmentForm = () => {
   const [phoneError, setPhoneError] = useState(''); // ለስልክ ቁጥር ስህተት state
   const [services, setServices] = useState([]); // አገልግሎቶችን ከ API ለማምጣት
   const [bookedSlots, setBookedSlots] = useState([]); // For holding booked time slots
-  const [availableSlots, setAvailableSlots] = useState([]); // For holding available time slots
+  const [allSlots, setAllSlots] = useState([]); // ሁሉንም ሰዓቶች ከባክኤንድ ለማምጣት
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -57,15 +58,24 @@ const AppointmentForm = () => {
     fetchServices();
   }, []); // ባዶ dependency array ማለት አንድ ጊዜ ብቻ ይስራ ማለት ነው
 
-    // Generate time slots from 9 AM to 5 PM every hour
-  const generateTimeSlots = () => {
-    const slots = [];
-    for (let hour = 9; hour <= 17; hour++) {
-      const time = `${hour.toString().padStart(2, '0')}:00`;
-      slots.push(time);
-    }
-    return slots;
-  };
+  // Fetch all possible time slots from backend when component mounts
+  useEffect(() => {
+    const fetchAllSlots = async () => {
+      try {
+        const response = await axios.get(`${SETTINGS_API_URL}/working-hours`);
+        setAllSlots(response.data);
+      } catch (error) {
+        console.error("የስራ ሰዓቶችን ማምጣት አልተቻለም:", error);
+        // As a fallback, use hard-coded values if the API fails
+        const fallbackSlots = [];
+        for (let hour = 9; hour <= 17; hour++) {
+          fallbackSlots.push(`${hour.toString().padStart(2, '0')}:00`);
+        }
+        setAllSlots(fallbackSlots);
+      }
+    };
+    fetchAllSlots();
+  }, []);
 
   // Fetch booked slots when date changes
   useEffect(() => {
@@ -87,13 +97,6 @@ const AppointmentForm = () => {
     setFormData(prev => ({ ...prev, timeSlot: '' }));
   }, [formData.date]);
 
-  // Update available slots when booked slots change
-  useEffect(() => {
-    const allSlots = generateTimeSlots();
-    const available = allSlots.filter(slot => !bookedSlots.includes(slot));
-    setAvailableSlots(available);
-  }, [bookedSlots]);
-  
   // መልዕክቱ ከ 5 ሰከንድ በኋላ በራሱ እንዲጠፋ (Auto-clear message)
   useEffect(() => {
     if (message) {
@@ -103,6 +106,14 @@ const AppointmentForm = () => {
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  // Handle time slot button clicks
+  const handleTimeSlotSelect = (slot) => {
+    setFormData({
+      ...formData,
+      timeSlot: slot,
+    });
+  };
 
   // Handle input changes
   const handleChange = (e) => {
@@ -209,6 +220,38 @@ const AppointmentForm = () => {
             width: 100%;
           }
         }
+        /* --- Time Slot Button Styles --- */
+        .time-slot-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 0.5rem;
+          margin-top: 0.5rem;
+        }
+        .time-slot-btn {
+          padding: 0.75rem 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f9f9f9;
+          cursor: pointer;
+          text-align: center;
+          transition: background-color 0.2s, border-color 0.2s;
+        }
+        .time-slot-btn:hover:not(:disabled) {
+          background-color: #e9e9e9;
+          border-color: #999;
+        }
+        .time-slot-btn.selected {
+          background-color: var(--primary-color, #8a5a44);
+          color: white;
+          border-color: var(--primary-color, #8a5a44);
+          font-weight: bold;
+        }
+        .time-slot-btn:disabled {
+          background-color: #f1f1f1;
+          color: #aaa;
+          cursor: not-allowed;
+          text-decoration: line-through;
+        }
       `}</style>
       <div className="form-page-header"> {/* New wrapper */}
         <div className="form-header-left">
@@ -274,20 +317,31 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="appointment-form-group">
-            <label htmlFor="timeSlot">{currentText.timeLabel}:</label>
-            <select
-              id="timeSlot"
-              name="timeSlot"
-              value={formData.timeSlot}
-              onChange={handleChange}
-              required
-              disabled={!formData.date || availableSlots.length === 0} // Disable if no date or no slots
-            >
-              <option value="">{formData.date ? (availableSlots.length > 0 ? currentText.selectTimePlaceholder || 'Select a time' : currentText.noSlotsAvailable || 'No slots available') : (currentText.selectDateFirst || 'Select a date first')}</option>
-              {availableSlots.map(slot => (
-                <option key={slot} value={slot}>{new Date(`1970-01-01T${slot}`).toLocaleTimeString(language === 'am' ? 'am-ET' : 'en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</option>
-              ))}
-            </select>
+            <label>{currentText.timeLabel}:</label>
+            {!formData.date && <p className="time-slot-placeholder">{currentText.selectDateFirst}</p>}
+
+            {formData.date && (
+              <div className="time-slot-container">
+                {allSlots.map(slot => {
+                  const isBooked = bookedSlots.includes(slot);
+                  const isSelected = formData.timeSlot === slot;
+                  return (
+                    <button
+                      type="button"
+                      key={slot}
+                      className={`time-slot-btn ${isSelected ? 'selected' : ''}`}
+                      onClick={() => handleTimeSlotSelect(slot)}
+                      disabled={isBooked}
+                    >
+                      {new Date(`1970-01-01T${slot}`).toLocaleTimeString(language === 'am' ? 'am-ET' : 'en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {formData.date && allSlots.length > 0 && allSlots.every(slot => bookedSlots.includes(slot)) && (
+              <p className="time-slot-placeholder">{currentText.noSlotsAvailable}</p>
+            )}
           </div>
         </div>
 

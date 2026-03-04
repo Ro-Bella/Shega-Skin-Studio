@@ -117,12 +117,14 @@ app.use(cors({
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const settingsRoutes = require('./routes/settingsRoutes'); // አዲስ route እናስገባለን
 const { notFound, errorHandler } = require('./errorMiddleware');
 
 // Mount routes
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/settings', settingsRoutes); // አዲሱን route እንጠቀማለን
 
 
 

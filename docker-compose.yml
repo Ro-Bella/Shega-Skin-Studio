@@ -14,22 +14,22 @@ services:
     build: ./backend
     # The port is no longer exposed to the host.
     # The 'frontend' service can still access it via the internal Docker network.
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/shega_skin_studio
-      - PORT=5000
-      - JWT_SECRET=12345678 # ይህንን በራስዎ ሚስጥራዊ ቁልፍ ይቀይሩ
-      - SUPER_ADMIN_EMAIL=baby@example.com
-      - SUPER_ADMIN_PASSWORD=shega123
+    env_file:
+      - .env # Load environment variables from .env file
     depends_on:
       - mongo
+    restart: unless-stopped
 
   # 3. Database Service (MongoDB)
   mongo:
     image: mongo
-    ports:
-      - "27017:27017"
+    # For production security, do not expose the database port to the host.
+    # The backend service can access it via the internal Docker network.
+    # ports:
+    #   - "27017:27017" # Uncomment only if you need direct access from your host.
     volumes:
       - mongo-data:/data/db
+    restart: always
 
 volumes:
   mongo-data:
