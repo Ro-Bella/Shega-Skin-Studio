@@ -1,9 +1,20 @@
 import axios from 'axios';
 
+// Check if the app is running in production (e.g., on Vercel)
+const isProduction = import.meta.env.PROD;
+
 // የ Backend API URL ከ Vercel Environment Variables እናነባለን።
 // Vite 'import.meta.env' ይጠቀማል፣ 'process.env' አይደለም።
 // በ Vercel ላይ የምናስገባው ተለዋዋጭ (variable) በ 'VITE_' መጀመር አለበት።
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+let API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  if (isProduction) {
+    console.error("የBackend URL አልተገኘም! እባክዎ በ Vercel ላይ VITE_API_URL የሚል Environment Variable ያስገቡ።");
+  } else {
+    API_URL = 'http://localhost:5000'; // For local development
+  }
+}
 
 // ለዲበጊንግ (ለማረጋገጥ)፡ Vercel ላይ የትኛውን URL እንደሚያነብ በኮንሶል ላይ እናያለን
 console.log("Connecting to API at:", API_URL);
