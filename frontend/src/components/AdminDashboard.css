@@ -6,7 +6,8 @@
 }
 
 .dashboard-container {
-  width: 100%; /* የቦርዱን ስፋት ጨምረናል */
+  width: 90%; /* የቦርዱን ስፋት ቀንሰናል */
+  width: 100%; /* የቦርዱን ስፋት ቀንሰናል */
   margin: 2rem auto; /* ቦርዱ መሃል ላይ እንዲሆን */
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.1); /* ከቀጠሮ ገጹ ጋር እንዲመሳሰል */
@@ -15,6 +16,7 @@
   -webkit-backdrop-filter: blur(10px); /* ለ Safari */ 
   backdrop-filter: blur(10px); /* የበረዶ መስታወት ውጤት */
   border: 1px solid rgba(255, 255, 255, 0.3); /* ከቀጠሮ ገጹ ጋር እንዲመሳሰል */
+  overflow-x: auto;
 }
 
 .dashboard-container h1 {
@@ -31,6 +33,7 @@
   width: 100%;
   border-collapse: collapse;
   counter-reset: row-num; /* ለቁጥር መቁጠሪያ አዘጋጅተናል */
+  table-layout: fixed;
   margin-top: 1rem;
 }
 
@@ -46,6 +49,7 @@
 .appointments-table th {
   background-color: rgba(255, 255, 255, 0.15); /* የጀርባ ቀለም አስተካክለናል */
   color: #fff; /* የሠንጠረዥ ርዕስ ቀለም ወደ ነጭ ቀይረናል */
+  word-wrap: break-word;
   font-weight: bold;
   font-size: 1rem; /* የፊደል መጠን ጨምረናል */
 }
@@ -105,13 +109,13 @@
 }
 
 .action-buttons button {
-  padding: 8px 16px;
+  padding: 5px 10px;
   border: none;
   color: white;
   cursor: pointer;
   font-size: 0.9em;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -128,6 +132,14 @@
   border-radius: 50px;
   box-shadow: 0 4px 15px rgba(231, 79, 193, 0.4);
   margin-top: 1rem; /* ከቁልፉ በላይ ክፍተት ጨምረናል */
+}
+
+.appointments-table .action-buttons .btn-confirm {
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border-radius: 12px;
+  margin-top: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-delete {
@@ -264,6 +276,7 @@
   width: 100%;
   max-width: 250px; /* የፍለጋ ሳጥኑን ስፋት ለመቀነስ */
   padding: 0.75rem 1rem; /* የውስጥ ክፍተት */
+  word-wrap: break-word;
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3); /* ቀለል ያለ እና ግልጽ ድንበር */
   background-color: rgba(255, 255, 255, 0.1); /* ትንሽ ግልጽ የሆነ ዳራ */
@@ -295,17 +308,17 @@
 }
 
 .export-buttons button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.3rem 0.5rem ; /* የፓዲንግ መጠን ቀይረናል */
   border: none;
   border-radius: 25px;
   color: white;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -642,6 +655,7 @@
   .appointments-table td {
     display: block;
     text-align: right;
+
     text-align: left; /* ጽሑፉን ከርዕሱ አጠገብ ለማድረግ ወደ ግራ አስተካክለናል */
     font-size: 1rem;
     border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
@@ -670,6 +684,10 @@
   .appointments-table .action-buttons {
     justify-content: flex-end;
     flex-wrap: wrap; /* ቁልፎቹ ቦታ ሲያጡ ወደታች እንዲታጠፉ */
+  }
+  .appointments-table .action-buttons > * {
+    flex-basis: 100%; /* እያንዳንዱ ቁልፍ ሙሉውን ስፋት እንዲይዝ */
+    margin-bottom: 0.5rem; /* በእያንዳንዱ ቁልፍ ግርጌ ላይ ትንሽ ክፍተት */
   }
 
   .modal-content {
