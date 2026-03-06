@@ -57,7 +57,7 @@ const AdminLogin = () => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit} className="appointment-form admin-login-form">
           <div className="appointment-form-group">
-            <label htmlFor="email">{t.email}:</label>
+            <label htmlFor="email" style={{ color: 'black' }}>{t.email}:</label>
             <input
               type="email"
               id="email"
@@ -68,7 +68,7 @@ const AdminLogin = () => {
             />
           </div>
           <div className="appointment-form-group">
-            <label htmlFor="password">{t.password}:</label>
+            <label htmlFor="password" style={{ color: 'black' }}>{t.password}:</label>
             <input
               type="password"
               id="password"
