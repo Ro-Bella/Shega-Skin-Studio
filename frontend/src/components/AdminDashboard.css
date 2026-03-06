@@ -43,12 +43,12 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* ከታች ብቻ ቀጭን መስመር */
   padding: 15px; /* ፓዲንግ ጨምረናል */
   text-align: left;
-  color: #fff; /* የጽሑፉን ቀለም ወደ ነጭ ቀይረናል */
+  color: #000; /* የጽሑፉን ቀለም ወደ ጥቁር ቀይረናል */
 }
 
 .appointments-table th {
   background-color: rgba(255, 255, 255, 0.15); /* የጀርባ ቀለም አስተካክለናል */
-  color: #fff; /* የሠንጠረዥ ርዕስ ቀለም ወደ ነጭ ቀይረናል */
+  color: #000; /* የሠንጠረዥ ርዕስ ቀለም ወደ ጥቁር ቀይረናል */
   word-wrap: break-word;
   font-weight: bold;
   font-size: 1rem; /* የፊደል መጠን ጨምረናል */
@@ -66,7 +66,7 @@
   padding: 15px;
   text-align: left;
   background-color: rgba(255, 255, 255, 0.15); /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
-  color: #fff; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
+  color: #000; /* ከሌሎቹ ርዕሶች ጋር እንዲመሳሰል */
   font-weight: bold;
   font-size: 1rem;
 }
@@ -79,7 +79,7 @@
   padding: 15px; 
   text-align: left;
   font-weight: bold; /* ጽሑፉ ጎላ እንዲል */
-  color: #fff; /* የቁጥሩን ቀለም ወደ ነጭ ቀይረናል */
+  color: #000; /* የቁጥሩን ቀለም ወደ ጥቁር ቀይረናል */
 }
 
 .status {
@@ -266,7 +266,7 @@
 }
 
 .filter-container label {
-  color: #fff; /* የ "Filter by Status" ጽሑፍ ወደ ነጭ ተቀይሯል */
+  color: #000; /* የ "Filter by Status" ጽሑፍ ወደ ጥቁር ተቀይሯል */
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -280,7 +280,7 @@
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3); /* ቀለል ያለ እና ግልጽ ድንበር */
   background-color: rgba(255, 255, 255, 0.1); /* ትንሽ ግልጽ የሆነ ዳራ */
-  color: #fff; /* የውስጥ ጽሑፍ (All, Pending...) ወደ ነጭ ተቀይሯል */
+  color: #000; /* የውስጥ ጽሑፍ (All, Pending...) ወደ ጥቁር ተቀይሯል */
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
@@ -291,7 +291,7 @@
 
 /* ለ placeholder ጽሑፍ ቀለም */
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* የ "Search..." ጽሑፍ ወደ ነጭ ተቀይሯል */
+  color: rgba(0, 0, 0, 0.7); /* የ "Search..." ጽሑፍ ወደ ጥቁር ተቀይሯል */
 }
 
 .filter-select:focus,
@@ -343,13 +343,14 @@
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #000; /* የሴክሽኑ ጽሑፍ ጥቁር እንዲሆን */
 }
 
-.section-title {
-  color: #fff;
+.dashboard-container .section-title {
+  color: #000;
   text-align: center;
   margin-bottom: 1.5rem;
-  font-size: 1.1rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -406,7 +407,7 @@
   border-radius: 10px;
   text-align: center;
   background: linear-gradient(145deg, #e74fc1, #6573ec);
-  color: white;
+  color: #000; /* የካርዱ ጽሑፍ ወደ ጥቁር ተቀይሯል */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -568,6 +569,18 @@
   text-align: center;
 }
 
+.dashboard-container .appointment-form h3,
+.dashboard-container h3 {
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.dashboard-container .appointment-form .appointment-form-group label {
+  color: #000;
+  font-weight: bold;
+  display: block;
+}
+
 /* Responsive Styles for Mobile */
 @media (max-width: 768px) {
   .dashboard-container {
@@ -660,7 +673,7 @@
     font-size: 1rem;
     border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
     padding: 0.75rem 0;
-    color: #fff; /* Match the label color for readability on dark card background */
+    color: #000; /* Match the label color for readability on dark card background */
     /* ረጅም ቃላት እንዲሰበሩ እና እንዳያስፋፉ ማድረግ */
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -675,7 +688,7 @@
     content: attr(data-label);
     float: left;
     font-weight: bold;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
     padding-right: 1em; /* በርዕሱ እና በመረጃው መካከል ክፍተት ለመፍጠር */
   }
