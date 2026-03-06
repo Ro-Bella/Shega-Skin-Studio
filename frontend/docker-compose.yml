@@ -3,7 +3,7 @@
 services:
   # 1. Frontend Service (React)
   frontend:
-    build: ./frontend
+    build: .
     ports:
       - "3000:3000"
     depends_on:
@@ -11,7 +11,7 @@ services:
 
   # 2. Backend Service (Node.js)
   backend:
-    build: ./backend
+    build: ../backend
     ports:
       - "5000:5000"
     environment:
