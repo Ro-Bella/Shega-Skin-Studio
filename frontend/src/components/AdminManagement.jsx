@@ -1,12 +1,9 @@
 // frontend/src/components/AdminManagement.js
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { LanguageContext } from './LanguageContext';
 import './AdminDashboard.css'; // Sharing styles
-import API_BASE_URL from '../api/config';
-
-const API_URL = `${API_BASE_URL}/api/admin`;
+import api from '../api'; // Use the centralized api instance
 
 const AdminManagement = () => {
   const { language, translations } = useContext(LanguageContext);
@@ -23,24 +20,11 @@ const AdminManagement = () => {
   const [password, setPassword] = useState('');
   const [editingAdmin, setEditingAdmin] = useState(null); // To hold the admin being edited
 
-  const getConfig = () => {
-    const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-    if (!adminInfo || !adminInfo.token) {
-      navigate('/admin/login');
-      return {};
-    }
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${adminInfo.token}`,
-      },
-    };
-  };
-
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get(API_URL, getConfig());
+        // The api instance automatically includes the auth token
+        const response = await api.get('/admin');
         setAdmins(response.data.data || []);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch admins.');
@@ -81,12 +65,12 @@ const AdminManagement = () => {
     try {
       if (editingAdmin) {
         // Update admin
-        const { data } = await axios.put(`${API_URL}/${editingAdmin._id}`, adminData, getConfig());
+        const { data } = await api.put(`/admin/${editingAdmin._id}`, adminData);
         setAdmins(admins.map(admin => admin._id === editingAdmin._id ? data.data : admin));
         setFormMessage(`✅ ${currentText.adminUpdated}`);
       } else {
         // Create new admin
-        const { data } = await axios.post(API_URL, adminData, getConfig());
+        const { data } = await api.post('/admin', adminData);
         setAdmins([...admins, data.data]);
         setFormMessage(`✅ ${currentText.adminCreated}`);
       }
@@ -115,7 +99,7 @@ const AdminManagement = () => {
     if (window.confirm(currentText.deleteConfirm)) {
       setFormMessage(''); // Clear previous messages
       try {
-        await axios.delete(`${API_URL}/${id}`, getConfig());
+        await api.delete(`/admin/${id}`);
         setAdmins(admins.filter(admin => admin._id !== id));
         setFormMessage(`✅ ${currentText.adminDeleted}`);
       } catch (err) {

@@ -1,12 +1,9 @@
 // frontend/src/components/ServiceManagement.js
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate
 import { LanguageContext } from './LanguageContext';
 import './ServiceManagement.css'; // ቅሉን ከዳሽቦርዱ ጋር እንዲጋራ
-import API_BASE_URL from '../api/config';
-
-const API_URL = `${API_BASE_URL}/api/services`;
+import api from '../api'; // Use the centralized api instance
 
 const ServiceManagement = () => {
   const { language, translations } = useContext(LanguageContext);
@@ -18,21 +15,10 @@ const ServiceManagement = () => {
   const [serviceName, setServiceName] = useState('');
   const [error, setError] = useState(''); // Add error state
 
-  // ሁሉንም አገልግሎቶች መጫን
-  // Function to get auth header with token
-  const getConfig = () => {
-    const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-    return {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${adminInfo?.token}`,
-      },
-    };
-  };
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(API_URL, getConfig()); // Pass auth header
+        const response = await api.get('/services'); // The api instance handles the auth token
         setServices(response.data);
       } catch (err) {
         setError('ስህተት: አገልግሎቶችን ማምጣት አልተቻለም።');
@@ -52,7 +38,7 @@ const ServiceManagement = () => {
     if (!serviceName.trim()) return;
 
     try {
-      const response = await axios.post(API_URL, { name: serviceName }, getConfig()); // Pass auth header
+      const response = await api.post('/services', { name: serviceName });
       setServices([...services, response.data]);
       setServiceName(''); // input መስኩን ባዶ ማድረግ
     } catch (err) {
@@ -67,7 +53,7 @@ const ServiceManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm(currentText.deleteConfirmService)) {
       try {
-        await axios.delete(`${API_URL}/${id}`, getConfig()); // Pass auth header
+        await api.delete(`/services/${id}`);
         setServices(services.filter(service => service._id !== id));
         alert(currentText.serviceDeleted);
       } catch (err) {

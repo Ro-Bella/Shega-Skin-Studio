@@ -2,14 +2,9 @@
 
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom'; // Link ኮምፖነንትን እናስገባለን
-import axios from 'axios'; // axios import እናደርጋለን
 import './AppointmentForm.css'; // Importing CSS for styling
 import { LanguageContext } from './LanguageContext'; // For multi-language support (Assuming this file exists)
-import API_BASE_URL from '../api/config'; // አዲሱን ኮንፊግ እናስገባለን
-
-const APPOINTMENTS_API_URL = `${API_BASE_URL}/api/appointments`;
-const SERVICES_API_URL = `${API_BASE_URL}/api/services`;
-const SETTINGS_API_URL = `${API_BASE_URL}/api/settings`; // ለ settings አዲስ URL
+import api from '../api'; // Use the centralized api instance
 
 const AppointmentForm = () => {
   const { language, translations } = useContext(LanguageContext);
@@ -47,7 +42,7 @@ const AppointmentForm = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(SERVICES_API_URL);
+        const response = await api.get('/services');
         setServices(response.data); // የመጡትን አገልግሎቶች state ላይ እናስቀምጣለን
       } catch (error) {
         console.error("አገልግሎቶችን ማምጣት አልተቻለም:", error);
@@ -62,7 +57,7 @@ const AppointmentForm = () => {
   useEffect(() => {
     const fetchAllSlots = async () => {
       try {
-        const response = await axios.get(`${SETTINGS_API_URL}/working-hours`);
+        const response = await api.get('/settings/working-hours');
         setAllSlots(response.data);
       } catch (error) {
         console.error("የስራ ሰዓቶችን ማምጣት አልተቻለም:", error);
@@ -83,7 +78,7 @@ const AppointmentForm = () => {
       if (formData.date) {
         try {
           // Assuming an endpoint to get booked slots for a specific date
-          const response = await axios.get(`${APPOINTMENTS_API_URL}/booked-slots?date=${formData.date}`);
+          const response = await api.get(`/appointments/booked-slots?date=${formData.date}`);
           setBookedSlots(response.data); // e.g., ['10:00', '14:00']
         } catch (error) {
           console.error("Failed to fetch booked slots:", error);
@@ -153,7 +148,7 @@ const AppointmentForm = () => {
     setMessage(currentText.sending); // "Sending..."
     try {
       // ዳታውን ወደ ባክኤንድ እንልካለን
-      const response = await axios.post(APPOINTMENTS_API_URL, {
+      const response = await api.post('/appointments', {
         name: formData.fullName, // 'fullName'ን ወደ 'name' እንቀይረዋለን
         phone: formData.phone,
         service: formData.service,
