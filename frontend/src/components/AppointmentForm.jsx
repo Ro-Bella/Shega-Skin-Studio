@@ -97,6 +97,7 @@ const AppointmentForm = () => {
     if (message) {
       const timer = setTimeout(() => {
         setMessage('');
+
       }, 10000); // 10000 ሚሊሰከንድ = 10 ሰከንድ
       return () => clearTimeout(timer);
     }
@@ -156,7 +157,29 @@ const AppointmentForm = () => {
         timeSlot: formData.timeSlot,
       });
 
-      setMessage(`✅ ${currentText.submitSuccess}`); // ከባክኤንድ የመጣውን መልዕክት እናሳያለን
+      const newAppointment = response.data.data;
+
+      // Format date based on language
+      const formattedDate = new Date(newAppointment.date).toLocaleDateString(
+        language === 'am' ? 'am-ET-u-ca-ethiopic' : 'en-US'
+      );
+
+      // The time is already in the correct format in newAppointment.timeSlot
+      const formattedTime = newAppointment.timeSlot;
+
+      // Get translated status text
+      const statusText = currentText[newAppointment.status.toLowerCase()] || newAppointment.status;
+
+      // Create the detailed success message string
+      const successDetails = `\n\n` +
+        `${currentText.clientNameLabel}: ${newAppointment.name}\n` +
+        `${currentText.clientPhoneLabel}: ${newAppointment.phone}\n` +
+        `${currentText.serviceLabel}: ${newAppointment.service}\n` +
+        `${currentText.dateLabel}: ${formattedDate}\n` +
+        `${currentText.timeLabel}: ${formattedTime}\n` +
+        `${currentText.status}: ${statusText}`;
+
+      setMessage(`✅ ${currentText.submitSuccess}${successDetails}`);
       // ፎርሙን ባዶ እናደርጋለን
       setFormData({
         fullName: '',
@@ -337,13 +360,14 @@ const AppointmentForm = () => {
         </button>
         {/* መልዕክቱ ከ "Submit" በተኑ ስር እንዲታይ ወደዚህ አንቀሳቅሰነዋል */}
         {message && (
-          <p
+          <div
             className={`form-message ${
               message.includes('❌') ? 'error' : 'success'
             }`}
+            style={{ whiteSpace: 'pre-wrap', textAlign: 'left', lineHeight: '1.8' }}
           >
             {message}
-          </p>
+          </div>
         )}
         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
             <Link to="/admin/login">{currentText.adminLogin}</Link>

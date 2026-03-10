@@ -26,7 +26,7 @@ const appointmentSchema = new mongoose.Schema({ // የቀጠሮ ስኬታዊ አ
     status: { // የቀጠሮ ሁኔታ
         type: String, // ለምሳሌ 'Pending', 'Confirmed', 'Cancelled', 'Completed'
         enum: ['Pending', 'Confirmed', 'Cancelled', 'Completed'], // የሚቀበሉ እርምጃዎች
-        default: 'Pending' // ነባሪ እርምጃ
+        default: 'Confirmed' // ነባሪ እርምጃ
     }
 }, { timestamps: true }); // የማዘጋጃ ጊዜና የማሻሻያ ጊዜ መክተት
 
