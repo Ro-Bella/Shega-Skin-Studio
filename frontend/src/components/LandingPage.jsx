@@ -266,15 +266,23 @@ const LandingPage = () => {
       <div id="services" className="services-section">
         <h3 className="services-title">{currentText.servicesTitle}</h3>
         <div className="services-grid">
-          {currentText.servicesList && currentText.servicesList.map((service, index) => (
-            <div key={index} className="service-card" style={{ minWidth: '250px' }}>
-              <div className="service-icon">
-                <i className={service.icon}></i>
+          {currentText.servicesList && currentText.servicesList.map((service, index) => {
+            const card = (
+              <div className="service-card" style={{ minWidth: '250px', height: '100%' }}>
+                <div className="service-icon">
+                  <i className={service.icon}></i>
+                </div>
+                <h4 className="service-card-title">{service.title}</h4>
+                <p className="service-card-description">{service.description}</p>
               </div>
-              <h4 className="service-card-title">{service.title}</h4>
-              <p className="service-card-description">{service.description}</p>
-            </div>
-          ))}
+            );
+
+            return service.videoUrl ? (
+              <a key={index} href={service.videoUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                {card}
+              </a>
+            ) : <div key={index}>{card}</div>;
+          })}
         </div>
       </div>
 

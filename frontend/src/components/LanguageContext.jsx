@@ -50,15 +50,15 @@ export const LanguageProvider = ({ children }) => {
       // Services Section
       servicesTitle: 'Our Premier Services',
       servicesList: [
-          { icon: 'fas fa-spa', title: 'Signature Facials', description: 'Customized facials that target your specific skin concerns, leaving you with a radiant glow.' },
-          { icon: 'fas fa-magic', title: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.' },
-          { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Stimulates collagen production to improve skin texture and reduce scars.' },
-          { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Exfoliates the skin to treat acne, scars, and discoloration.' },
-          { icon: 'fas fa-leaf', title: 'Hydra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.' },
-          { icon: 'fas fa-leaf', title: 'BB Glowing', description: 'Semi-permanent foundation treatment for glowing, even-toned skin.' },
-          { icon: 'fas fa-leaf', title: 'Microdermabrasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.' },
-          { icon: 'fas fa-leaf', title: 'Nano Infusions', description: 'Non-invasive treatment to enhance product absorption and skin hydration.' },
-          { icon: 'fas fa-leaf', title: 'Waxing Services', description: 'Professional hair removal for smooth and silky skin.' },
+          { icon: 'fas fa-spa', title: 'Signature Facials', description: 'Customized facials that target your specific skin concerns, leaving you with a radiant glow.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-magic', title: 'Dermaplaning', description: 'Advanced treatments to reduce fine lines and wrinkles, restoring your skin\'s youthful vitality.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Microneedling', description: 'Stimulates collagen production to improve skin texture and reduce scars.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Chemical Peels', description: 'Exfoliates the skin to treat acne, scars, and discoloration.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Hydra Facial', description: 'Cleanses, extracts, and hydrates the skin using super serums.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'BB Glowing', description: 'Semi-permanent foundation treatment for glowing, even-toned skin.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Microdermabrasion', description: 'Exfoliates dead skin cells to reveal a brighter complexion.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Nano Infusions', description: 'Non-invasive treatment to enhance product absorption and skin hydration.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'Waxing Services', description: 'Professional hair removal for smooth and silky skin.', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
           
 
         
@@ -174,15 +174,15 @@ export const LanguageProvider = ({ children }) => {
       // Services Section
       servicesTitle: 'የእኛ ዋና አገልግሎቶች',
       servicesList: [
-          { icon: 'fas fa-spa', title: 'ፌሻል የፊት ህክምናዎች', description: 'ለቆዳዎ አይነት እና ፍላጎት ተብለው የተዘጋጁ፣ ቆዳዎን የሚያንጸባርቁ የፊት ህክምናዎች።' },
-          { icon: 'fas fa-magic', title: 'የእርጅና መከላከያ ህክምናዎች', description: 'የመሸብሸብ እና የእርጅና ምልክቶችን የሚቀንሱ፣ የቆዳዎን የወጣትነት ህይወት የሚመልሱ ዘመናዊ ህክምናዎች።' },
-          { icon: 'fas fa-leaf', title: 'ማይክሮኒድሊንግ', description: 'የኮላጅን ምርትን በማነቃቃት የቆዳ ጥራትን የሚያሻሽል እና ጠባሳዎችን የሚቀንስ።' },
-          { icon: 'fas fa-leaf', title: 'የኬሚካል ፒልስ', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ብጉርን፣ ጠባሳን እና የቆዳ ቀለምን የሚያስተካክል።' },
-          { icon: 'fas fa-leaf', title: 'ቢቢ ግሎው', description: 'ለቆዳ ወጥ እና አንጸባራቂ ቀለም የሚሰጥ ከፊል-ቋሚ የመዋቢያ ህክምና።' },
-          { icon: 'fas fa-leaf', title: 'ማይክሮደርማ ብራሽን', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ቆዳን የሚያበራ እና የሚያድስ።' },
-          { icon: 'fas fa-leaf', title: 'ናኖ ኢንፊውዥን', description: 'የቆዳን እርጥበት እና የምርት መሳብ አቅምን የሚጨምር ህክምና።' },
-          { icon: 'fas fa-leaf', title: 'ሃይድራ ፌሻል', description: 'ቆዳን የሚያጸዳ፣ የሚያርስ እና እርጥበት የሚሰጥ ዘመናዊ የፊት ህክምና።' },
-          { icon: 'fas fa-leaf', title: 'የዋክስ አገልግሎት', description: 'ለስላሳ እና ጸጉር አልባ ቆዳ የሚሰጥ የባለሙያ የዋክስ አገልግሎት።' },
+          { icon: 'fas fa-spa', title: 'ፌሻል የፊት ህክምናዎች', description: 'ለቆዳዎ አይነት እና ፍላጎት ተብለው የተዘጋጁ፣ ቆዳዎን የሚያንጸባርቁ የፊት ህክምናዎች።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-magic', title: 'የእርጅና መከላከያ ህክምናዎች', description: 'የመሸብሸብ እና የእርጅና ምልክቶችን የሚቀንሱ፣ የቆዳዎን የወጣትነት ህይወት የሚመልሱ ዘመናዊ ህክምናዎች።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'ማይክሮኒድሊንግ', description: 'የኮላጅን ምርትን በማነቃቃት የቆዳ ጥራትን የሚያሻሽል እና ጠባሳዎችን የሚቀንስ።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'የኬሚካል ፒልስ', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ብጉርን፣ ጠባሳን እና የቆዳ ቀለምን የሚያስተካክል።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'ቢቢ ግሎው', description: 'ለቆዳ ወጥ እና አንጸባራቂ ቀለም የሚሰጥ ከፊል-ቋሚ የመዋቢያ ህክምና።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'ማይክሮደርማ ብራሽን', description: 'የሞቱ የቆዳ ሴሎችን በማንሳት ቆዳን የሚያበራ እናሚያድስ።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'ናኖ ኢንፊውዥን', description: 'የቆዳን እርጥበት እና የምርት መሳብ አቅምን የሚጨምር ህክምና።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'ሃይድራ ፌሻል', description: 'ቆዳን የሚያጸዳ፣ የሚያርስ እና እርጥበት የሚሰጥ ዘመናዊ የፊት ህክምና።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
+          { icon: 'fas fa-leaf', title: 'የዋክስ አገልግሎት', description: 'ለስላሳ እና ጸጉር አልባ ቆዳ የሚሰጥ የባለሙያ የዋክስ አገልግሎት።', videoUrl: 'https://www.tiktok.com/@shega.skin.studio?is_from_webapp=1&sender_device=pc' },
       ],
       // Appointment Form
       formTitle: 'ሸጋ ቀጠሮ ማስገቢያ ቅጽ',
