@@ -97,7 +97,7 @@ const AppointmentForm = () => {
     if (message) {
       const timer = setTimeout(() => {
         setMessage('');
-      }, 5000); // 5000 ሚሊሰከንድ = 5 ሰከንድ
+      }, 10000); // 10000 ሚሊሰከንድ = 10 ሰከንድ
       return () => clearTimeout(timer);
     }
   }, [message]);
@@ -258,14 +258,6 @@ const AppointmentForm = () => {
           <div className="date-display">{currentDateTime.toLocaleDateString(language === 'am' ? 'am-ET-u-ca-ethiopic' : 'en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</div>
         </div>
       </div>
-      {message && (
-        <p
-          className={`form-message ${message.includes('❌') ? 'error' : 'success'}`}
-          style={message.includes(currentText.timeSlotTaken) ? { color: 'black' } : {}}
-        >
-          {message}
-        </p>
-      )}
       <form onSubmit={handleSubmit} className="appointment-form">
         <div className="form-section">
           <h3>{currentText.clientInfoTitle}</h3>
@@ -343,6 +335,16 @@ const AppointmentForm = () => {
         <button type="submit" className="appointment-form-submit" disabled={loading || phoneError || !formData.fullName || !formData.phone || !formData.service || !formData.date || !formData.timeSlot}>
           {loading ? <div className="spinner"></div> : currentText.submitButton}
         </button>
+        {/* መልዕክቱ ከ "Submit" በተኑ ስር እንዲታይ ወደዚህ አንቀሳቅሰነዋል */}
+        {message && (
+          <p
+            className={`form-message ${
+              message.includes('❌') ? 'error' : 'success'
+            }`}
+          >
+            {message}
+          </p>
+        )}
         <div style={{ textAlign: 'center', marginTop: '1rem' }}>
             <Link to="/admin/login">{currentText.adminLogin}</Link>
         </div>
