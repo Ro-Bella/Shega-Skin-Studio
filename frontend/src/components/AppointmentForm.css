@@ -30,7 +30,7 @@ body {
 
 .form-page-header {
     display: flex;
-    justify-content: center; /* ይዘቶችን መሃል ላይ ለማድረግ */
+    justify-content: center;
     align-items: center; /* ይዘቶችን በአቀባዊ መሃል ላይ ለማድረግ */
     margin-bottom: 1.5rem;
     margin-right: -0.5rem;
@@ -44,9 +44,10 @@ body {
 .form-header-left {
     display: flex;
     align-items: center;
-    gap: 5rem; /* ክፍተቱን ጨምረናል */
-    margin-left: 5rem;
+    gap: 2rem; /* ክፍተቱን ጨምረናል */
+    margin-right: 5rem;
     /* margin-top: 4rem; */ /* ይህ መስመር አያስፈልግም */
+    margin-left: auto;
 }
 
 .appointment-form-container h2 {
@@ -157,10 +158,9 @@ body {
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.6); /* የብርሃን ጥላ ጨምረናል */
   border: 1px solid rgba(255, 255, 255, 0.2); /* ድንበሩን አስተካክለናል */
   flex-shrink: 0; /* እንዳይጨማደድ */
-  text-align: right; /* ጽሑፉን ወደ ቀኝ አስተካክለናል */
+  text-align: auto; /* ጽሑፉን ወደ ቀኝ አስተካክለናል */
   margin-top: -7rem; /* ከላይ ያለውን ክፍተት አስተካክለናል */
-  margin-right: -1.5rem; /* ከቀኝ ያለውን ክፍተት አስተካክለናል */
-  margin-left: -1.5rem; /* ከግራ ያለውን ክፍተት አስተካክለናል */
+  margin-right: auto;
 }
 
 .time-display {
