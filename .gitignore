@@ -3,3 +3,9 @@ node_modules/
 .DS_Store
 coverage/
 dist/
+
+# Ignore the script that creates the .env file to avoid exposing credentials
+backend/fixEnv.js
+
+# Ignore environment file for Docker Compose
+frontend/.env
