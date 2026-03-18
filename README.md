@@ -9,11 +9,3 @@
 # Backend
 
 # http://localhost:5000/
-
-# Admin email
-
-# robi@example.com
-
-# Admin Management
-
-# baby@example.com
